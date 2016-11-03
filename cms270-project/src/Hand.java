@@ -28,5 +28,6 @@ public class Hand {
 	//checkHand method returns totalValue of cards in hand object
 	public int checkHand() {
 		return totalValue;
+		
 	}
 }
