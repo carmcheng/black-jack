@@ -12,7 +12,8 @@ public class Hand {
 	}
 	
 	public void addHand(Card c) {
-		
+		totalNumOfCards++;
+		totalValue += c.getCardValue();
 	}
 	
 	public int numOfCards() {
