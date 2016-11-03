@@ -37,6 +37,7 @@ public class Player {
 	}
 	public void quit(){
 	//If player desires the quit the game.
+		
 	}
 	
 
