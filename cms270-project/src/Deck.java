@@ -2,7 +2,8 @@
 public class Deck {
 
 	public Deck() {
-		// TODO Auto-generated constructor stub
+		ArrayList<Card> deck = new ArrayList<Card>(52);
+		
 	}
 
 }
