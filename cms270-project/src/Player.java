@@ -1,17 +1,14 @@
 
 public class Player {
-	private String name = "";
-	private double bet;
-	private Hand hand;
+	private String name ="";
 	private double totalMoney;
 	
-	
-	public Player(String name, Hand hand, double totalmoney){
-	//Player will have a unique name, a unique hand and an amount of money to play Blackjack.
+	public Player(String name, double bet, Hand hand) {
 		this.name = name;
+		this.bet = bet;
 		this.hand = hand;
-		this.totalmoney = totalmoney;
 	}
+
 	public void startGame(Table table){
 	//Start a game of blackjack with a table.	
 	}
@@ -40,5 +37,6 @@ public class Player {
 		
 	}
 	
+
 
 }
