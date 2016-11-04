@@ -9,7 +9,7 @@ public class Player {
 	//Player will have a unique name, a unique hand and an amount of money to play Blackjack.
 		this.name = name;
 		this.hand = hand;
-		this.totalmoney = totalmoney;
+		this.totalMoney = totalmoney;
 	}
 	public void startGame(Table table){
 	//Start a game of blackjack with a table.	

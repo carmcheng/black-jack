@@ -4,7 +4,7 @@ public class Hand {
 
 	private int totalValue;
 	private int totalNumOfCards;
-	private ArrayList<Card> cards;
+	private Card cards[];
 	
 	public Hand() {
 		totalValue = 0;

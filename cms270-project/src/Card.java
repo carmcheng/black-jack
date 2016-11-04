@@ -3,18 +3,25 @@ public class Card {
 
 	private int cardValue;
 	private char cardName;
-	private String suit;
+	private String cardSuit;
 	
 	public Card(int value, char name, String suit){
-		this.cardValue = value;
-		this.cardName = name;
-		this.suit = suit;
+		cardValue = value;
+		cardName = name;
+		cardSuit = suit;
+	}
+	
+	public char getCardName() {
+		return cardName;
 	}
 	
 	public int getCardValue() {
 		return cardValue;
 	}
 	
-	public String 
+	public String getCardSuit() {
+		return cardSuit;
+	}
+	
 	
 }
