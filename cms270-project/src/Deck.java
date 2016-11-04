@@ -15,6 +15,7 @@ public class Deck {
 		
 		for (int i = 0; i < cardSuits.length; i++) {
 			for (String s : cardSuits) {
+				// Initial value of Ace is set to 1
 				int v = 1;
 				for (char n : cardNames) {
 					deck.add(new Card(v, n, s));
