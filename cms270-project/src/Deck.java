@@ -4,20 +4,26 @@ public class Deck {
 	private Card deck[];
 	private final int DECK_SIZE = 52;
 	private int cardsUsed;
-	private final int TOP = 0;
 
 	public Deck() {
 		deck = new Card[DECK_SIZE];
 		String cardSuits[] = {"Spade", "Clover", "Heart", "Diamond"};
-		char cardNames[] = {'A', '2', '3', '4', '5', '6', 
-							'7', '8', '9', 'J', 'Q', 'K'};
+		char cardNames[] = {'2', '3', '4', '5', '6', '7',
+							'8', '9', 'J', 'Q', 'K', 'A'};
 		int cardIndex = 0;
 
 		for (String suit : cardSuits) {
 			int value = 1;
 			for (char name : cardNames) {
+				if (name == 'J' || name == 'Q' || name == 'K') {
+					value = 10;
+				} else if (name == 'A') {
+					// Set initial value of Ace to 11
+					value = 11;
+				} else {
+					value++;
+				}
 				deck[cardIndex] = new Card(value, name, suit);
-				value++;
 				cardIndex++;
 			}
 		}

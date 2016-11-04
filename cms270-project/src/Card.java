@@ -5,7 +5,7 @@ public class Card {
 	private char cardName;
 	private String cardSuit;
 	
-	public Card(int value, char name, String suit){
+	public Card(int value, char name, String suit) {
 		cardValue = value;
 		cardName = name;
 		cardSuit = suit;
@@ -22,6 +22,4 @@ public class Card {
 	public String getCardSuit() {
 		return cardSuit;
 	}
-	
-	
 }
