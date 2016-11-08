@@ -11,6 +11,10 @@ public class Player {
 		this.hand = hand;
 		this.totalMoney = totalmoney;
 	}
+	//Returns name to be added to the list of players at the table
+	public String getName(){
+		return name;
+	}
 	public void startGame(Table table){
 	//Start a game of blackjack with a table.	
 	}
