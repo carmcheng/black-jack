@@ -21,4 +21,4 @@ public class Hand {
 	public int checkHand() {
 		return totalValue;
 	}
-}
+}//Use state pattern to change behaviour depending on the state of the hand??
