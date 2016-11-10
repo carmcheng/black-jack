@@ -1,10 +1,11 @@
 import java.util.*;
 
 public class Table {
-	
+	private Dealer dealer;
 	private int numPlayers;
 	
 	public Table(){
+		dealer.getInstance();
 		numPlayers = 0;
 		//initializing the deck. Maybe use singleton pattern (only one at the table)??
 		Deck cardDeck = new Deck();
@@ -25,4 +26,5 @@ public class Table {
 	public int getNumPlayers(){
 		return numPlayers;
 	}
+	
 }
