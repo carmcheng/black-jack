@@ -17,8 +17,8 @@ public class Player {
 		return name;
 	}
 	
-	public Hand getHand() {
-		return hand;
+	public void getHand() {
+		
 	}
 	
 	public double getMoney() {
@@ -52,7 +52,4 @@ public class Player {
 	//If player desires the quit the game.
 	}
 	
-	public String toString() {
-		return name + " " + totalMoney +  "\n" + hand;
-	}
 }
