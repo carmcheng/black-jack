@@ -19,6 +19,10 @@ public class Card {
 		return cardValue;
 	}
 	
+	public void setCardValue(int newValue) {
+		cardValue = newValue;
+	}
+	
 	public String getCardSuit() {
 		return cardSuit;
 	}
