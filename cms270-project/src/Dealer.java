@@ -3,6 +3,10 @@ public class Dealer {
 	
 	private static Dealer dealer;
 	
+	DealerState hardSeventeenState;
+	DealerState softAndBelowState; 
+	DealerState dealingState; 
+	
 	/**
 	 * Private constructor to insure that only one Dealer object is made
 	 */
@@ -21,5 +25,7 @@ public class Dealer {
 			return dealer;
 		}
 	}
-
+	
+	public void addCard() {
+	
 }
