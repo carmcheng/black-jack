@@ -1,11 +1,14 @@
 
 public class Game {
-
-	public Game() {
-		// TODO Auto-generated constructor stub
+	Dealer dealer;
+	
+	public Game(Player p, Pot money ){
+		dealer.getInstance();
+		
 	}
 	
 	public boolean win(Player p){
+		return false;
 		
 	}
 

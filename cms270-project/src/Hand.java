@@ -10,7 +10,7 @@ public class Hand {
 	//Hand constructor does not take any arguments
 	//Each new Hand object starts with a totalValue of 0 and totalNumOfCards of 0
 
-	private Card cards[];
+
 	
 
 	public Hand() {

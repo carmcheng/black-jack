@@ -3,6 +3,7 @@ import java.util.*;
 public class Deck {
 	private ArrayList<Card> deck;
 	private final int SIZE_OF_DECK = 54;
+	int cardsUsed;
 
 	public Deck() {
 		deck = new ArrayList<Card>(SIZE_OF_DECK);
@@ -13,10 +14,10 @@ public class Deck {
 
 		for (String suit : cardSuits) {
 			int value = 1;
-			for (char name : cardNames) {
-				if (name == 'J' || name == 'Q' || name == 'K') {
+			for (String name : cardNames) {
+				if (name == "J" || name == "Q" || name == "K") {
 					value = 10;
-				} else if (name == 'A') {
+				} else if (name == "A") {
 					// Set initial value of Ace to 11
 					value = 11;
 				} else {
@@ -36,23 +37,24 @@ public class Deck {
 			Random rand = new Random();
 			int n = rand.nextInt(52);
 			Card temp = deck.get(i);
-			deck.get(i) = deck.get(n);
-			deck[n] = temp;
+			temp = deck.get(n);
+			//deck[n] = temp;
 		}
 		cardsUsed = 0;
-	}
+	//}
 
-	public Card dealCard() {
-		if (cardsUsed == 52) {
-			shuffle();
-		}
-		cardsUsed++;
-		return deck[cardsUsed - 1];
-	}
+	//public Card dealCard() {
+//		if (cardsUsed == 52) {
+//			shuffle();
+//		}
+//		cardsUsed++;
+		//return deck[cardsUsed - 1];
+	//}
 
 	// Function returns the number of cards left
-	public int cardsLeft() {
-		return DECK_SIZE - cardsUsed;
+	//public int cardsLeft() {
+	//	return SIZE_OF_DECK - cardsUsed;
+	//}
 	}
-
 }
+

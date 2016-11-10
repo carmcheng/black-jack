@@ -24,9 +24,7 @@ public class Player {
 	public void push(){
 	//When player and dealer have the score in hands.	
 	}
-	public void hit(){
-	//When player wants another card from the deck.
-	}
+	
 	public void stand(){
 	//When player no longer wants another card from the deck.
 		
