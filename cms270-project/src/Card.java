@@ -2,16 +2,16 @@
 public class Card {
 
 	private int cardValue;
-	private char cardName;
+	private String cardName;
 	private String cardSuit;
 	
-	public Card(int value, char name, String suit) {
+	public Card(int value, String name, String suit) {
 		cardValue = value;
 		cardName = name;
 		cardSuit = suit;
 	}
 	
-	public char getCardName() {
+	public String getCardName() {
 		return cardName;
 	}
 	

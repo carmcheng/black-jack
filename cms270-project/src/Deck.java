@@ -1,16 +1,15 @@
 import java.util.*;
 
 public class Deck {
-	private Card deck[];
-	private final int DECK_SIZE = 52;
-	private int cardsUsed;
+	private ArrayList<Card> deck;
+	private final int SIZE_OF_DECK = 54;
 
 	public Deck() {
-		deck = new Card[DECK_SIZE];
+		deck = new ArrayList<Card>(SIZE_OF_DECK);
 		String cardSuits[] = {"Spade", "Clover", "Heart", "Diamond"};
-		char cardNames[] = {'2', '3', '4', '5', '6', '7',
-							'8', '9', 'J', 'Q', 'K', 'A'};
-		int cardIndex = 0;
+		String cardNames[] = {"2", "3", "4", "5", "6", "7",
+							  "8", "9", "10", "J", "Q", "K", "A"};
+							  
 
 		for (String suit : cardSuits) {
 			int value = 1;
@@ -23,12 +22,12 @@ public class Deck {
 				} else {
 					value++;
 				}
-				deck[cardIndex] = new Card(value, name, suit);
-				cardIndex++;
+				Card c = new Card(value, name, suit);
+				deck.add(c);
 			}
 		}
-		cardsUsed = 0;
 	}
+	
 
 	// Used cards are placed back into the deck and then reassigned
 	// to a random index. Card in random index replaces original card.
@@ -36,8 +35,8 @@ public class Deck {
 		for (int i = 0; i < 52; i++) {
 			Random rand = new Random();
 			int n = rand.nextInt(52);
-			Card temp = deck[i];
-			deck[i] = deck[n];
+			Card temp = deck.get(i);
+			deck.get(i) = deck.get(n);
 			deck[n] = temp;
 		}
 		cardsUsed = 0;
