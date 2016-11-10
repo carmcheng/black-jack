@@ -19,7 +19,15 @@ public class Card {
 		return cardValue;
 	}
 	
+	public void setCardValue(int newValue) {
+		cardValue = newValue;
+	}
+	
 	public String getCardSuit() {
 		return cardSuit;
+	}
+	
+	public String toString() {
+		return cardName + ", " + cardSuit + ", " + Integer.toString(cardValue);
 	}
 }

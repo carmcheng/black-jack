@@ -7,13 +7,11 @@ public class Hand {
 
 	private ArrayList<Card> cards;
 
-	//Hand constructor does not take any arguments
-	//Each new Hand object starts with a totalValue of 0 and totalNumOfCards of 0	
-
 	public Hand() {
 		totalValue = 0;
 		totalNumOfCards = 0;
 	}
+	
 	//addHand method increments totalNumOfCards by 1
 	//Adds the card's value to the total value and then adds the card to the array list that hand holds
 	public void addHand(Card c) {
@@ -32,4 +30,5 @@ public class Hand {
 		return totalValue;
 		
 	}
+	
 }//Use state pattern to change behaviour depending on the state of the hand??
