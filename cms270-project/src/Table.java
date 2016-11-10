@@ -27,4 +27,8 @@ public class Table {
 		return numPlayers;
 	}
 	
+	public static void main(String[] args){
+		Table table = new Table();
+	}
+	
 }
