@@ -4,15 +4,15 @@ public class Hand {
 
 	private int totalValue;
 	private int totalNumOfCards;
-<<<<<<< HEAD
+
 	private ArrayList<Card> cards;
 
 	//Hand constructor does not take any arguments
 	//Each new Hand object starts with a totalValue of 0 and totalNumOfCards of 0
-=======
+
 	private Card cards[];
 	
->>>>>>> branch 'master' of https://github.com/rollins-cms270/project-team-vegas.git
+
 	public Hand() {
 		totalValue = 0;
 		totalNumOfCards = 0;
