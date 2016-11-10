@@ -9,11 +9,6 @@ public class Deck {
 
 
 	public Deck() {
-
-		deck = new ArrayList<Card>();
-		String cardSuits[] = {"Spade", "Clover", "Heart", "Diamond"};
-		String cardNames[] = {"2", "3", "4", "5", "6", "7",
-							  "8", "9", "10", "J", "Q", "K", "A"};
 							  
 		deck = new ArrayList<Card>();
 		
@@ -31,7 +26,6 @@ public class Deck {
 						value++;
 					}
 					deck.add(new Card(value, name, suit));
-
 				}
 			}
 		}
@@ -45,9 +39,7 @@ public class Deck {
 			Random rand = new Random();
 			int n = rand.nextInt(52);
 			Card temp = deck.get(i);
-
 			temp = deck.get(n);
-	
 			deck.set(i, deck.get(n));
 			deck.set(n, temp);
 		}
@@ -55,9 +47,8 @@ public class Deck {
 	}
 	
 	public Card dealCard() {
-		if (deck.size() == 52) {
+		if (deck.size() == 52)
 			shuffle();
-		}
 		Card card = deck.get(0);
 		deck.remove(0);
 		
