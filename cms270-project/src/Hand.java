@@ -8,10 +8,7 @@ public class Hand {
 	private ArrayList<Card> cards;
 
 	//Hand constructor does not take any arguments
-	//Each new Hand object starts with a totalValue of 0 and totalNumOfCards of 0
-
-	private Card cards[];
-	
+	//Each new Hand object starts with a totalValue of 0 and totalNumOfCards of 0	
 
 	public Hand() {
 		totalValue = 0;

@@ -40,15 +40,16 @@ public class Deck {
 			deck.set(n, temp);
 		}
 	}
-
+	
+	
 	public Card dealCard() {
 		if (deck.size() == 52) {
 			shuffle();
 		}
-		int i = -1;
-		deck.remove(++i);
-
-		return deck.get(i);
+		Card card = deck.get(0);
+		deck.remove(0);
+		
+		return card;
 	}
 
 	// Function returns the number of cards left
