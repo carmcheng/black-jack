@@ -31,8 +31,4 @@ public class Hand {
 		
 	}
 	
-	public String toString() {
-		return "Card #1: " + cards.get(0) + "\nCard #2: " + cards.get(1);
-	}
-	
 }//Use state pattern to change behaviour depending on the state of the hand??
