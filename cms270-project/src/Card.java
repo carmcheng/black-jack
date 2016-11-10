@@ -22,4 +22,8 @@ public class Card {
 	public String getCardSuit() {
 		return cardSuit;
 	}
+	
+	public String toString() {
+		return cardName + ", " + cardSuit + ", " + Integer.toString(cardValue);
+	}
 }

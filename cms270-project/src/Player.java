@@ -11,16 +11,28 @@ public class Player {
 		this.hand = hand;
 		this.totalMoney = totalmoney;
 	}
-	//Returns name to be added to the list of players at the table
+	
 	public String getName(){
+	//Returns name to be added to the list of players at the table
 		return name;
 	}
+	
+	public Hand getHand() {
+		return hand;
+	}
+	
+	public double getMoney() {
+		return totalMoney;
+	}
+	
 	public void startGame(Table table){
 	//Start a game of blackjack with a table.	
 	}
+	
 	public void setBet(double bet){
 		this.bet = bet;
 	}
+	
 	public void push(){
 	//When player and dealer have the score in hands.	
 	}
@@ -29,14 +41,18 @@ public class Player {
 	//When player no longer wants another card from the deck.
 		
 	}
-	public void doubleDown(double bet){
+	
+	public void doubleDown(){
 	//When player wants to double their bet, a
 	//and can no longer hit in current round of the game.
-	
-		bet = bet * 2;
+		setBet(bet * 2);
 	}
+	
 	public void quit(){
 	//If player desires the quit the game.
 	}
 	
+	public String toString() {
+		return name + " " + totalMoney +  "\n" + hand;
+	}
 }
