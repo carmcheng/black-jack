@@ -4,6 +4,7 @@ public class Player {
 	private double bet;
 	private double totalMoney;
 	private Hand hand;
+	private Pot pot;
 	
 	public Player(String name, double totalmoney){
 	//Player will have a unique name, a unique hand and an amount of money to play Blackjack.
@@ -31,12 +32,15 @@ public class Player {
 	
 	public void setBet(double bet){
 		this.bet = bet;
+		totalMoney -= bet;
+		pot.addPot(bet);
 	}
 	
 	public void doubleDown(){
 	//When player wants to double their bet, a
 	//and can no longer hit in current round of the game.
-		setBet(bet * 2);
+		totalMoney -= bet;
+		pot.addPot(bet);
 	}
 	
 	public void quit(){
