@@ -31,4 +31,8 @@ public class Hand {
 		
 	}
 	
+	public Iterator createIterator() {
+		return new HandIterator(cards);
+	}
+	
 }//Use state pattern to change behaviour depending on the state of the hand??
