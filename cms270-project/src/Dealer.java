@@ -2,15 +2,14 @@
 public class Dealer {
 	
 	private static Dealer dealer;
-	
-	DealerState hardSeventeenState;
-	DealerState softAndBelowState; 
-	DealerState dealingState; 
+	private Hand hand;
 	
 	/**
 	 * Private constructor to insure that only one Dealer object is made
 	 */
-	private Dealer() {}
+	private Dealer() {
+		this.hand = new Hand(); 
+	}
 	
 	/**
 	 * Method creates new Dealer object if not already initialized
@@ -24,10 +23,13 @@ public class Dealer {
 		return dealer;
 	}
 	
-<<<<<<< HEAD
-	public void addCard() {
+	public void addCard(Card c) {
+		
+	}
 	
-=======
+	public void printHand() {
+		
+	}
+	
 
->>>>>>> branch 'master' of https://github.com/rollins-cms270/project-team-vegas.git
 }
