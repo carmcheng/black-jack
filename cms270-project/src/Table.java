@@ -5,7 +5,7 @@ public class Table {
 	private int numPlayers;
 	
 	public Table(){
-		dealer.getInstance();
+		dealer = Dealer.getInstance();
 		numPlayers = 0;
 		//initializing the deck. Maybe use singleton pattern (only one at the table)??
 		Deck cardDeck = new Deck();
