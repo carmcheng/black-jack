@@ -8,7 +8,7 @@ public class Dealer {
 	 * Private constructor to insure that only one Dealer object is made
 	 */
 	private Dealer() {
-		this.hand = new Hand(); 
+		hand = new Hand(); 
 	}
 	
 	/**
@@ -23,8 +23,12 @@ public class Dealer {
 		return dealer;
 	}
 	
-	public void addCard(Card c) {
+	public void makeMove() {
 		
+	}
+	
+	public Hand getHand() {
+		return hand;
 	}
 	
 	public void printHand() {

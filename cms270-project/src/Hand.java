@@ -4,7 +4,6 @@ public class Hand {
 
 	private int totalValue;
 	private int totalNumOfCards;
-
 	private ArrayList<Card> cards;
 
 	public Hand() {
@@ -14,10 +13,10 @@ public class Hand {
 	
 	//addHand method increments totalNumOfCards by 1
 	//Adds the card's value to the total value and then adds the card to the array list that hand holds
-	public void addHand(Card c) {
+	public void addCard(Card c) {
 		totalNumOfCards++;
 		totalValue += c.getCardValue();
-		this.cards.add(c);
+		cards.add(c);
 	}
 	
 	//numOfCards method returns the total number of cards that hand holds
@@ -26,7 +25,7 @@ public class Hand {
 	}
 	
 	//checkHand method returns totalValue of cards in hand object
-	public int checkHand() {
+	public int checkHandValue() {
 		return totalValue;
 		
 	}
