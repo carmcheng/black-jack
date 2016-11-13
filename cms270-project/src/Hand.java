@@ -5,10 +5,11 @@ public class Hand {
 	private int totalValue;
 	private int totalNumOfCards;
 	private ArrayList<Card> cards;
-
+	
 	public Hand() {
 		totalValue = 0;
 		totalNumOfCards = 0;
+		cards = new ArrayList<Card>(); 
 	}
 	
 	//addHand method increments totalNumOfCards by 1
@@ -17,6 +18,10 @@ public class Hand {
 		totalNumOfCards++;
 		totalValue += c.getCardValue();
 		cards.add(c);
+	}
+	
+	public ArrayList<Card> getCards() {
+		return cards;
 	}
 	
 	//numOfCards method returns the total number of cards that hand holds
@@ -28,6 +33,14 @@ public class Hand {
 	public int checkHandValue() {
 		return totalValue;
 		
+	}
+	
+	public boolean checkBlackjack() {
+		if(totalNumOfCards == 2 && totalValue == 21) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 	
 	public Iterator createIterator() {
