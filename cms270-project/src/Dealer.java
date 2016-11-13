@@ -23,6 +23,16 @@ public class Dealer {
 		return dealer;
 	}
 	
+	public boolean checkSoftSeventeen() {
+		if(hand.numOfCards() == 2 && hand.checkHandValue() == 17 &&
+				(hand.getCards().get(0).getCardName().equals("A") ||
+						hand.getCards().get(1).getCardName().equals("A"))) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
 	public void makeMove() {
 		
 	}
@@ -32,7 +42,11 @@ public class Dealer {
 	}
 	
 	public void printHand() {
-		
+		Iterator handIterator = new HandIterator(hand.getCards());
+		while(handIterator.hasNext()) {
+			Card card = (Card) handIterator.next();
+			System.out.println(card);
+		}
 	}
 	
 
