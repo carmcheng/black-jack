@@ -1,5 +1,7 @@
 
 public class Player {
+	
+	
 	private String name = "";
 	private double bet;
 	private double totalMoney;
@@ -26,10 +28,6 @@ public class Player {
 		return totalMoney;
 	}
 	
-	public void startGame(Table table){
-	//Start a game of blackjack with a table.
-	}
-	
 	public void setBet(double bet){
 		this.bet = bet;
 		totalMoney -= bet;
@@ -43,8 +41,12 @@ public class Player {
 		pot.addPot(bet);
 	}
 	
-	public void quit(){
-	//If player desires the quit the game.
+	public void printHand() {
+		Iterator handIterator = new HandIterator(hand.getCards());
+		while(handIterator.hasNext()) {
+			Card card = (Card) handIterator.next();
+			System.out.println(card);
+		}
 	}
 	
 }
