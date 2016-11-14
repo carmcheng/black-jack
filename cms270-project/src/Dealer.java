@@ -24,10 +24,8 @@ public class Dealer {
 		return dealer;
 	}
 	
-<<<<<<< HEAD
+
 	public void addCard() {
 	
-=======
-
->>>>>>> branch 'master' of https://github.com/rollins-cms270/project-team-vegas.git
+	}
 }
