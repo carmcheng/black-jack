@@ -21,6 +21,7 @@ public class Dealer {
 			dealer = new Dealer(); 
 		} 
 		return dealer;
+	
 	}
 	
 	public boolean checkSoftSeventeen() {
@@ -33,10 +34,13 @@ public class Dealer {
 		}
 	}
 	
+
+	public void addCard() {
+		
+	}
 	public void makeMove() {
 		
 	}
-	
 	public Hand getHand() {
 		return hand;
 	}
@@ -49,5 +53,4 @@ public class Dealer {
 		}
 	}
 	
-
 }
