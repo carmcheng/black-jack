@@ -5,19 +5,19 @@ public class Table {
 	private int numPlayers;
 	
 	public Table(){
-		dealer.getInstance();
+		dealer = Dealer.getInstance();
 		numPlayers = 0;
 		//initializing the deck. Maybe use singleton pattern (only one at the table)??
 		Deck cardDeck = new Deck();
 	}
 	
 	//have arraylist keeping track of number of players
-	private ArrayList<String> players = new ArrayList<String>();
+	private ArrayList<Player> players = new ArrayList<Player>();
 	
 	//Adding a player to the table. Will add the player to the arraylist
 	//and increment numPlayers
 	public void addPlayer(Player player){
-		players.add(player.getName());
+		players.add(player);
 		numPlayers++;
 	}
 	
@@ -25,6 +25,10 @@ public class Table {
 	//when dealing cards
 	public int getNumPlayers(){
 		return numPlayers;
+	}
+	
+	public Iterator createIterator() {
+		return new PlayerIterator(players);
 	}
 	
 	public static void main(String[] args){

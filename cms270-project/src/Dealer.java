@@ -2,15 +2,14 @@
 public class Dealer {
 	
 	private static Dealer dealer;
-	
-	DealerState hardSeventeenState;
-	DealerState softAndBelowState; 
-	DealerState dealingState; 
+	private Hand hand;
 	
 	/**
 	 * Private constructor to insure that only one Dealer object is made
 	 */
-	private Dealer() {}
+	private Dealer() {
+		hand = new Hand(); 
+	}
 	
 	/**
 	 * Method creates new Dealer object if not already initialized
@@ -23,9 +22,19 @@ public class Dealer {
 		} 
 		return dealer;
 	}
-	
 
 	public void addCard() {
-	
+		
 	}
+	public void makeMove() {
+		
+	}
+	public Hand getHand() {
+		return hand;
+	}
+	
+	public void printHand() {
+		
+	}
+	
 }
