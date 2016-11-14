@@ -47,6 +47,7 @@ public class Player {
 			Card card = (Card) handIterator.next();
 			System.out.println("\t" + card);
 		}
+		System.out.println("\tHand value: " + hand.checkHandValue());
 	}
 	
 }

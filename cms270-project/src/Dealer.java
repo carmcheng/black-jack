@@ -49,8 +49,9 @@ public class Dealer {
 		Iterator handIterator = new HandIterator(hand.getCards());
 		while(handIterator.hasNext()) {
 			Card card = (Card) handIterator.next();
-			System.out.println(card);
+			System.out.println("\t" + card);
 		}
+		System.out.println("\tHand value: " + hand.checkHandValue());
 	}
 	
 }
