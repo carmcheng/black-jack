@@ -45,22 +45,22 @@ public class Table {
 	
 	public void startGame() {
 		Scanner scan = new Scanner(System.in);
-		System.out.println("How many people are there?");
+		System.out.println("How many players will be in the game?");
 		int number = scan.nextInt();
 		int count = 1;
 		do {
-		System.out.println("New Player?"); 
+		System.out.println("Enter player name."); 
 		String name = scan.next();
 		System.out.println("How much money do you have?");
 		double money = scan.nextDouble();
 		Player player = new Player(name, money);
-		System.out.println("Place your starting bet");
+		System.out.println("Place your starting bet:");
 		double bet = scan.nextDouble();
 		player.setBet(bet);
 		players.add(player);
 		numPlayers++;
-		count ++;
-		} while ( count <= number);
+		count++;
+		} while (count <= number);
 	}
 	
 	public void firstDeal() {
