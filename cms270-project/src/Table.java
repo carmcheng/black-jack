@@ -20,17 +20,18 @@ public class Table {
 		pot = new Pot();
 		players = new ArrayList<Player>();
 	}
-	
+
+
 	//have getNumPlayers method that deal method in dealer class can call  
 	//when dealing cards
 	public int getNumPlayers(){
 		return numPlayers;
 	}
-	
+
 	public Iterator createIterator() {
 		return new PlayerIterator(players);
 	}
-	
+
 	/**
 	 * Starts table with certain number of Player objects
 	 * 
@@ -45,6 +46,7 @@ public class Table {
 			number = scan.nextInt();
 		}
 		int count = 1;
+
 		do {
 		System.out.println("Enter player name."); 
 		String name = scan.next();
@@ -75,7 +77,7 @@ public class Table {
 		System.out.println("Dealer's hand: ");
 		System.out.println("\t" + dealer.getHand().getCards().get(0) + "\n\tHidden Card");
 	}
-	
+
 	public void startRound() {
 		playerIterator = new PlayerIterator(players);
 		while(playerIterator.hasNext()) {
@@ -98,7 +100,7 @@ public class Table {
 						answer = scan.next();
 					}
 				}
-								
+
 				System.out.println("Choose to hit or stand.");
 				String move = scan.next();
 				while(move.equalsIgnoreCase("hit")) {
@@ -145,5 +147,5 @@ public class Table {
 		table.startGame();
 		table.playGame();
 	}
-	
+
 }
