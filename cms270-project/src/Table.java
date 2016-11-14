@@ -1,5 +1,5 @@
 import java.util.*;
-
+import java.text.*;
 public class Table {
 
 	private Dealer dealer;
@@ -85,6 +85,16 @@ public class Table {
 		// Dealer conditions go here, soft17 and hard17 mechanisms
 	}
 
+	public void printMoneyLeft() {
+		DecimalFormat money = new DecimalFormat("$0.00");
+		playerIterator = new PlayerIterator(players);
+		while(playerIterator.hasNext()) {
+			Player currentPlayer = (Player) playerIterator.next();
+			System.out.println(currentPlayer.getName() + ", you have " +
+					money.format(currentPlayer.getMoney()) + " left." );
+		}
+	}
+	
 	public void startRound() {
 		playerIterator = new PlayerIterator(players);
 		while(playerIterator.hasNext()) {
@@ -157,6 +167,7 @@ public class Table {
 		}
 		dealerTurn();
 	}
+	
 
 	public void playGame() {
 		playerIterator = new PlayerIterator(players);
@@ -177,6 +188,7 @@ public class Table {
 		// Starting hands are dealt
 		firstDeal();
 		startRound();
+		printMoneyLeft();
 	}
 
 	public static void main(String[] args){
