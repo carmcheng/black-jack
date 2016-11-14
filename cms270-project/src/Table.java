@@ -9,10 +9,17 @@ public class Table {
 	private Player player;
 	private Pot pot;
 	private final int MAX_PLAYERS = 6;
+<<<<<<< HEAD
 
 	private Scanner scan = new Scanner(System.in);
 	private Iterator playerIterator;
 
+=======
+	
+	private Scanner scan = new Scanner(System.in);
+	private Iterator playerIterator;
+	
+>>>>>>> branch 'master' of https://github.com/rollins-cms270/project-team-vegas.git
 	public Table(){
 		dealer = Dealer.getInstance();
 		numPlayers = 0;
@@ -20,7 +27,11 @@ public class Table {
 		pot = new Pot();
 		players = new ArrayList<Player>();
 	}
+<<<<<<< HEAD
 
+=======
+	
+>>>>>>> branch 'master' of https://github.com/rollins-cms270/project-team-vegas.git
 	//have getNumPlayers method that deal method in dealer class can call  
 	//when dealing cards
 	public int getNumPlayers(){
@@ -45,6 +56,7 @@ public class Table {
 			number = scan.nextInt();
 		}
 		int count = 1;
+<<<<<<< HEAD
 		do {
 			System.out.println("Enter player name."); 
 			String name = scan.next();
@@ -57,6 +69,20 @@ public class Table {
 		} while (count <= number);
 	}
 
+=======
+		do {
+		System.out.println("Enter player name."); 
+		String name = scan.next();
+		System.out.println("How much money do you have?");
+		double money = scan.nextDouble();
+		player = new Player(name, money);
+		players.add(player);
+		numPlayers++;
+		count++;
+		} while (count <= number);
+	}
+	
+>>>>>>> branch 'master' of https://github.com/rollins-cms270/project-team-vegas.git
 	public void firstDeal() {
 		playerIterator = new PlayerIterator(players);
 		while(playerIterator.hasNext()) {
@@ -71,6 +97,7 @@ public class Table {
 		System.out.println("Dealer's hand: ");
 		dealer.printHand();
 	}
+<<<<<<< HEAD
 
 	public void startRound() {
 		playerIterator = new PlayerIterator(players);
@@ -78,6 +105,15 @@ public class Table {
 			Player currentPlayer = (Player) playerIterator.next();
 			System.out.println("\nIt's your turn, " + currentPlayer.getName() + ".");
 
+=======
+	
+	public void startRound() {
+		playerIterator = new PlayerIterator(players);
+		while(playerIterator.hasNext()) {
+			Player currentPlayer = (Player) playerIterator.next();
+			System.out.println("\nIt's your turn, " + currentPlayer.getName() + ".");
+			
+>>>>>>> branch 'master' of https://github.com/rollins-cms270/project-team-vegas.git
 			if(currentPlayer.getHand().checkBlackjack()) { // if they have blackjack (changes state)
 				System.out.println("You got blackjack!");
 				currentPlayer = (Player) playerIterator.next();
@@ -94,7 +130,11 @@ public class Table {
 						answer = scan.next();
 					}
 				}
+<<<<<<< HEAD
 
+=======
+								
+>>>>>>> branch 'master' of https://github.com/rollins-cms270/project-team-vegas.git
 				System.out.println("Choose to hit or stand.");
 				String move = scan.next();
 				while(move.equalsIgnoreCase("hit")) {
@@ -112,6 +152,7 @@ public class Table {
 			}
 		}
 	}
+<<<<<<< HEAD
 
 	public void playGame() {
 		playerIterator = new PlayerIterator(players);
@@ -134,6 +175,30 @@ public class Table {
 		startRound();
 	}
 
+=======
+	
+	public void playGame() {
+		playerIterator = new PlayerIterator(players);
+		
+		// Each player sets their bet
+		while(playerIterator.hasNext()) {
+			Player currentPlayer = (Player) playerIterator.next();
+			System.out.println(currentPlayer.getName() + ", place your starting bet.");
+			double bet = scan.nextDouble();
+			while(bet > currentPlayer.getMoney()) {
+				System.out.println("You can't bet more money than you have!");
+				System.out.println("You have: " + currentPlayer.getMoney() + "\nSet your bet.");
+				bet = scan.nextDouble();
+			}
+			currentPlayer.setBet(bet);
+		}
+		
+		// Starting hands are dealt
+		firstDeal();
+		startRound();
+	}
+	
+>>>>>>> branch 'master' of https://github.com/rollins-cms270/project-team-vegas.git
 	public static void main(String[] args){
 		Table table = new Table();
 		table.startGame();
