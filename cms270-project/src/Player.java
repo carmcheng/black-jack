@@ -7,14 +7,16 @@
  * such as accessing name, hand, bet, the choice of double down
  * and printing the hand of the player. 
  */
+
+import java.util.*;
+
 public class Player {
-	
 	
 	private String name = "";
 	private double bet;
 	private double totalMoney;
 	private Hand hand;
-	private Pot pot;
+	private Pot pot = new Pot();
 	
 	/**
 	 * Constructor that creates a player with a unique name, a unique hand 
@@ -76,7 +78,7 @@ public class Player {
 		Iterator handIterator = new HandIterator(hand.getCards());
 		while(handIterator.hasNext()) {
 			Card card = (Card) handIterator.next();
-			System.out.println(card);
+			System.out.println("\t" + card);
 		}
 	}
 	

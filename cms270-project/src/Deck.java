@@ -9,22 +9,16 @@ import java.util.*;
  */
 public class Deck {
 	private ArrayList<Card> deck;
+	private static Deck cardDeck;
 
 	private String cardSuits[] = {"Spade", "Clover", "Heart", "Diamond"};
 	private String cardNames[] = {"2", "3", "4", "5", "6", "7",
-								  "8", "9", "10", "J", "Q", "K", "A"};
+								  "8", "9", "10", "J", "Q", "K", "A"};		  
 
 	/**
-	 * Constructor that creates a deck of cards and assigns the correct
-	 * values to each card. An ace is set to an initial value of 11.
+	 * Private constructor ensures only one Deck object is made.
 	 */
-	public Deck() {
-
-		deck = new ArrayList<Card>();
-		String cardSuits[] = {"Spade", "Clover", "Heart", "Diamond"};
-		String cardNames[] = {"2", "3", "4", "5", "6", "7",
-							  "8", "9", "10", "J", "Q", "K", "A"};
-							  
+	private Deck() {							  
 		deck = new ArrayList<Card>();
 		
 		for(int i = 0; i < 3; i++) {
@@ -46,6 +40,13 @@ public class Deck {
 			}
 		}
 	}
+	
+	public static Deck getInstance() {
+		if(cardDeck == null) {
+			cardDeck = new Deck();
+		} 
+		return cardDeck;
+	}
 
 	/**
 	 * This method shuffles the deck where used cards are placed back into the deck 
@@ -53,9 +54,10 @@ public class Deck {
 	 * The card in random index replaces original card.
 	 */
 	public void shuffle() {
-		for (int i = 0; i < 52; i++) {
+		for (int i = 0; i < 156; i++) {
 			Random rand = new Random();
-			int n = rand.nextInt(52);
+
+			int n = rand.nextInt(156);
 			Card temp = deck.get(i);
 
 			temp = deck.get(n);
@@ -71,7 +73,9 @@ public class Deck {
 	 * @return a card representation to deal to player/dealer.
 	 */
 	public Card dealCard() {
-		if (deck.size() == 52) {
+
+		if (deck.size() == 156){
+
 			shuffle();
 		}
 		Card card = deck.get(0);
