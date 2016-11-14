@@ -52,10 +52,14 @@ public class Table {
 			String name = scan.next();
 			System.out.println("How much money do you have?");
 			double money = scan.nextDouble();
-			player = new Player(name, money);
-			players.add(player);
-			numPlayers++;
-			count++;
+			if(money <= 0) {
+				System.out.println("You do not have enough money to play the game");
+			} else {
+				player = new Player(name, money);
+				players.add(player);
+				numPlayers++;
+				count++;
+			}
 		} while (count <= number);
 	}
 
