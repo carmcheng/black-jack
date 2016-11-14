@@ -65,11 +65,15 @@ public class Table {
 			currentPlayer.getHand().addCard(cardDeck.dealCard()); //adds two cards to player's hand on first deal
 			System.out.println(currentPlayer.getName() + "'s hand: ");
 			currentPlayer.printHand();
+			if(currentPlayer.getHand().checkHandValue() == 21) {
+				System.out.println("You have 21!"); // if they have 21
+				break;
+			}
 		}
 		dealer.getHand().addCard(cardDeck.dealCard());
 		dealer.getHand().addCard(cardDeck.dealCard());
 		System.out.println("Dealer's hand: ");
-		dealer.printHand();
+		System.out.println("\t" + dealer.getHand().getCards().get(0) + "\n\tHidden Card");
 	}
 	
 	public void startRound() {
@@ -103,8 +107,10 @@ public class Table {
 					currentPlayer.printHand();
 					if(currentPlayer.getHand().checkHandValue() == 21) {
 						System.out.println("You have 21!"); // if they have 21
+						break;
 					} else if(currentPlayer.getHand().checkHandValue() > 21) {
 						System.out.println("You've busted."); // if they bust
+						break;
 					}
 					System.out.println("Hit or stand?");
 					move = scan.next();
