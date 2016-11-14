@@ -1,12 +1,12 @@
+import java.util.*;
 
 public class Player {
-	
 	
 	private String name = "";
 	private double bet;
 	private double totalMoney;
 	private Hand hand;
-	private Pot pot;
+	private Pot pot = new Pot();
 	
 	public Player(String name, double totalmoney){
 	//Player will have a unique name, a unique hand and an amount of money to play Blackjack.
@@ -45,7 +45,7 @@ public class Player {
 		Iterator handIterator = new HandIterator(hand.getCards());
 		while(handIterator.hasNext()) {
 			Card card = (Card) handIterator.next();
-			System.out.println(card);
+			System.out.println("\t" + card);
 		}
 	}
 	

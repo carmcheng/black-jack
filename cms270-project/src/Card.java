@@ -28,6 +28,6 @@ public class Card {
 	}
 	
 	public String toString() {
-		return cardName + ", " + cardSuit + ", " + Integer.toString(cardValue);
+		return cardName + ", " + cardSuit;
 	}
 }
