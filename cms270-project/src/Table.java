@@ -65,7 +65,6 @@ public class Table {
 			Player currentPlayer = (Player) playerIterator.next();
 			currentPlayer.getHand().addCard(cardDeck.dealCard());
 			currentPlayer.getHand().addCard(cardDeck.dealCard()); //adds two cards to player's hand on first deal
-			System.out.println(currentPlayer.getName() + "'s hand: ");
 			currentPlayer.printHand();
 			if (currentPlayer.getHand().checkBlackjack()) {
 				System.out.println("You got blackjack!");
@@ -74,15 +73,11 @@ public class Table {
 		dealer.getHand().addCard(cardDeck.dealCard());
 		dealer.getHand().addCard(cardDeck.dealCard());
 		if(dealer.getHand().checkBlackjack()) {
+			dealer.printHand();
 			System.out.println("Dealer got blackjack.");
 			return;
 		}
-		System.out.println("Dealer's hand: ");
-		System.out.println("\t" + dealer.getHand().getCards().get(0) + "\n\tHidden Card");
-	}
-	
-	public void dealerTurn() {
-		// Dealer conditions go here, soft17 and hard17 mechanisms
+		dealer.printHiddenHand();
 	}
 
 	public void printMoneyLeft() {
@@ -94,7 +89,7 @@ public class Table {
 					money.format(currentPlayer.getMoney()) + " left." );
 		}
 	}
-	
+
 	public void startRound() {
 		playerIterator = new PlayerIterator(players);
 		while(playerIterator.hasNext()) {
@@ -118,14 +113,9 @@ public class Table {
 			if(answer.equalsIgnoreCase("Yes")) {		// make sure player has enough money to double down
 				currentPlayer.doubleDown();
 				currentPlayer.getHand().addCard(cardDeck.dealCard());
-				System.out.println("Your hand: ");
 				currentPlayer.printHand();
 				flag = true;
-				// Duplicate code; any way of encapsulating this in a method?
-				if(currentPlayer.getHand().checkHandValue() == 21) {
-					System.out.println("You have 21!"); // if they have 21
-					break;
-				} else if(currentPlayer.getHand().checkHandValue() > 21) {
+				if(currentPlayer.getHand().checkHandValue() > 21) {
 					System.out.println("You've busted."); // if they bust
 					break;
 				}
@@ -138,36 +128,37 @@ public class Table {
 				System.out.println("\nChoose to hit or stand.");
 				String move = scan.next();
 				while (move.equalsIgnoreCase("hit")) {
-					// Trying to test Ace value.... setter method won't work?
-//					Card c = new Card(11, "A", "Test");
-//					currentPlayer.getHand().addCard(c);
-//					if (c.getCardName().equals("A")) {
-//						System.out.println("You got an Ace card. Value = 1 or 11?");
-//						int ans = scan.nextInt();
-//						if (ans == 1) {
-//							c.setCardValue(1);
-//						} else {
-//							break;
-//						}
-//					}
-					currentPlayer.getHand().addCard(cardDeck.dealCard());
-					System.out.println("Your hand:");
+					Card c = cardDeck.dealCard();
+					if (c.getCardName().equals("A")) {
+						System.out.println("You got an Ace card. Value = 1 or 11?");
+						int ans = scan.nextInt();
+						while (ans != 1 && ans != 11) {
+							System.out.println("Invalid input. Try again.");
+							ans = scan.nextInt();
+						}
+						if (ans == 1) {
+							c.setCardValue(1);
+						} else if (ans == 11) {
+							break;
+						}
+					}
+					currentPlayer.getHand().addCard(c);
 					currentPlayer.printHand();
-					if(currentPlayer.getHand().checkHandValue() == 21) {
-						System.out.println("You have 21!"); // if they have 21
-						break;
-					} else if(currentPlayer.getHand().checkHandValue() > 21) {
+					
+					if(currentPlayer.getHand().checkHandValue() > 21) {
 						System.out.println("You've busted."); // if they bust
 						break;
 					}
+					
 					System.out.println("Hit or stand?");
 					move = scan.next();
 				}
 			}
 		}
-		dealerTurn();
 	}
 	
+	
+
 
 	public void playGame() {
 		playerIterator = new PlayerIterator(players);

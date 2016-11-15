@@ -62,6 +62,16 @@ public class Player {
 		totalMoney -= bet;
 		pot.addPot(bet);
 	}
+	
+	public void collectWinnings() {
+		if (hand.checkBlackjack()) {
+			bet *= 1.25;
+			totalMoney += bet;
+		} else {
+			totalMoney += bet;
+		}
+	}
+	
 	/**
 	 * This method is used when a player wants to double their bet, 
 	 * and can no longer hit in the current round of the game.
@@ -76,6 +86,7 @@ public class Player {
 	 */
 	public void printHand() {
 		Iterator handIterator = new HandIterator(hand.getCards());
+		System.out.println(getName() + "'s hand:");
 		while(handIterator.hasNext()) {
 			Card card = (Card) handIterator.next();
 			System.out.println("\t" + card);
