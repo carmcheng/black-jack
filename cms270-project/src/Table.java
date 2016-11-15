@@ -96,22 +96,26 @@ public class Table {
 					currentPlayer.getHand().reset(); 
 				} else if(response.equalsIgnoreCase("No")) {
 					players.remove(currentPlayer);
+				} else if(currentPlayer.getMoney() <= 0) {
+					System.out.println("You do not have enough money to play.");
+					players.remove(currentPlayer);
 				} else {
 					System.out.println("Enter a valid response");
 					valid = false;
 				}
 			} while(!valid);
 		}
-		//if player is the last person playing
+		//if there is at least one person still playing, game will restart
 		if(players.size() == 1) {
 			System.out.println(players.get(0).getName() + 
-					", would you like to end the game? Yes/No?");
+					", would you like to keep playing? Yes/No?");
 			 response = scan.next(); 
-			if(response.equalsIgnoreCase("Yes")) {
-				System.out.println("Ending game...");
+			if(response.equalsIgnoreCase("No")) {
+				System.out.println("There are no more players. Ending game...");
 				return;
 			} else {
 				players.get(0).getHand().reset();
+				startGame(); 
 			}
 		}
 	}
@@ -246,11 +250,11 @@ public class Table {
 			if(playerValue<= 21){
 				if(playerValue>dealerValue || dealerValue>21){
 					System.out.println("Congratulations " + currentPlayer.getName()
-					+ "! You have won againts the dealer!");
+					+ "! You have won against the dealer!");
 					currentPlayer.collectWinnings();
 				}else if(currentPlayer.getHand().checkBlackjack()){
 					System.out.println("Congratulations " + currentPlayer.getName()
-										+ "! You have won againts the dealer!");
+										+ "! You have won against the dealer!");
 					currentPlayer.collectWinnings();
 				}
 			}
@@ -264,7 +268,6 @@ public class Table {
 	 */
 	public void playGame() {
 		playerIterator = new PlayerIterator(players);
-		do {
 			// Each player sets their bet
 			while(playerIterator.hasNext()) {
 				Player currentPlayer = (Player) playerIterator.next();
@@ -292,24 +295,6 @@ public class Table {
 			distributeMoney();
 			printMoneyLeft();
 			restartGame();
-			startGame();
-		
-			
-		} while (!players.isEmpty());
-		// Starting hands are dealt
-		firstDeal();
-		startRound();
-		//dealer plays after the iterator has gone through all the players
-		while(dealer.checkSoftSeventeen() || dealer.getHand().checkHandValue()<17){
-			Card c = cardDeck.dealCard();
-			if(c.getCardName().equals("A")){
-				c.setCardValue(1);
-			}
-			dealer.getHand().addCard(c);
-		}
-		dealer.printHand();
-		distributeMoney();
-		printMoneyLeft();
 	}
 	/**
 	 * Main method, where we are able to run our program.
