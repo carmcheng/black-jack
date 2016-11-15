@@ -20,7 +20,7 @@ public class Table {
 	private Player player;
 	private Pot pot;
 	private final int MAX_PLAYERS = 6;
-
+	private DecimalFormat money = new DecimalFormat("$0.00");
 	private Scanner scan = new Scanner(System.in);
 	private Iterator playerIterator;
 
@@ -81,6 +81,40 @@ public class Table {
 			}
 		} while (count <= number);
 	}
+	
+	public void restartGame() {
+		playerIterator = new PlayerIterator(players);
+		String response;
+		boolean valid = true;
+		dealer.getHand().reset();
+		while(playerIterator.hasNext()) {
+			Player currentPlayer = (Player) playerIterator.next();
+			System.out.println(currentPlayer.getName() + ", would you like to keep playing? Yes/No?");
+			do {
+				response = scan.next();
+				if(response.equalsIgnoreCase("Yes")) {
+					currentPlayer.getHand().reset(); 
+				} else if(response.equalsIgnoreCase("No")) {
+					players.remove(currentPlayer);
+				} else {
+					System.out.println("Enter a valid response");
+					valid = false;
+				}
+			} while(!valid);
+		}
+		//if player is the last person playing
+		if(players.size() == 1) {
+			System.out.println(players.get(0).getName() + 
+					", would you like to end the game? Yes/No?");
+			 response = scan.next(); 
+			if(response.equalsIgnoreCase("Yes")) {
+				System.out.println("Ending game...");
+				return;
+			} else {
+				players.get(0).getHand().reset();
+			}
+		}
+	}
 	/**
 	 * This method implements the first deal of the game where a player is given two cards
 	 * for their hand and checks if they received Blackjack in the first deal. The same applies
@@ -92,9 +126,9 @@ public class Table {
 			Player currentPlayer = (Player) playerIterator.next();
 			currentPlayer.getHand().addCard(cardDeck.dealCard());
 			currentPlayer.getHand().addCard(cardDeck.dealCard()); //adds two cards to player's hand on first deal
-			currentPlayer.printHand();
 			if (currentPlayer.getHand().checkBlackjack()) {
 				System.out.println("You got blackjack!");
+				currentPlayer.printHand();
 			}
 		}
 		dealer.getHand().addCard(cardDeck.dealCard());
@@ -105,9 +139,9 @@ public class Table {
 			return;
 		}
 
-		dealer.printHiddenHand();
-		System.out.println("Dealer's hand: ");
-		System.out.println("\t" + dealer.getHand().getCards().get(0) + "\n\tHidden Card");
+	//	dealer.printHiddenHand();
+	//	System.out.println("Dealer's hand: ");
+	//	System.out.println("\t" + dealer.getHand().getCards().get(0) + "\n\tHidden Card");
 	}
 	
 	
@@ -115,7 +149,6 @@ public class Table {
 	 * This method prints the amount of money left the players hold.
 	 */
 	public void printMoneyLeft() {
-		DecimalFormat money = new DecimalFormat("$0.00");
 		playerIterator = new PlayerIterator(players);
 		while(playerIterator.hasNext()) {
 			Player currentPlayer = (Player) playerIterator.next();
@@ -137,7 +170,7 @@ public class Table {
 				currentPlayer = (Player) playerIterator.next();
 			}
 			System.out.println("\nIt's your turn, " + currentPlayer.getName() + ".");
-
+			currentPlayer.printHand();
 			// Double down option
 			System.out.println("Would you like to double down? Yes/No?");
 			String answer = scan.next();
@@ -220,32 +253,39 @@ public class Table {
 	 */
 	public void playGame() {
 		playerIterator = new PlayerIterator(players);
-
-		// Each player sets their bet
-		while(playerIterator.hasNext()) {
-			Player currentPlayer = (Player) playerIterator.next();
-			System.out.println(currentPlayer.getName() + ", place your starting bet.");
-			double bet = scan.nextDouble();
-			while(bet > currentPlayer.getMoney()) {
-				System.out.println("You can't bet more money than you have!");
-				System.out.println("You have: " + currentPlayer.getMoney() + "\nSet your bet.");
-				bet = scan.nextDouble();
+		do {
+			// Each player sets their bet
+			while(playerIterator.hasNext()) {
+				Player currentPlayer = (Player) playerIterator.next();
+				System.out.println(currentPlayer.getName() + ", place your starting bet.");
+				double bet = scan.nextDouble();
+				while(bet > currentPlayer.getMoney()) {
+					System.out.println("You can't bet more money than you have!");
+					System.out.println("You have: " + money.format(currentPlayer.getMoney()) + "\nSet your bet.");
+					bet = scan.nextDouble();
+				}
+				currentPlayer.setBet(bet);
 			}
-			currentPlayer.setBet(bet);
-		}
 
-		// Starting hands are dealt
-		firstDeal();
-		startRound();
-		//dealer plays after the iterator has gone through all the players
-		while(!dealer.checkSoftSeventeen() && dealer.getHand().checkHandValue()<17){
-			Card c = cardDeck.dealCard();
-			dealer.getHand().addCard(c);
-		}
-		dealer.printHand();
-		distributeMoney();
-		printMoneyLeft();
-	}
+			// Starting hands are dealt
+			firstDeal();
+			startRound();
+			//dealer plays after the iterator has gone through all the players
+
+			while(!dealer.checkSoftSeventeen() && dealer.getHand().checkHandValue()<17){
+				Card c = cardDeck.dealCard();
+				dealer.getHand().addCard(c);
+			}
+
+			dealer.printHand();
+			distributeMoney();
+			printMoneyLeft();
+			restartGame();
+			startGame();
+		
+			
+		} while (!players.isEmpty());
+	} 
 	/**
 	 * Main method, where we are able to run our program.
 	 * @param args
