@@ -195,6 +195,24 @@ public class Table {
 			}
 		}
 	}
+	
+	public void distributeMoney(){
+	
+		playerIterator = new PlayerIterator(players);
+		while(playerIterator.hasNext()){
+			Player currentPlayer = (Player) playerIterator.next();
+			int playerValue = currentPlayer.getHand().checkHandValue();
+			int dealerValue = dealer.getHand().checkHandValue();
+			if(playerValue<= 21){
+				if(playerValue>dealerValue || dealerValue>21){
+					currentPlayer.collectWinnings();
+				}else if(currentPlayer.getHand().checkBlackjack()){
+					currentPlayer.collectWinnings();
+				}
+			}
+		}
+	}
+	
 
 	/**
 	 * This method starts a new game of Blackjack and uses our player iterator interface.
@@ -219,6 +237,13 @@ public class Table {
 		// Starting hands are dealt
 		firstDeal();
 		startRound();
+		//dealer plays after the iterator has gone through all the players
+		while(!dealer.checkSoftSeventeen() && dealer.getHand().checkHandValue()<17){
+			Card c = cardDeck.dealCard();
+			dealer.getHand().addCard(c);
+		}
+		dealer.printHand();
+		distributeMoney();
 		printMoneyLeft();
 	}
 	/**

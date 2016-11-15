@@ -11,6 +11,7 @@ public class Dealer {
 	
 	
 	private static Dealer dealer;
+	private Hand hand = new Hand();
 	
 	/**
 	 * Private constructor to insure that only one Dealer object is made
@@ -26,8 +27,6 @@ public class Dealer {
 	public static Dealer getInstance() {
 		if(dealer == null) {
 			dealer = new Dealer(); 
-<<<<<<< HEAD
-=======
 		} 
 		return dealer;
 	
@@ -42,15 +41,11 @@ public class Dealer {
 				(hand.getCards().get(0).getCardName().equals("A") ||
 						hand.getCards().get(1).getCardName().equals("A"))) {
 			return true;
->>>>>>> branch 'master' of https://github.com/rollins-cms270/project-team-vegas.git
 		} else {
-			return dealer;
+			return false;
 		}
-		return dealer;
 	}
-<<<<<<< HEAD
 
-=======
 	
 
 	public void makeMove() {
@@ -84,6 +79,4 @@ public class Dealer {
 		}
 		System.out.println("\tHand value: " + hand.checkHandValue());
 	}
-	
->>>>>>> branch 'master' of https://github.com/rollins-cms270/project-team-vegas.git
 }
