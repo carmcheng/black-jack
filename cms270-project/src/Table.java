@@ -84,7 +84,7 @@ public class Table {
 	/**
 	 * This method implements the first deal of the game where a player is given two cards
 	 * for their hand and checks if they received Blackjack in the first deal. The same applies
-	 * for a dealer.
+	 * for a dealer
 	 */
 	public void firstDeal() {
 		playerIterator = new PlayerIterator(players);
