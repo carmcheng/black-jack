@@ -69,7 +69,7 @@ public class Table {
 		do {
 			System.out.println("Enter player name."); 
 			String name = scan.next();
-			System.out.println("How much money do you have?");
+			System.out.println("How much money do you have? (Dollars)");
 			double money = scan.nextDouble();
 			if(money <= 0) {
 				System.out.println("You do not have enough money to play the game");
@@ -118,7 +118,7 @@ public class Table {
 	/**
 	 * This method implements the first deal of the game where a player is given two cards
 	 * for their hand and checks if they received Blackjack in the first deal. The same applies
-	 * for a dealer.
+	 * for a dealer
 	 */
 	public void firstDeal() {
 		playerIterator = new PlayerIterator(players);
@@ -127,8 +127,8 @@ public class Table {
 			currentPlayer.getHand().addCard(cardDeck.dealCard());
 			currentPlayer.getHand().addCard(cardDeck.dealCard()); //adds two cards to player's hand on first deal
 			if (currentPlayer.getHand().checkBlackjack()) {
-				System.out.println("You got blackjack!");
 				currentPlayer.printHand();
+				System.out.println("You got blackjack!");
 			}
 		}
 		dealer.getHand().addCard(cardDeck.dealCard());
@@ -139,12 +139,14 @@ public class Table {
 			return;
 		}
 
+
 	//	dealer.printHiddenHand();
 	//	System.out.println("Dealer's hand: ");
 	//	System.out.println("\t" + dealer.getHand().getCards().get(0) + "\n\tHidden Card");
+
+		dealer.printHiddenHand();
+
 	}
-	
-	
 	/**
 	 * This method prints the amount of money left the players hold.
 	 */
@@ -229,6 +231,11 @@ public class Table {
 		}
 	}
 	
+	/**
+	 * This method determines if the player has won against the dealer. If 
+	 * so, their bet and potential extra winnings is added to their total 
+	 * money. 
+	 */
 	public void distributeMoney(){
 	
 		playerIterator = new PlayerIterator(players);
@@ -238,8 +245,12 @@ public class Table {
 			int dealerValue = dealer.getHand().checkHandValue();
 			if(playerValue<= 21){
 				if(playerValue>dealerValue || dealerValue>21){
+					System.out.println("Congratulations " + currentPlayer.getName()
+					+ "! You have won againts the dealer!");
 					currentPlayer.collectWinnings();
 				}else if(currentPlayer.getHand().checkBlackjack()){
+					System.out.println("Congratulations " + currentPlayer.getName()
+										+ "! You have won againts the dealer!");
 					currentPlayer.collectWinnings();
 				}
 			}
@@ -285,7 +296,21 @@ public class Table {
 		
 			
 		} while (!players.isEmpty());
-	} 
+		// Starting hands are dealt
+		firstDeal();
+		startRound();
+		//dealer plays after the iterator has gone through all the players
+		while(dealer.checkSoftSeventeen() || dealer.getHand().checkHandValue()<17){
+			Card c = cardDeck.dealCard();
+			if(c.getCardName().equals("A")){
+				c.setCardValue(1);
+			}
+			dealer.getHand().addCard(c);
+		}
+		dealer.printHand();
+		distributeMoney();
+		printMoneyLeft();
+	}
 	/**
 	 * Main method, where we are able to run our program.
 	 * @param args
