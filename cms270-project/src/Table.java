@@ -1,5 +1,16 @@
 import java.util.*;
 import java.text.*;
+/**
+ * 
+ * @author Zoe, Ebba, Carmen, Aruna
+ * 
+ * @version
+ * This class provides a table for a game of Blackjack where players 
+ * are able to join the table (that have enough money to play )and set a bet
+ * to play a game. It also includes methods that handles the mechanisms for 
+ * both a dealer and a player.
+ *
+ */
 public class Table {
 
 	private Dealer dealer;
@@ -22,18 +33,26 @@ public class Table {
 	}
 
 
-	//have getNumPlayers method that deal method in dealer class can call  
-	//when dealing cards
+	/**
+	 * This method accesses the number of players at the table.
+	 * @return The number of players
+	 */
 	public int getNumPlayers(){
 		return numPlayers;
 	}
-
+	/**
+	 * This method implements an iterator pattern to go through the
+	 * players at the table.
+	 * @return The players
+	 */
 	public Iterator createIterator() {
 		return new PlayerIterator(players);
 	}
 
 	/**
-	 * Starts table with certain number of Player objects
+	 * Starts table with certain number of Player objects. Checks to make sure
+	 * the table does not have an invalid amount of players. A player is able to enter
+	 * their name and appropriate money to start the game.
 	 * 
 	 */
 	public void startGame() {
@@ -62,7 +81,11 @@ public class Table {
 			}
 		} while (count <= number);
 	}
-
+	/**
+	 * This method implements the first deal of the game where a player is given two cards
+	 * for their hand and checks if they received Blackjack in the first deal. The same applies
+	 * for a dealer.
+	 */
 	public void firstDeal() {
 		playerIterator = new PlayerIterator(players);
 		while(playerIterator.hasNext()) {
@@ -84,11 +107,17 @@ public class Table {
 		System.out.println("Dealer's hand: ");
 		System.out.println("\t" + dealer.getHand().getCards().get(0) + "\n\tHidden Card");
 	}
-	
+	/**
+	 * This method enables the dealer to hit/stand after all players' turns are completed.
+	 * Soft17 and Hard17 are also accounted for in this method.
+	 */
 	public void dealerTurn() {
 		// Dealer conditions go here, soft17 and hard17 mechanisms
 	}
-
+	
+	/**
+	 * This method prints the amount of money left the players hold.
+	 */
 	public void printMoneyLeft() {
 		DecimalFormat money = new DecimalFormat("$0.00");
 		playerIterator = new PlayerIterator(players);
@@ -98,7 +127,11 @@ public class Table {
 					money.format(currentPlayer.getMoney()) + " left." );
 		}
 	}
-	
+	/**
+	 * This method starts a new round of Blackjack using the player iterator interface.
+	 * It also takes into account if the player has Blackjack, busted or their choice
+	 * of doubling down.
+	 */
 	public void startRound() {
 		playerIterator = new PlayerIterator(players);
 		while(playerIterator.hasNext()) {
@@ -172,7 +205,10 @@ public class Table {
 		dealerTurn();
 	}
 	
-
+	/**
+	 * This method starts a new game of Blackjack and uses our player iterator interface.
+	 * A player is able to set a bet but can not set a bet higher than the amount of money they hold.
+	 */
 	public void playGame() {
 		playerIterator = new PlayerIterator(players);
 
@@ -194,7 +230,10 @@ public class Table {
 		startRound();
 		printMoneyLeft();
 	}
-
+	/**
+	 * Main method, where we are able to run our program.
+	 * @param args
+	 */
 	public static void main(String[] args){
 		Table table = new Table();
 		table.startGame();
