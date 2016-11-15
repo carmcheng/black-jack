@@ -40,7 +40,11 @@ public class Deck {
 			}
 		}
 	}
-	
+	/**
+	 * Method creates new Deck object if not already initialized
+	 * If Deck object does already exist, it returns the already initialized Deck object
+	 * @return 
+	 */
 	public static Deck getInstance() {
 		if(cardDeck == null) {
 			cardDeck = new Deck();
