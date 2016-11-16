@@ -75,6 +75,10 @@ public class Player {
 		totalMoney -= bet;
 	}
 	
+	/**
+	 * This method allows players to collect their winnings
+	 * considering if they had blackjack or not
+	 */
 	public void collectWinnings() {
 		if (hand.checkBlackjack()) {
 			double win = bet * 1.5;
@@ -84,6 +88,10 @@ public class Player {
 		}
 	}
 	
+	/**
+	 * This method allows bets to return to player's totalMoney
+	 * Used when player has same handValue as dealer's
+	 */
 	public void takeBetBack() {
 		totalMoney += bet;
 	}
@@ -97,6 +105,11 @@ public class Player {
 		totalMoney -= bet;
 	}
 	
+	/**
+	 * This method checks the hand for an Ace
+	 * Used to distinguish 1's and 11's for players and dealers
+	 * @return true boolean value if hand contains an Ace
+	 */
 	public boolean checkForAce() {
 		handIterator = new HandIterator(hand.getCards());
 		while (handIterator.hasNext()) {
@@ -107,6 +120,10 @@ public class Player {
 		return false;
 	}
 	
+	/**
+	 * This method checks hand has busted (value is greater than 21)
+	 * @return true boolean value if handValue is above 21
+	 */
 	public boolean isBusted() {
 		if (hand.checkHandValue() > 21) {
 			return true;
