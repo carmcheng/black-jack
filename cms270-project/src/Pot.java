@@ -22,6 +22,7 @@ public class Pot {
 	}
 	/**
 	 * This method checks the current total money in the pot.
+	 * 
 	 * @return - a double representation of the total money in the pot.
 	 */
 	public double checkPot(){
@@ -35,6 +36,13 @@ public class Pot {
 	public void addPot(double bet){
 		totalPot += bet;
 		System.out.println("Total money in pot: " + money.format(checkPot()));
+	}
+	/**
+	 * This method subtracts the given bet from the money pot.
+	 * @param bet - The given bet from the player.
+	 */
+	public void subPot(double bet) {
+		totalPot -= bet;
 	}
 	/**
 	 * This method subtracts the given amount of money from the pot.

@@ -34,6 +34,7 @@ public class Dealer {
 	/**
 	 * This method determines if the dealer holds an Ace in their hand
 	 * when the hand value is equal to 17.  
+	 * 
 	 * @return a boolean representation 
 	 */
 	public boolean checkSoftSeventeen() {
@@ -47,15 +48,9 @@ public class Dealer {
 	}
 
 
-
-	public void makeMove() {
-
-	}
-
-
-
 	/**
 	 * This method accesses to dealer's hand.
+	 * 
 	 * @return a Hand representation for the dealer
 	 */
 	public Hand getHand() {

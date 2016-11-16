@@ -43,7 +43,8 @@ public class Deck {
 	/**
 	 * Method creates new Deck object if not already initialized
 	 * If Deck object does already exist, it returns the already initialized Deck object
-	 * @return 
+	 * 
+	 * @return the single cardDeck object
 	 */
 	public static Deck getInstance() {
 		if(cardDeck == null) {
@@ -74,6 +75,7 @@ public class Deck {
 	/**
 	 * This method deals a card from the deck and uses the shuffle method. 
 	 * Once the card is dealt, that card is removed from the deck.
+	 * 
 	 * @return a card representation to deal to player/dealer.
 	 */
 	public Card dealCard() {
@@ -90,6 +92,7 @@ public class Deck {
 	
 	/**
 	 * This method checks to see how many cards are left in the deck.
+	 * 
 	 * @return an integer representation of how many cards are left. 
 	 */
 	public int cardsLeft() {
