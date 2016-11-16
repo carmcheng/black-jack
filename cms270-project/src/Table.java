@@ -27,6 +27,7 @@ public class Table {
 	public Table(){
 		dealer = Dealer.getInstance();
 		numPlayers = 0;
+		cardDeck = Deck.getInstance();
 		pot = new Pot();
 		players = new ArrayList<Player>();
 	}
@@ -55,7 +56,6 @@ public class Table {
 	 * 
 	 */
 	public void startGame() {
-		cardDeck = Deck.getInstance();
 		System.out.println("Welcome to the table!");
 		System.out.println("How many players will be in the game? (Max: 6)");
 		int number = scan.nextInt();
@@ -98,7 +98,7 @@ public class Table {
 			do {
 				response = scan.next();
 				if(response.equalsIgnoreCase("Yes")) {
-					currentPlayer.getHand().reset(); 
+					currentPlayer.getHand().reset();
 				} else if(response.equalsIgnoreCase("No")) {
 					toRemove.add(currentPlayer);
 				} else {
@@ -143,14 +143,7 @@ public class Table {
 			System.out.println("Dealer got blackjack.");
 			return;
 		}
-
-
-		// dealer.printHiddenHand();
-		// System.out.println("Dealer's hand: ");
-		// System.out.println("\t" + dealer.getHand().getCards().get(0) + "\n\tHidden Card");
-
 		dealer.printHiddenHand();
-
 	}
 	/**
 	 * This method prints the amount of money left the players hold.
@@ -240,7 +233,6 @@ public class Table {
 	 * money. 
 	 */
 	public void distributeMoney(){
-
 		playerIterator = new PlayerIterator(players);
 		while (playerIterator.hasNext()) {
 			Player currentPlayer = (Player) playerIterator.next();
@@ -272,6 +264,8 @@ public class Table {
 	 * A player is able to set a bet but can not set a bet higher than the amount of money they hold.
 	 */
 	public void playGame() {
+		//Makes new deck after it is reset to null
+		cardDeck = Deck.getInstance();
 		playerIterator = new PlayerIterator(players);
 		// Each player sets their bet
 		while(playerIterator.hasNext()) {
