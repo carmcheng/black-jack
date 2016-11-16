@@ -131,9 +131,9 @@ public class Table {
 			Player currentPlayer = (Player) playerIterator.next();
 			currentPlayer.getHand().addCard(cardDeck.dealCard());
 			currentPlayer.getHand().addCard(cardDeck.dealCard()); //adds two cards to player's hand on first deal
-			currentPlayer.printHand();
 			if (currentPlayer.getHand().checkBlackjack()) {
-				System.out.println("You got blackjack!");
+				currentPlayer.printHand();
+				System.out.println(currentPlayer.getName() + " got blackjack!");
 			}
 		}
 		dealer.getHand().addCard(cardDeck.dealCard());
@@ -168,6 +168,8 @@ public class Table {
 			Player currentPlayer = (Player) playerIterator.next();
 			if (currentPlayer.getHand().checkBlackjack() && playerIterator.hasNext()) {
 				currentPlayer = (Player) playerIterator.next();
+			} else if (currentPlayer.getHand().checkBlackjack() && players.size() == 1) {
+				break;
 			}
 			System.out.println("\nIt's your turn, " + currentPlayer.getName() + ".");
 			currentPlayer.printHand();
