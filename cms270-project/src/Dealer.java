@@ -47,7 +47,6 @@ public class Dealer {
 		}
 	}
 
-
 	/**
 	 * This method accesses to dealer's hand.
 	 * 
@@ -57,6 +56,10 @@ public class Dealer {
 		return hand;
 	}
 
+	/**
+	 * This method prints the dealer's hand, but hides the second card
+	 * from the players.
+	 */
 	public void printHiddenHand() {
 		System.out.println("Dealer's hand: ");
 		System.out.println("\t" + dealer.getHand().getCards().get(0) + "\n\tHidden Card");
