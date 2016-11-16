@@ -35,6 +35,7 @@ public class Hand {
 	}
 	/**
 	 * This method accesses the current set of cards in the array list.
+	 * 
 	 * @return an array list representation of the current cards. 
 	 */
 	public ArrayList<Card> getCards() {
@@ -42,6 +43,7 @@ public class Hand {
 	}
 	/**
 	 * This method accesses the total number of cards a hand holds.
+	 * 
 	 * @return an integer representation of the total number of cards. 
 	 */
 	public int numOfCards() {
@@ -49,6 +51,7 @@ public class Hand {
 	}
 	/**
 	 * This method checks the total hand value of either player or dealer.
+	 * 
 	 * @return an integer representation of totalValue of cards in hand object
 	 */
 	public int checkHandValue() {
@@ -57,6 +60,7 @@ public class Hand {
 	}
 	/**
 	 * This method determines if a hand is Blackjack.
+	 * 
 	 * @return a boolean representation to check for Blackjack.
 	 */
 	public boolean checkBlackjack() {
@@ -71,7 +75,6 @@ public class Hand {
 	 * This method sets all variables back to 0
 	 * so that Player does not have to construct a new hand 
 	 */
-	
 	public void reset() {
 		totalNumOfCards = 0;
 		totalValue = 0;
@@ -80,10 +83,11 @@ public class Hand {
 	/**
 	 * This method creates an iterator pattern to go through
 	 * the cards in a hand.
+	 * 
 	 * @return an iterator representation of the cards in the hand.
 	 */
 	public Iterator createIterator() {
 		return new HandIterator(cards);
 	}
 	
-}//Use state pattern to change behavior depending on the state of the hand??
+}
