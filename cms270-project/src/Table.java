@@ -27,7 +27,6 @@ public class Table {
 	public Table(){
 		dealer = Dealer.getInstance();
 		numPlayers = 0;
-		cardDeck = Deck.getInstance();
 		pot = new Pot();
 		players = new ArrayList<Player>();
 	}
@@ -56,6 +55,7 @@ public class Table {
 	 * 
 	 */
 	public void startGame() {
+		cardDeck = Deck.getInstance();
 		System.out.println("Welcome to the table!");
 		System.out.println("How many players will be in the game? (Max: 6)");
 		int number = scan.nextInt();
@@ -82,12 +82,17 @@ public class Table {
 		} while (count <= number);
 	}
 
-	public void restartGame() {
+	public void restart() {
+		//Clear out dealer's hand and resets deck
+		dealer.getHand().reset();
+		cardDeck = null;
+		
+		//Restart players
 		playerIterator = new PlayerIterator(players);
 		String response;
-		boolean valid = true;
-		dealer.getHand().reset();
+		ArrayList<Player> toRemove = new ArrayList<Player>();
 		while(playerIterator.hasNext()) {
+			boolean valid = true;
 			Player currentPlayer = (Player) playerIterator.next();
 			System.out.println(currentPlayer.getName() + ", would you like to keep playing? Yes/No?");
 			do {
@@ -95,26 +100,26 @@ public class Table {
 				if(response.equalsIgnoreCase("Yes")) {
 					currentPlayer.getHand().reset(); 
 				} else if(response.equalsIgnoreCase("No")) {
-					players.remove(currentPlayer);
+					toRemove.add(currentPlayer);
 				} else {
 					System.out.println("Enter a valid response");
 					valid = false;
 				}
 			} while(!valid);
 		}
-		//if player is the last person playing
-		if(players.size() == 1) {
-			System.out.println(players.get(0).getName() + 
-					", would you like to end the game? Yes/No?");
-			response = scan.next(); 
-			if(response.equalsIgnoreCase("Yes")) {
-				System.out.println("Ending game...");
-				return;
-			} else {
-				players.get(0).getHand().reset();
-			}
+		
+		for (Player p : toRemove) {
+			players.remove(p);
+		}
+
+		if (!players.isEmpty()) {
+			playGame();
+		} else {
+			System.out.println("Thanks for playing!");
+			System.exit(0);
 		}
 	}
+
 	/**
 	 * This method implements the first deal of the game where a player is given two cards
 	 * for their hand and checks if they received Blackjack in the first deal. The same applies
@@ -126,8 +131,8 @@ public class Table {
 			Player currentPlayer = (Player) playerIterator.next();
 			currentPlayer.getHand().addCard(cardDeck.dealCard());
 			currentPlayer.getHand().addCard(cardDeck.dealCard()); //adds two cards to player's hand on first deal
+			currentPlayer.printHand();
 			if (currentPlayer.getHand().checkBlackjack()) {
-				currentPlayer.printHand();
 				System.out.println("You got blackjack!");
 			}
 		}
@@ -209,7 +214,7 @@ public class Table {
 					currentPlayer.getHand().addCard(c);
 					currentPlayer.printHand();
 
-					if(currentPlayer.getHand().checkHandValue() > 21) {
+					if(currentPlayer.isBusted()) {
 						System.out.println("You've busted."); // if they bust
 						break;
 					}
@@ -221,7 +226,7 @@ public class Table {
 				currentPlayer.doubleDown();
 				currentPlayer.getHand().addCard(cardDeck.dealCard());
 				currentPlayer.printHand();
-				if(currentPlayer.getHand().checkHandValue() > 21) {
+				if(currentPlayer.isBusted()) {
 					System.out.println("You've busted."); // if they bust
 					break;
 				}
@@ -244,14 +249,18 @@ public class Table {
 			if (playerValue <= 21){
 				if (playerValue > dealerValue || dealerValue > 21) {
 					System.out.println("Congratulations " + currentPlayer.getName()
-					+ "! You have won againts the dealer!");
+					+ "! You have won against the dealer!");
 					currentPlayer.collectWinnings();
 				} else if (currentPlayer.getHand().checkBlackjack()) {
 					System.out.println("Congratulations " + currentPlayer.getName()
-					+ "! You have won againts the dealer!");
+					+ "! You have won against the dealer!");
 					currentPlayer.collectWinnings();
 				} else if (playerValue == dealerValue) {
+					System.out.println(currentPlayer.getName() + ", you have the same hand value as"
+							+ " the dealer. You do not win or lose money.");
 					currentPlayer.takeBetBack();
+				} else {
+					System.out.println("Dealer beats " + currentPlayer.getName() + "!");
 				}
 			}
 		}
@@ -264,52 +273,32 @@ public class Table {
 	 */
 	public void playGame() {
 		playerIterator = new PlayerIterator(players);
-		do {
-			// Each player sets their bet
-			while(playerIterator.hasNext()) {
-				Player currentPlayer = (Player) playerIterator.next();
-				System.out.println(currentPlayer.getName() + ", place your starting bet.");
-				double bet = scan.nextDouble();
-				while(bet > currentPlayer.getMoney()) {
-					System.out.println("You can't bet more money than you have!");
-					System.out.println("You have: " + money.format(currentPlayer.getMoney()) + "\nSet your bet.");
-					bet = scan.nextDouble();
-				}
-				currentPlayer.setBet(bet);
+		// Each player sets their bet
+		while(playerIterator.hasNext()) {
+			Player currentPlayer = (Player) playerIterator.next();
+			System.out.println(currentPlayer.getName() + ", place your starting bet.");
+			double bet = scan.nextDouble();
+			while(bet > currentPlayer.getMoney()) {
+				System.out.println("You can't bet more money than you have!");
+				System.out.println("You have: " + money.format(currentPlayer.getMoney()) + "\nSet your bet.");
+				bet = scan.nextDouble();
 			}
+			currentPlayer.setBet(bet);
+		}
 
-			// Starting hands are dealt
-			firstDeal();
-			startRound();
-			//dealer plays after the iterator has gone through all the players
-
-			while(!dealer.checkSoftSeventeen() && dealer.getHand().checkHandValue()<17){
-				Card c = cardDeck.dealCard();
-				dealer.getHand().addCard(c);
-			}
-
-			dealer.printHand();
-			distributeMoney();
-			printMoneyLeft();
-			restartGame();
-			startGame();
-
-
-		} while (!players.isEmpty());
 		// Starting hands are dealt
 		firstDeal();
 		startRound();
+
 		//dealer plays after the iterator has gone through all the players
-		while(dealer.checkSoftSeventeen() || dealer.getHand().checkHandValue()<17){
+		while(!dealer.checkSoftSeventeen() && dealer.getHand().checkHandValue()<17){
 			Card c = cardDeck.dealCard();
-			if(c.getCardName().equals("A")){
-				c.setCardValue(1);
-			}
 			dealer.getHand().addCard(c);
 		}
 		dealer.printHand();
 		distributeMoney();
 		printMoneyLeft();
+		restart();
 	}
 	/**
 	 * Main method, where we are able to run our program.

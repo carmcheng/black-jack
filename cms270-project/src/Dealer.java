@@ -47,13 +47,6 @@ public class Dealer {
 	}
 
 
-
-	public void makeMove() {
-
-	}
-
-
-
 	/**
 	 * This method accesses to dealer's hand.
 	 * @return a Hand representation for the dealer
