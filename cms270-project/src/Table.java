@@ -182,23 +182,13 @@ public class Table {
 				answer = scan.next();
 			}
 
-			boolean flag = false;
-			// Did player double down
-			if(answer.equalsIgnoreCase("Yes")) { // make sure player has enough money to double down
-				currentPlayer.doubleDown();
-				currentPlayer.getHand().addCard(cardDeck.dealCard());
-				currentPlayer.printHand();
-				flag = true;
-				if(currentPlayer.getHand().checkHandValue() > 21) {
-					System.out.println("You've busted."); // if they bust
-					break;
-				}
-			} else if (answer.equalsIgnoreCase("No")) {
-				System.out.println("You have chosen NOT to double down");
-			} 
 
-			// Player did not double down and gets to choose hit or stand
-			if (!flag) {
+			// Did player double down
+			if (answer.equalsIgnoreCase("No") ||
+					currentPlayer.getMoney() < currentPlayer.getSetBet()) {
+				String s = currentPlayer.getMoney() < currentPlayer.getSetBet() ? 
+						"Not enough money to double down." : "You have chosen NOT to double down.";
+				System.out.println(s);
 				System.out.println("\nChoose to hit or stand.");
 				String move = scan.next();
 				while (move.equalsIgnoreCase("hit")) {
@@ -226,6 +216,14 @@ public class Table {
 
 					System.out.println("Hit or stand?");
 					move = scan.next();
+				}				
+			} else if (answer.equalsIgnoreCase("Yes")) {
+				currentPlayer.doubleDown();
+				currentPlayer.getHand().addCard(cardDeck.dealCard());
+				currentPlayer.printHand();
+				if(currentPlayer.getHand().checkHandValue() > 21) {
+					System.out.println("You've busted."); // if they bust
+					break;
 				}
 			}
 		}
@@ -239,19 +237,21 @@ public class Table {
 	public void distributeMoney(){
 
 		playerIterator = new PlayerIterator(players);
-		while(playerIterator.hasNext()){
+		while (playerIterator.hasNext()) {
 			Player currentPlayer = (Player) playerIterator.next();
 			int playerValue = currentPlayer.getHand().checkHandValue();
 			int dealerValue = dealer.getHand().checkHandValue();
-			if(playerValue<= 21){
-				if(playerValue>dealerValue || dealerValue>21){
+			if (playerValue <= 21){
+				if (playerValue > dealerValue || dealerValue > 21) {
 					System.out.println("Congratulations " + currentPlayer.getName()
 					+ "! You have won againts the dealer!");
 					currentPlayer.collectWinnings();
-				}else if(currentPlayer.getHand().checkBlackjack()){
+				} else if (currentPlayer.getHand().checkBlackjack()) {
 					System.out.println("Congratulations " + currentPlayer.getName()
 					+ "! You have won againts the dealer!");
 					currentPlayer.collectWinnings();
+				} else if (playerValue == dealerValue) {
+					currentPlayer.takeBetBack();
 				}
 			}
 		}
