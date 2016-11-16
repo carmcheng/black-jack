@@ -20,7 +20,7 @@ public class Table {
 	private Player player;
 	private Pot pot;
 	private final int MAX_PLAYERS = 6;
-
+	
 	private Scanner scan = new Scanner(System.in);
 	private Iterator playerIterator;
 
@@ -31,6 +31,10 @@ public class Table {
 		pot = new Pot();
 		players = new ArrayList<Player>();
 	}
+	
+	public Deck getDeck() {
+		return cardDeck;
+	}
 
 
 	/**
@@ -40,6 +44,7 @@ public class Table {
 	public int getNumPlayers(){
 		return numPlayers;
 	}
+	
 	/**
 	 * This method implements an iterator pattern to go through the
 	 * players at the table.
@@ -81,6 +86,7 @@ public class Table {
 			}
 		} while (count <= number);
 	}
+	
 	/**
 	 * This method implements the first deal of the game where a player is given two cards
 	 * for their hand and checks if they received Blackjack in the first deal. The same applies
@@ -90,26 +96,22 @@ public class Table {
 		playerIterator = new PlayerIterator(players);
 		while(playerIterator.hasNext()) {
 			Player currentPlayer = (Player) playerIterator.next();
-			currentPlayer.getHand().addCard(cardDeck.dealCard());
-			currentPlayer.getHand().addCard(cardDeck.dealCard()); //adds two cards to player's hand on first deal
+			currentPlayer.getHand().addCard(new Card(11, "A", "Heart"));
+			currentPlayer.getHand().addCard(new Card(10, "J", "Heart")); //adds two cards to player's hand on first deal
 			currentPlayer.printHand();
 			if (currentPlayer.getHand().checkBlackjack()) {
 				System.out.println("You got blackjack!");
 			}
 		}
-		dealer.getHand().addCard(cardDeck.dealCard());
-		dealer.getHand().addCard(cardDeck.dealCard());
+		dealer.getHand().addCard(new Card(11, "A", "Heart"));
+		dealer.getHand().addCard(new Card(10, "J", "Heart"));
 		if(dealer.getHand().checkBlackjack()) {
 			dealer.printHand();
 			System.out.println("Dealer got blackjack.");
 			return;
 		}
-
 		dealer.printHiddenHand();
-		System.out.println("Dealer's hand: ");
-		System.out.println("\t" + dealer.getHand().getCards().get(0) + "\n\tHidden Card");
 	}
-	
 	
 	/**
 	 * This method prints the amount of money left the players hold.
@@ -141,33 +143,29 @@ public class Table {
 			// Double down option
 			System.out.println("Would you like to double down? Yes/No?");
 			String answer = scan.next();
-
 			while (!answer.equalsIgnoreCase("yes") && !answer.equalsIgnoreCase("no")) {
 				System.out.println("Enter a valid response.");
 				answer = scan.next();
 			}
 
-			boolean flag = false;
 			// Did player double down
 			if(answer.equalsIgnoreCase("Yes")) {		// make sure player has enough money to double down
 				currentPlayer.doubleDown();
+				pot.addPot(currentPlayer.getSetBet());
 				currentPlayer.getHand().addCard(cardDeck.dealCard());
 				currentPlayer.printHand();
-				flag = true;
 				if(currentPlayer.getHand().checkHandValue() > 21) {
 					System.out.println("You've busted."); // if they bust
 					break;
 				}
 			} else if (answer.equalsIgnoreCase("No")) {
 				System.out.println("You have chosen NOT to double down");
-			} 
-
-			// Player did not double down and gets to choose hit or stand
-			if (!flag) {
 				System.out.println("\nChoose to hit or stand.");
 				String move = scan.next();
 				while (move.equalsIgnoreCase("hit")) {
 					Card c = cardDeck.dealCard();
+					currentPlayer.getHand().addCard(c);
+					currentPlayer.printHand();
 					if (c.getCardName().equals("A")) {
 						System.out.println("You got an Ace card. Value = 1 or 11?");
 						int ans = scan.nextInt();
@@ -177,24 +175,44 @@ public class Table {
 						}
 						if (ans == 1) {
 							c.setCardValue(1);
-						} else if (ans == 11) {
-							break;
+							currentPlayer.printHand();
 						}
 					}
-					currentPlayer.getHand().addCard(c);
-					currentPlayer.printHand();
-					
 					if(currentPlayer.getHand().checkHandValue() > 21) {
 						System.out.println("You've busted."); // if they bust
 						break;
 					}
-					
 					System.out.println("Hit or stand?");
 					move = scan.next();
 				}
 			}
 		}
+		dealerTurn();
 	}
+	
+	public void dealerTurn() {
+		dealer.printHand();				// Reveal second card
+		while(dealer.underOrSoftSeventeen()) {
+			dealer.getHand().addCard(cardDeck.dealCard());
+			dealer.aceValueChecker();
+			dealer.printHand();
+		}
+	}
+	
+	public void handResults() {
+		playerIterator = new PlayerIterator(players);
+		while(playerIterator.hasNext()) {
+			Player currentPlayer = (Player) playerIterator.next();
+			if ((currentPlayer.getHand().checkBlackjack() && !dealer.getHand().checkBlackjack())
+					|| (currentPlayer.getHand().checkHandValue() > dealer.getHand().checkHandValue())) {
+				currentPlayer.collectWinnings();
+			} else if (currentPlayer.getHand().checkHandValue() == dealer.getHand().checkHandValue()) {
+				currentPlayer.takeBetBack();
+			}
+		}
+		pot.emptyPot();
+	}
+
 
 	/**
 	 * This method starts a new game of Blackjack and uses our player iterator interface.
@@ -214,6 +232,7 @@ public class Table {
 				bet = scan.nextDouble();
 			}
 			currentPlayer.setBet(bet);
+			pot.addPot(bet);
 		}
 
 		// Starting hands are dealt
