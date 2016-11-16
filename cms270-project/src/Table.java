@@ -96,15 +96,15 @@ public class Table {
 		playerIterator = new PlayerIterator(players);
 		while(playerIterator.hasNext()) {
 			Player currentPlayer = (Player) playerIterator.next();
-			currentPlayer.getHand().addCard(new Card(11, "A", "Heart"));
-			currentPlayer.getHand().addCard(new Card(10, "J", "Heart")); //adds two cards to player's hand on first deal
+			currentPlayer.getHand().addCard(cardDeck.dealCard());
+			currentPlayer.getHand().addCard(cardDeck.dealCard()); //adds two cards to player's hand on first deal
 			currentPlayer.printHand();
 			if (currentPlayer.getHand().checkBlackjack()) {
 				System.out.println("You got blackjack!");
 			}
 		}
 		dealer.getHand().addCard(new Card(11, "A", "Heart"));
-		dealer.getHand().addCard(new Card(10, "J", "Heart"));
+		dealer.getHand().addCard(new Card(10, "6", "Heart"));
 		if(dealer.getHand().checkBlackjack()) {
 			dealer.printHand();
 			System.out.println("Dealer got blackjack.");
@@ -206,9 +206,7 @@ public class Table {
 			if ((currentPlayer.getHand().checkBlackjack() && !dealer.getHand().checkBlackjack())
 					|| (currentPlayer.getHand().checkHandValue() > dealer.getHand().checkHandValue())) {
 				currentPlayer.collectWinnings();
-			} else if (currentPlayer.getHand().checkHandValue() == dealer.getHand().checkHandValue()) {
-				currentPlayer.takeBetBack();
-			}
+			} 
 		}
 		pot.emptyPot();
 	}

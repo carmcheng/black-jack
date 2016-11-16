@@ -8,12 +8,11 @@
  * making a move on their turn. 
  */
 public class Dealer {
-
 	private static Dealer dealer;
 	private Hand hand;
 	private Table table;
 	private Iterator handIterator;
-
+	
 	/**
 	 * Private constructor to insure that only one Dealer object is made
 	 */
@@ -21,10 +20,12 @@ public class Dealer {
 		hand = new Hand(); 
 	}
 
+
 	/**
 	 * Method creates new Dealer object if not already initialized
 	 * If Dealer object does already exist, it returns the already initialized Dealer object
-	 * @return 
+	 * 
+	 * @return the one instance of the Dealer object
 	 */
 	public static Dealer getInstance() {
 		if(dealer == null) {
@@ -39,7 +40,7 @@ public class Dealer {
 	 * changes its value to 1 if the dealer busts
 	 */
 	public void aceValueChecker() {
-		if (hand.checkHandValue() > 21 && checkForAce()) {
+		if (hand.checkHandValue() > 21) {
 			handIterator = new HandIterator(hand.getCards());
 			while (handIterator.hasNext()) {
 				Card card = (Card) handIterator.next();
@@ -54,28 +55,14 @@ public class Dealer {
 	 * when the hand value is equal to 17.  
 	 * @return a boolean representation 
 	 */
-	public boolean underOrSoftSeventeen() {
-		if(hand.checkHandValue() < 17) {
-			return true;
-		} else if (hand.checkHandValue() <= 17 && checkForAce()) {
+	public boolean checkSoftSeventeen() {
+		if(hand.numOfCards() == 2 && hand.checkHandValue() == 17 &&
+				(hand.getCards().get(0).getCardName().equals("A") ||
+						hand.getCards().get(1).getCardName().equals("A"))) {
 			return true;
 		} else {
 			return false;
 		}
-	}
-
-	/**
-	 * This method iterates through the dealer's hand for an Ace
-	 * @return a boolean representation
-	 */
-	public boolean checkForAce() {
-		handIterator = new HandIterator(hand.getCards());
-		while (handIterator.hasNext()) {
-			Card card = (Card) handIterator.next();
-			if (card.getCardName().equals("A"))
-				return true;
-		}
-		return false;
 	}
 
 	/**
@@ -102,6 +89,6 @@ public class Dealer {
 			System.out.println("\t" + card);
 		}
 		System.out.println("\tHand value: " + hand.checkHandValue());
-	}
 
+	}
 }

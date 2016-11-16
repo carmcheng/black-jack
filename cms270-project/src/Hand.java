@@ -66,6 +66,11 @@ public class Hand {
 			return false;
 		}
 	}
+	public void reset() {
+		totalNumOfCards = 0;
+		totalValue = 0;
+		cards = new ArrayList<Card>();
+	}
 	/**
 	 * This method creates an iterator pattern to go through
 	 * the cards in a hand.
