@@ -1,4 +1,4 @@
-import java.util.ArrayList;
+import java.util.*;
 /**
  * 
  * @author Zoe, Ebba, Carmen, Aruna
@@ -13,6 +13,7 @@ public class Hand {
 	private int totalValue;
 	private int totalNumOfCards;
 	private ArrayList<Card> cards;
+	private Scanner scan = new Scanner(System.in);
 	
 	/**
 	 * Constructor that creates an initial Hand of no cards with no values.
@@ -65,6 +66,12 @@ public class Hand {
 			return false;
 		}
 	}
+	
+	/**
+	 * This method sets all variables back to 0
+	 * so that Player does not have to construct a new hand 
+	 */
+	
 	public void reset() {
 		totalNumOfCards = 0;
 		totalValue = 0;

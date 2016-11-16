@@ -8,16 +8,16 @@
  * making a move on their turn. 
  */
 public class Dealer {
-	
-	
+
+
 	private static Dealer dealer;
 	private Hand hand = new Hand();
-	
+
 	/**
 	 * Private constructor to insure that only one Dealer object is made
 	 */
 	private Dealer() {}
-	
+
 	/**
 	 * Method creates new Dealer object if not already initialized
 	 * If Dealer object does already exist, it returns the already initialized Dealer object
@@ -29,7 +29,7 @@ public class Dealer {
 			dealer = new Dealer(); 
 		} 
 		return dealer;
-	
+
 	}
 	/**
 	 * This method determines if the dealer holds an Ace in their hand
@@ -46,14 +46,14 @@ public class Dealer {
 		}
 	}
 
-	
+
 
 	public void makeMove() {
-		
+
 	}
-	
-	
-	
+
+
+
 	/**
 	 * This method accesses to dealer's hand.
 	 * @return a Hand representation for the dealer
@@ -61,12 +61,12 @@ public class Dealer {
 	public Hand getHand() {
 		return hand;
 	}
-	
+
 	public void printHiddenHand() {
 		System.out.println("Dealer's hand: ");
 		System.out.println("\t" + dealer.getHand().getCards().get(0) + "\n\tHidden Card");
 	}
-	
+
 	/**
 	 * This method prints the dealer's hand using an iterator pattern.
 	 */
