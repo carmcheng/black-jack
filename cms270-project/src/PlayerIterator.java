@@ -21,6 +21,8 @@ public class PlayerIterator implements Iterator {
 	
 	/**
 	 * Traverses to next Player in collection
+	 * 
+	 * @return the next Player object in collection
 	 */
 	public Player next() {
 		Player currentPlayer = players.get(position);
@@ -30,6 +32,8 @@ public class PlayerIterator implements Iterator {
 	
 	/**
 	 * Checks if another Player exists in the next index 
+	 * 
+	 * @return boolean value if next Player object is not null
 	 */
 	public boolean hasNext() {
 		if(position >= players.size() || players.get(position) == null) {
