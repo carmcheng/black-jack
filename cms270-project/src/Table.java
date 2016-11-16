@@ -153,8 +153,8 @@ public class Table {
 		playerIterator = new PlayerIterator(players);
 		while(playerIterator.hasNext()) {
 			Player currentPlayer = (Player) playerIterator.next();
-			currentPlayer.getHand().addCard(new Card(11, "A", "test"));
-			currentPlayer.getHand().addCard(new Card(11, "A", "test")); //adds two cards to player's hand on first deal
+			currentPlayer.getHand().addCard(cardDeck.dealCard());
+			currentPlayer.getHand().addCard(cardDeck.dealCard()); //adds two cards to player's hand on first deal
 			if (currentPlayer.getHand().checkBlackjack()) {
 				currentPlayer.printHand();
 				System.out.println(currentPlayer.getName() + " got blackjack!");
@@ -215,6 +215,7 @@ public class Table {
 			}
 			System.out.println("\nIt's your turn, " + currentPlayer.getName() + ".");
 			currentPlayer.printHand();
+			//Asks player if s/he wants to change ace card value in first hand
 			currentPlayer.aceChanger();
 			// Double down option
 			System.out.println("Would you like to double down? Yes/No?");
@@ -246,9 +247,10 @@ public class Table {
 				}				
 			} else if (answer.equalsIgnoreCase("Yes")) {
 				currentPlayer.doubleDown();
-//				Card c = cardDeck.dealCard();
-				currentPlayer.aceChanger();
-				currentPlayer.getHand().addCard(cardDeck.dealCard());
+				//Asks player for value of ace card, if ace is dealt
+				Card c = cardDeck.dealCard();
+				checkForAceValue(c);
+				currentPlayer.getHand().addCard(c);
 				currentPlayer.printHand();
 				if(currentPlayer.isBusted()) {
 					System.out.println("You've busted."); // if they bust

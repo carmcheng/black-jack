@@ -61,6 +61,7 @@ public class Card {
 	 * This method prints the card's name, suit and value as a String.
 	 */
 	public String toString() {
-		return cardName + ", " + cardSuit;
+		String s = getCardName().equals("A") ? " (Value: " + Integer.toString(cardValue) + ")": "";
+		return cardName + ", " + cardSuit + s;
 	}
 }
