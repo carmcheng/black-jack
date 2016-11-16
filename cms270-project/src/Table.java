@@ -32,7 +32,6 @@ public class Table {
 		players = new ArrayList<Player>();
 	}
 
-
 	/**
 	 * This method accesses the number of players at the table.
 	 * @return The number of players
