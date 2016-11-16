@@ -65,7 +65,7 @@ public class Player {
 	
 	public void collectWinnings() {
 		if (hand.checkBlackjack()) {
-			bet *= 1.25;
+			bet = bet + (0.5 * bet);
 			totalMoney += bet;
 		} else {
 			totalMoney += bet;
