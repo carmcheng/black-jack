@@ -43,7 +43,12 @@ public class Dealer {
 			return false;
 		}
 	}
-	
+
+	/**
+	 * This method iterates through the dealer's hand and looks for an
+	 * Ace card.
+	 * @return a boolean representation
+	 */
 	public boolean findAce() {
 		Iterator handIterator = new HandIterator(hand.getCards());
 		while (handIterator.hasNext()) {
@@ -53,16 +58,26 @@ public class Dealer {
 		}
 		return false;
 	}
-	
-	public void setAce() {
-		Iterator handIterator = new HandIterator(hand.getCards());
-		while (handIterator.hasNext()) {
-			Card c = (Card) handIterator.next();
-			if (c.getCardName().equals("A"))
-				c.setCardValue(1);
+
+	/**
+	 * This method checks the dealer's hand to see if it holds an Ace
+	 * card and total hand value has busted. It then changes the value
+	 * of an Ace card from 11 to 1.
+	 */
+	public void aceChecker() {
+		if (findAce() && hand.checkHandValue() > 21) {
+			Iterator handIterator = new HandIterator(hand.getCards());
+			Card temp = null;
+			while (handIterator.hasNext()) {
+				Card c = (Card) handIterator.next();
+				if (c.getCardName().equals("A")) {
+					temp = c;
+					hand.remove(c);
+				}
+			}
+			hand.addCard(new Card(1, "A", temp.getCardSuit()));
 		}
 	}
-	
 
 	/**
 	 * This method accesses to dealer's hand.

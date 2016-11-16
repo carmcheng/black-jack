@@ -101,8 +101,8 @@ public class Player {
 	 * and can no longer hit in the current round of the game.
 	 */
 	public void doubleDown(){
-		bet += bet;
 		totalMoney -= bet;
+		bet += bet;
 	}
 	
 	/**

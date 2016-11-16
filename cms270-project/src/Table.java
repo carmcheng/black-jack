@@ -116,7 +116,7 @@ public class Table {
 			System.out.println(currentPlayer.getName() + ", would you like to keep playing? Yes/No?");
 			do {
 				response = scan.next();
-				if (currentPlayer.getMoney() == 0) {
+				if (currentPlayer.getMoney() <= 0 && response.equalsIgnoreCase("yes")) {
 					System.out.println("You have no money, " + currentPlayer.getName() + "!"
 							+ " Security will be escorting you out...");
 					toRemove.add(currentPlayer);
@@ -159,8 +159,8 @@ public class Table {
 				System.out.println(currentPlayer.getName() + " got blackjack!");
 			}
 		}
-		dealer.getHand().addCard(new Card(11, "A", "Heart"));
-		dealer.getHand().addCard(new Card(2, "2", "Heart"));
+		dealer.getHand().addCard(cardDeck.dealCard());
+		dealer.getHand().addCard(cardDeck.dealCard());
 		if(dealer.getHand().checkBlackjack()) {
 			dealer.printHand();
 			System.out.println("Dealer got blackjack.");
@@ -180,6 +180,11 @@ public class Table {
 		}
 	}
 	
+	/**
+	 * This method checks if a dealt card is an Ace, then asks the
+	 * client if they want its value to be 1 or 11
+	 * @param c - 
+	 */
 	public void checkForAceValue(Card c) {
 		if (c.getCardName().equals("A")) {
 			System.out.println("You got an Ace card. Value = 1 or 11?");
@@ -248,7 +253,6 @@ public class Table {
 				currentPlayer.printHand();
 				if(currentPlayer.isBusted()) {
 					System.out.println("You've busted."); // if they bust
-					break;
 				}
 			}
 		}
@@ -266,7 +270,7 @@ public class Table {
 			Player currentPlayer = (Player) playerIterator.next();
 			int playerValue = currentPlayer.getHand().checkHandValue();
 			int dealerValue = dealer.getHand().checkHandValue();
-			if (playerValue <= 21){
+			if (!currentPlayer.isBusted()){
 				if (playerValue > dealerValue || dealerValue > 21) {
 					System.out.println("Congratulations " + currentPlayer.getName()
 					+ "! You have won against the dealer!");
@@ -285,6 +289,8 @@ public class Table {
 				} else {
 					System.out.println("Dealer beats " + currentPlayer.getName() + "!");
 				}
+			} else {
+				
 			}
 		}
 	}
@@ -330,11 +336,8 @@ public class Table {
 
 		//dealer plays after the iterator has gone through all the players
 		while(dealer.checkSoftSeventeen() || dealer.getHand().checkHandValue()<17){
-			//Card c = cardDeck.dealCard();
-			dealer.getHand().addCard(new Card(10, "J", "Spade"));
-			if (dealer.findAce() && dealer.getHand().checkHandValue() > 21) {
-				dealer.setAce();
-			}
+			dealer.getHand().addCard(cardDeck.dealCard());
+			dealer.aceChecker();
 		}
 		dealer.printHand();
 		distributeMoney();
