@@ -145,6 +145,7 @@ public class Player {
 				}
 			}
 			hand.addCard(new Card(1, "A", temp.getCardSuit()));
+			printHand();
 		}
 	}
 
