@@ -22,6 +22,7 @@ public class Pot {
 	}
 	/**
 	 * This method checks the current total money in the pot.
+	 * 
 	 * @return - a double representation of the total money in the pot.
 	 */
 	public double checkPot(){
