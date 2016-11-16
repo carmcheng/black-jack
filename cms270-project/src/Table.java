@@ -81,43 +81,48 @@ public class Table {
 			}
 		} while (count <= number);
 	}
-	
+	//Error: iterator doesn't go to next person when currentPlayer doesn't have enough money to play.
 	public void restartGame() {
 		playerIterator = new PlayerIterator(players);
 		String response;
-		boolean valid = true;
 		dealer.getHand().reset();
 		while(playerIterator.hasNext()) {
 			Player currentPlayer = (Player) playerIterator.next();
 			System.out.println(currentPlayer.getName() + ", would you like to keep playing? Yes/No?");
-			do {
 				response = scan.next();
-				if(response.equalsIgnoreCase("Yes")) {
-					currentPlayer.getHand().reset(); 
-				} else if(response.equalsIgnoreCase("No")) {
-					players.remove(currentPlayer);
-				} else if(currentPlayer.getMoney() <= 0) {
-					System.out.println("You do not have enough money to play.");
-					players.remove(currentPlayer);
+				if(!response.equalsIgnoreCase("Yes") && !response.equalsIgnoreCase("No")) {
+					System.out.println("Enter valid response");
+					response = scan.next();
+				} else if (response.equalsIgnoreCase("Yes")) {
+					if(currentPlayer.getMoney() <= 0) {
+						System.out.println("You do not have enough money to play.");
+						players.remove(currentPlayer);
+						numPlayers--;
+					} else {
+						currentPlayer.getHand().reset(); 
+					}
 				} else {
-					System.out.println("Enter a valid response");
-					valid = false;
-				}
-			} while(!valid);
+					players.remove(currentPlayer);
+					numPlayers--; 
+				} 
 		}
+		if(numPlayers == 0) {
+			System.out.println("There are no more players. Ending game...");
+		}
+
 		//if there is at least one person still playing, game will restart
-		if(players.size() == 1) {
-			System.out.println(players.get(0).getName() + 
-					", would you like to keep playing? Yes/No?");
-			 response = scan.next(); 
-			if(response.equalsIgnoreCase("No")) {
-				System.out.println("There are no more players. Ending game...");
-				return;
-			} else {
-				players.get(0).getHand().reset();
-				startGame(); 
-			}
-		}
+//		if(players.size() == 1) {
+//			System.out.println(players.get(0).getName() + 
+//					", would you like to keep playing? Yes/No?");
+//			 response = scan.next(); 
+//			if(response.equalsIgnoreCase("No")) {
+//				System.out.println("There are no more players. Ending game...");
+//				return;
+//			} else {
+//				players.get(0).getHand().reset();
+//				startGame(); 
+//			}
+//		}
 	}
 	/**
 	 * This method implements the first deal of the game where a player is given two cards
@@ -240,6 +245,8 @@ public class Table {
 	 * so, their bet and potential extra winnings is added to their total 
 	 * money. 
 	 */
+	
+	//Error: Player does not get the right money back if they double down 
 	public void distributeMoney(){
 	
 		playerIterator = new PlayerIterator(players);
@@ -256,6 +263,9 @@ public class Table {
 					System.out.println("Congratulations " + currentPlayer.getName()
 										+ "! You have won against the dealer!");
 					currentPlayer.collectWinnings();
+				}else if (playerValue == dealerValue) {
+					System.out.println("It is a tie.");
+					currentPlayer.collectWinnings(); 
 				}
 			}
 		}
