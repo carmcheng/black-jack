@@ -21,6 +21,8 @@ public class HandIterator implements Iterator {
 	
 	/**
 	 * Traverses to next Card in collection
+	 * 
+	 * @return the next Card object in collection
 	 */
 	public Card next() {
 		Card currentCard = cards.get(position);
@@ -29,6 +31,8 @@ public class HandIterator implements Iterator {
 	}
 	/**
 	 * Checks if another Card exists in the next index 
+	 * 
+	 * @return boolean value if next Card object is not null
 	 */
 	public boolean hasNext() {
 		if(position >= cards.size() || cards.get(position) == null) {
