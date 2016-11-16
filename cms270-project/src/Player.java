@@ -153,12 +153,8 @@ public class Player {
 					}
 				}
 			}
-<<<<<<< HEAD
 			hand.addCard(new Card(1, "A", temp.getCardSuit()));
 			printHand();
-=======
-			hand.addCard(new Card(value, "A", temp.getCardSuit()));
->>>>>>> branch 'master' of https://github.com/rollins-cms270/project-team-vegas.git
 		}
 	}
 
