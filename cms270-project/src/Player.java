@@ -127,25 +127,38 @@ public class Player {
 	 */
 	public void aceChanger() {
 		if (checkForAce()) {
+			printHand();
 			Iterator handIterator = new HandIterator(hand.getCards());
 			Card temp = null;
+			int value = 0;
 			while (handIterator.hasNext()) {
 				Card c = (Card) handIterator.next();
 				if (c.getCardName().equals("A")) {
-					System.out.println("You got an Ace card. Value = 1 or 11?");
+					System.out.println("You hold Ace card(s). Value = 1 or 11?"
+							+ " Type 0 to exit.");
 					int ans = scan.nextInt();
-					while (ans != 1 && ans != 11) {
+					while (ans != 1 && ans != 11 && ans != 0) {
 						System.out.println("Invalid input. Try again.");
 						ans = scan.nextInt();
 					}
+					temp = c;
 					if (ans == 1) {
-						temp = c;
+						value = 1;
 						hand.remove(c);
+					} else if (ans == 11) {
+						value = 11;
+						hand.remove(c);
+					} else {
+						return;
 					}
 				}
 			}
+<<<<<<< HEAD
 			hand.addCard(new Card(1, "A", temp.getCardSuit()));
 			printHand();
+=======
+			hand.addCard(new Card(value, "A", temp.getCardSuit()));
+>>>>>>> branch 'master' of https://github.com/rollins-cms270/project-team-vegas.git
 		}
 	}
 
