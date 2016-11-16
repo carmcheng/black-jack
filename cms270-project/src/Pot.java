@@ -1,3 +1,5 @@
+import java.text.DecimalFormat;
+
 /**
  * @author Zoe, Ebba, Carmen, Aruna
  * 
@@ -10,6 +12,7 @@
 public class Pot {
 	
 	private double totalPot;
+	private DecimalFormat money = new DecimalFormat("$0.00");
 	
 	/**
 	 * Constructor that creates an initial money pot of 0.00 dollars.
@@ -30,13 +33,14 @@ public class Pot {
 	 * @param bet - The given bet from the player. 
 	 */
 	public void addPot(double bet){
-		totalPot+=bet;
+		totalPot += bet;
+		System.out.println("Total money in pot: " + money.format(checkPot()));
 	}
 	/**
 	 * This method subtracts the given amount of money from the pot.
 	 * @param amount - The amount of money to subtract from the pot. 
 	 */
-	public void subPot(double amount){
-		totalPot-=amount;
+	public void emptyPot() {
+		totalPot = 0;
 	}
 }

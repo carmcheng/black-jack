@@ -16,7 +16,7 @@ public class Player {
 	private double bet;
 	private double totalMoney;
 	private Hand hand;
-	private Pot pot = new Pot();
+	private Iterator handIterator;
 	
 	/**
 	 * Constructor that creates a player with a unique name, a unique hand 
@@ -53,6 +53,10 @@ public class Player {
 		return totalMoney;
 	}
 	
+	public double getSetBet() {
+		return bet;
+	}
+	
 	/**
 	 * This method sets the player's bet to their input.
 	 * @param bet - the amount of money the player wants to bet for the game.
@@ -60,16 +64,19 @@ public class Player {
 	public void setBet(double bet){
 		this.bet = bet;
 		totalMoney -= bet;
-		pot.addPot(bet);
 	}
 	
 	public void collectWinnings() {
 		if (hand.checkBlackjack()) {
-			bet = bet + (0.5 * bet);
-			totalMoney += bet;
+			double win = bet * 1.5;
+			totalMoney += (win + bet);
 		} else {
-			totalMoney += bet;
+			totalMoney += (bet + bet);
 		}
+	}
+	
+	public void takeBetBack() {
+		totalMoney += bet;
 	}
 	
 	/**
@@ -78,15 +85,31 @@ public class Player {
 	 */
 	public void doubleDown(){
 		totalMoney -= bet;
-		pot.addPot(bet);
+	}
+	
+	public boolean checkForAce() {
+		handIterator = new HandIterator(hand.getCards());
+		while (handIterator.hasNext()) {
+			Card card = (Card) handIterator.next();
+			if (card.getCardName().equals("A"))
+				return true;
+		}
+		return false;
+	}
+	
+	public boolean isBusted() {
+		if (hand.checkHandValue() > 21) {
+			return true;
+		}
+		return false;
 	}
 	
 	/**
 	 * This method prints the player's hand using an iterator pattern.
 	 */
 	public void printHand() {
-		Iterator handIterator = new HandIterator(hand.getCards());
-		System.out.println(getName() + "'s hand:");
+		handIterator = new HandIterator(hand.getCards());
+		System.out.println("\n" + getName() + "'s hand:");
 		while(handIterator.hasNext()) {
 			Card card = (Card) handIterator.next();
 			System.out.println("\t" + card);
