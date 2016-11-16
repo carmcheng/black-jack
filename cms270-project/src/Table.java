@@ -20,10 +20,18 @@ public class Table {
 	private Player player;
 	private Pot pot;
 	private final int MAX_PLAYERS = 6;
+	private static int roundCount;
 	private DecimalFormat money = new DecimalFormat("$0.00");
 	private Scanner scan = new Scanner(System.in);
 	private Iterator playerIterator;
 
+	/**
+	 * Constructor creates a new Table that also encapsulates the
+	 * creation of new Dealer, Deck, and Pot objects. Also sets number
+	 * of players to 0 and an ArrayList of Players is created.
+	 * 
+	 * @return a new instance of the Talbe object
+	 */
 	public Table(){
 		dealer = Dealer.getInstance();
 		numPlayers = 0;
@@ -31,7 +39,6 @@ public class Table {
 		pot = new Pot();
 		players = new ArrayList<Player>();
 	}
-
 
 	/**
 	 * This method accesses the number of players at the table.
@@ -47,6 +54,24 @@ public class Table {
 	 */
 	public Iterator createIterator() {
 		return new PlayerIterator(players);
+	}
+	
+	/**
+	 * This method asks a client for their name and money and creates
+	 * a Player with their credentials.
+	 */
+	public void addPlayer() {
+			System.out.println("Enter player name."); 
+			String name = scan.next();
+			System.out.println("How much money do you have? (Dollars)");
+			double money = scan.nextDouble();
+			if(money <= 0) {
+				System.out.println("You do not have enough money to play the game");
+			} else {
+				player = new Player(name, money);
+				players.add(player);
+				numPlayers++;
+			}
 	}
 
 	/**
@@ -64,28 +89,23 @@ public class Table {
 					+ " Please input a valid number of players.");
 			number = scan.nextInt();
 		}
-		int count = 1;
-
-		do {
-			System.out.println("Enter player name."); 
-			String name = scan.next();
-			System.out.println("How much money do you have? (Dollars)");
-			double money = scan.nextDouble();
-			if(money <= 0) {
-				System.out.println("You do not have enough money to play the game");
-			} else {
-				player = new Player(name, money);
-				players.add(player);
-				numPlayers++;
-				count++;
-			}
-		} while (count <= number);
+		int count = 0;
+		while (count < number) {
+			addPlayer();
+			count++;
+		}		
 	}
 
+	/**
+	 * Mechanism that asks players if they want to keep playing, and if they do,
+	 * resets all variables. If player chooses to quit, the player is removed
+	 * from the ArrayList.
+	 */
 	public void restart() {
 		//Clear out dealer's hand and resets deck
 		dealer.getHand().reset();
 		cardDeck = null;
+		pot.emptyPot();
 		
 		//Restart players
 		playerIterator = new PlayerIterator(players);
@@ -97,7 +117,11 @@ public class Table {
 			System.out.println(currentPlayer.getName() + ", would you like to keep playing? Yes/No?");
 			do {
 				response = scan.next();
-				if(response.equalsIgnoreCase("Yes")) {
+				if (currentPlayer.getMoney() == 0) {
+					System.out.println("You have no money, " + currentPlayer.getName() + "!"
+							+ " Security will be escorting you out...");
+					toRemove.add(currentPlayer);
+				} else if(response.equalsIgnoreCase("Yes")) {
 					currentPlayer.getHand().reset();
 				} else if(response.equalsIgnoreCase("No")) {
 					toRemove.add(currentPlayer);
@@ -227,6 +251,7 @@ public class Table {
 				}
 			}
 		}
+		roundCount++;
 	}
 
 	/**
@@ -245,14 +270,17 @@ public class Table {
 					System.out.println("Congratulations " + currentPlayer.getName()
 					+ "! You have won against the dealer!");
 					currentPlayer.collectWinnings();
+					pot.subPot(currentPlayer.getSetBet());
 				} else if (currentPlayer.getHand().checkBlackjack()) {
 					System.out.println("Congratulations " + currentPlayer.getName()
 					+ "! You have won against the dealer!");
 					currentPlayer.collectWinnings();
+					pot.subPot(currentPlayer.getSetBet());
 				} else if (playerValue == dealerValue) {
 					System.out.println(currentPlayer.getName() + ", you have the same hand value as"
 							+ " the dealer. You do not win or lose money.");
 					currentPlayer.takeBetBack();
+					pot.subPot(currentPlayer.getSetBet());
 				} else {
 					System.out.println("Dealer beats " + currentPlayer.getName() + "!");
 				}
@@ -268,6 +296,18 @@ public class Table {
 	public void playGame() {
 		//Makes new deck after it is reset to null
 		cardDeck = Deck.getInstance();
+		//Check for new players
+		if (roundCount > 0 && players.size() < MAX_PLAYERS) {
+			System.out.println("Any new players? Yes/No?");
+			String s = scan.next();
+			while (!s.equalsIgnoreCase("yes") && !s.equalsIgnoreCase("no")) {
+				System.out.println("Invalid input. Try again.");
+				s = scan.next();
+			}
+			if (s.equalsIgnoreCase("yes")) {
+				addPlayer();
+			}
+		}
 		playerIterator = new PlayerIterator(players);
 		// Each player sets their bet
 		while(playerIterator.hasNext()) {
@@ -280,6 +320,7 @@ public class Table {
 				bet = scan.nextDouble();
 			}
 			currentPlayer.setBet(bet);
+			pot.addPot(bet);
 		}
 
 		// Starting hands are dealt

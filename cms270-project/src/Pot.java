@@ -36,6 +36,10 @@ public class Pot {
 		totalPot += bet;
 		System.out.println("Total money in pot: " + money.format(checkPot()));
 	}
+	
+	public void subPot(double bet) {
+		totalPot -= bet;
+	}
 	/**
 	 * This method subtracts the given amount of money from the pot.
 	 * @param amount - The amount of money to subtract from the pot. 
