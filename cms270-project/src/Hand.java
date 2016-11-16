@@ -65,6 +65,12 @@ public class Hand {
 			return false;
 		}
 	}
+	
+	/**
+	 * This method sets all variables back to 0
+	 * so that Player does not have to construct a new hand 
+	 */
+	
 	public void reset() {
 		totalNumOfCards = 0;
 		totalValue = 0;
