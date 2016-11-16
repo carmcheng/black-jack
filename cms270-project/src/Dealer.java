@@ -8,10 +8,9 @@
  * making a move on their turn. 
  */
 public class Dealer {
-
-
 	private static Dealer dealer;
 	private Hand hand = new Hand();
+	private Card ace;
 
 	/**
 	 * Private constructor to insure that only one Dealer object is made
@@ -38,14 +37,32 @@ public class Dealer {
 	 * @return a boolean representation 
 	 */
 	public boolean checkSoftSeventeen() {
-		if(hand.numOfCards() == 2 && hand.checkHandValue() == 17 &&
-				(hand.getCards().get(0).getCardName().equals("A") ||
-						hand.getCards().get(1).getCardName().equals("A"))) {
+		if(hand.numOfCards() == 2 && hand.checkHandValue() == 17 && findAce()) {
 			return true;
 		} else {
 			return false;
 		}
 	}
+	
+	public boolean findAce() {
+		Iterator handIterator = new HandIterator(hand.getCards());
+		while (handIterator.hasNext()) {
+			Card c = (Card) handIterator.next();
+			if (c.getCardName().equals("A"))
+				return true;
+		}
+		return false;
+	}
+	
+	public void setAce() {
+		Iterator handIterator = new HandIterator(hand.getCards());
+		while (handIterator.hasNext()) {
+			Card c = (Card) handIterator.next();
+			if (c.getCardName().equals("A"))
+				c.setCardValue(1);
+		}
+	}
+	
 
 	/**
 	 * This method accesses to dealer's hand.

@@ -159,8 +159,8 @@ public class Table {
 				System.out.println(currentPlayer.getName() + " got blackjack!");
 			}
 		}
-		dealer.getHand().addCard(cardDeck.dealCard());
-		dealer.getHand().addCard(cardDeck.dealCard());
+		dealer.getHand().addCard(new Card(11, "A", "Heart"));
+		dealer.getHand().addCard(new Card(2, "2", "Heart"));
 		if(dealer.getHand().checkBlackjack()) {
 			dealer.printHand();
 			System.out.println("Dealer got blackjack.");
@@ -177,6 +177,19 @@ public class Table {
 			Player currentPlayer = (Player) playerIterator.next();
 			System.out.println(currentPlayer.getName() + ", you have " +
 					money.format(currentPlayer.getMoney()) + " left." );
+		}
+	}
+	
+	public void checkForAceValue(Card c) {
+		if (c.getCardName().equals("A")) {
+			System.out.println("You got an Ace card. Value = 1 or 11?");
+			int ans = scan.nextInt();
+			while (ans != 1 && ans != 11) {
+				System.out.println("Invalid input. Try again.");
+				ans = scan.nextInt();
+			}
+			if (ans == 1)
+				c.setCardValue(1);
 		}
 	}
 
@@ -205,7 +218,6 @@ public class Table {
 				answer = scan.next();
 			}
 
-
 			// Did player double down
 			if (answer.equalsIgnoreCase("No") ||
 					currentPlayer.getMoney() < currentPlayer.getSetBet()) {
@@ -216,19 +228,7 @@ public class Table {
 				String move = scan.next();
 				while (move.equalsIgnoreCase("hit")) {
 					Card c = cardDeck.dealCard();
-					if (c.getCardName().equals("A")) {
-						System.out.println("You got an Ace card. Value = 1 or 11?");
-						int ans = scan.nextInt();
-						while (ans != 1 && ans != 11) {
-							System.out.println("Invalid input. Try again.");
-							ans = scan.nextInt();
-						}
-						if (ans == 1) {
-							c.setCardValue(1);
-						} else if (ans == 11) {
-							break;
-						}
-					}
+					checkForAceValue(c);
 					currentPlayer.getHand().addCard(c);
 					currentPlayer.printHand();
 
@@ -242,7 +242,9 @@ public class Table {
 				}				
 			} else if (answer.equalsIgnoreCase("Yes")) {
 				currentPlayer.doubleDown();
-				currentPlayer.getHand().addCard(cardDeck.dealCard());
+				Card c = cardDeck.dealCard();
+				checkForAceValue(c);
+				currentPlayer.getHand().addCard(c);
 				currentPlayer.printHand();
 				if(currentPlayer.isBusted()) {
 					System.out.println("You've busted."); // if they bust
@@ -327,9 +329,12 @@ public class Table {
 		startRound();
 
 		//dealer plays after the iterator has gone through all the players
-		while(!dealer.checkSoftSeventeen() && dealer.getHand().checkHandValue()<17){
-			Card c = cardDeck.dealCard();
-			dealer.getHand().addCard(c);
+		while(dealer.checkSoftSeventeen() || dealer.getHand().checkHandValue()<17){
+			//Card c = cardDeck.dealCard();
+			dealer.getHand().addCard(new Card(10, "J", "Spade"));
+			if (dealer.findAce() && dealer.getHand().checkHandValue() > 21) {
+				dealer.setAce();
+			}
 		}
 		dealer.printHand();
 		distributeMoney();

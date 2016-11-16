@@ -80,6 +80,7 @@ public class Hand {
 		totalValue = 0;
 		cards = new ArrayList<Card>();
 	}
+	
 	/**
 	 * This method creates an iterator pattern to go through
 	 * the cards in a hand.
