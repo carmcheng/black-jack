@@ -29,8 +29,6 @@ public class Table {
 	 * Constructor creates a new Table that also encapsulates the
 	 * creation of new Dealer, Deck, and Pot objects. Also sets number
 	 * of players to 0 and an ArrayList of Players is created.
-	 * 
-	 * @return a new instance of the Talbe object
 	 */
 	public Table(){
 		dealer = Dealer.getInstance();
@@ -42,6 +40,7 @@ public class Table {
 
 	/**
 	 * This method accesses the number of players at the table.
+	 * 
 	 * @return The number of players
 	 */
 	public int getNumPlayers(){
@@ -50,6 +49,7 @@ public class Table {
 	/**
 	 * This method implements an iterator pattern to go through the
 	 * players at the table.
+	 * 
 	 * @return The players
 	 */
 	public Iterator createIterator() {
@@ -78,7 +78,6 @@ public class Table {
 	 * Starts table with certain number of Player objects. Checks to make sure
 	 * the table does not have an invalid amount of players. A player is able to enter
 	 * their name and appropriate money to start the game.
-	 * 
 	 */
 	public void startGame() {
 		System.out.println("Welcome to the table!");

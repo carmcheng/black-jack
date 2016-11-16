@@ -31,6 +31,7 @@ public class Player {
 	}
 	/**
 	 * This method accesses the name of a player.
+	 * 
 	 * @return The name to be added to the list of players at the table.
 	 */
 	public String getName(){
@@ -39,6 +40,7 @@ public class Player {
 	
 	/**
 	 * This method accesses the player's hand.
+	 * 
 	 * @return a Hand for the player.
 	 */
 	public Hand getHand() {
@@ -47,18 +49,25 @@ public class Player {
 	
 	/**
 	 * This method accesses the player's total money.
+	 * 
 	 * @return an integer value that represents player's total money.
 	 */
 	public double getMoney() {
 		return totalMoney;
 	}
 	
+	/**
+	 * This method accesses the player's set bet.
+	 * 
+	 * @return a double value that represents player's set bet.
+	 */
 	public double getSetBet() {
 		return bet;
 	}
 	
 	/**
 	 * This method sets the player's bet to their input.
+	 * 
 	 * @param bet - the amount of money the player wants to bet for the game.
 	 */
 	public void setBet(double bet){
