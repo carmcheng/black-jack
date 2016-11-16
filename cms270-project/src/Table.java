@@ -111,10 +111,11 @@ public class Table {
 		String response;
 		ArrayList<Player> toRemove = new ArrayList<Player>();
 		while(playerIterator.hasNext()) {
-			boolean valid = true;
+			boolean valid;
 			Player currentPlayer = (Player) playerIterator.next();
 			System.out.println(currentPlayer.getName() + ", would you like to keep playing? Yes/No?");
 			do {
+				valid = true;
 				response = scan.next();
 				if (currentPlayer.getMoney() <= 0 && response.equalsIgnoreCase("yes")) {
 					System.out.println("You have no money, " + currentPlayer.getName() + "!"
