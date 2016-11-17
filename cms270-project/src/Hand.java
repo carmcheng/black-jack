@@ -81,6 +81,17 @@ public class Hand {
 		cards = new ArrayList<Card>();
 	}
 	/**
+	 * This method subtracts the card's value from the total value
+	 * and then removes the card from the array list that hand holds.
+	 * @param c - The card to subtract from total value and array list.
+	 */
+	public void remove(Card c) {
+		cards.remove(c);
+		totalValue -= c.getCardValue();
+		totalNumOfCards--;
+	}
+	
+	/**
 	 * This method creates an iterator pattern to go through
 	 * the cards in a hand.
 	 * 

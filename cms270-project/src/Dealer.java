@@ -8,10 +8,9 @@
  * making a move on their turn. 
  */
 public class Dealer {
-
-
 	private static Dealer dealer;
 	private Hand hand = new Hand();
+	private Card ace;
 
 	/**
 	 * Private constructor to insure that only one Dealer object is made
@@ -38,15 +37,47 @@ public class Dealer {
 	 * @return a boolean representation 
 	 */
 	public boolean checkSoftSeventeen() {
-		if(hand.numOfCards() == 2 && hand.checkHandValue() == 17 &&
-				(hand.getCards().get(0).getCardName().equals("A") ||
-						hand.getCards().get(1).getCardName().equals("A"))) {
+		if(hand.numOfCards() == 2 && hand.checkHandValue() == 17 && findAce()) {
 			return true;
 		} else {
 			return false;
 		}
 	}
 
+	/**
+	 * This method iterates through the dealer's hand and looks for an
+	 * Ace card.
+	 * @return a boolean representation
+	 */
+	public boolean findAce() {
+		Iterator handIterator = new HandIterator(hand.getCards());
+		while (handIterator.hasNext()) {
+			Card c = (Card) handIterator.next();
+			if (c.getCardName().equals("A"))
+				return true;
+		}
+		return false;
+	}
+
+	/**
+	 * This method checks the dealer's hand to see if it holds an Ace
+	 * card and total hand value has busted. It then changes the value
+	 * of an Ace card from 11 to 1.
+	 */
+	public void aceChecker() {
+		if (findAce() && hand.checkHandValue() > 21) {
+			Iterator handIterator = new HandIterator(hand.getCards());
+			Card temp = null;
+			while (handIterator.hasNext()) {
+				Card c = (Card) handIterator.next();
+				if (c.getCardName().equals("A")) {
+					temp = c;
+					hand.remove(c);
+				}
+			}
+			hand.addCard(new Card(1, "A", temp.getCardSuit()));
+		}
+	}
 
 	/**
 	 * This method accesses to dealer's hand.
@@ -57,6 +88,10 @@ public class Dealer {
 		return hand;
 	}
 
+	/**
+	 * This method prints the dealer's hand, but hides the second card
+	 * from the players.
+	 */
 	public void printHiddenHand() {
 		System.out.println("Dealer's hand: ");
 		System.out.println("\t" + dealer.getHand().getCards().get(0) + "\n\tHidden Card");

@@ -27,6 +27,7 @@ public class Card {
 	}
 	/**
 	 * This method accesses the name of the card.
+	 * 
 	 * @return a String representation of the name of the card.
 	 */
 	public String getCardName() {
@@ -34,6 +35,7 @@ public class Card {
 	}
 	/**
 	 * This method accesses the value of the card.
+	 * 
 	 * @return an integer representation of the card value.
 	 */
 	public int getCardValue() {
@@ -49,6 +51,7 @@ public class Card {
 	}
 	/**
 	 * This method accesses the card suit.
+	 * 
 	 * @return a String representation of the card suit.
 	 */
 	public String getCardSuit() {
@@ -58,6 +61,7 @@ public class Card {
 	 * This method prints the card's name, suit and value as a String.
 	 */
 	public String toString() {
-		return cardName + ", " + cardSuit;
+		String s = getCardName().equals("A") ? " (Value: " + Integer.toString(cardValue) + ")": "";
+		return cardName + ", " + cardSuit + s;
 	}
 }

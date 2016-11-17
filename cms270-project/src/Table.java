@@ -111,12 +111,13 @@ public class Table {
 		String response;
 		ArrayList<Player> toRemove = new ArrayList<Player>();
 		while(playerIterator.hasNext()) {
-			boolean valid = true;
+			boolean valid;
 			Player currentPlayer = (Player) playerIterator.next();
 			System.out.println(currentPlayer.getName() + ", would you like to keep playing? Yes/No?");
 			do {
+				valid = true;
 				response = scan.next();
-				if (currentPlayer.getMoney() == 0) {
+				if (currentPlayer.getMoney() <= 0 && response.equalsIgnoreCase("yes")) {
 					System.out.println("You have no money, " + currentPlayer.getName() + "!"
 							+ " Security will be escorting you out...");
 					toRemove.add(currentPlayer);
@@ -179,6 +180,24 @@ public class Table {
 					money.format(currentPlayer.getMoney()) + " left." );
 		}
 	}
+	
+	/**
+	 * This method checks if a dealt card is an Ace, then asks the
+	 * client if they want its value to be 1 or 11
+	 * @param c - 
+	 */
+	public void checkForAceValue(Card c) {
+		if (c.getCardName().equals("A")) {
+			System.out.println("You got an Ace card. Value = 1 or 11?");
+			int ans = scan.nextInt();
+			while (ans != 1 && ans != 11) {
+				System.out.println("Invalid input. Try again.");
+				ans = scan.nextInt();
+			}
+			if (ans == 1)
+				c.setCardValue(1);
+		}
+	}
 
 	/**
 	 * This method starts a new round of Blackjack using the player iterator interface.
@@ -196,6 +215,8 @@ public class Table {
 			}
 			System.out.println("\nIt's your turn, " + currentPlayer.getName() + ".");
 			currentPlayer.printHand();
+			//Asks player if s/he wants to change ace card value in first hand
+			currentPlayer.aceChanger();
 			// Double down option
 			System.out.println("Would you like to double down? Yes/No?");
 			String answer = scan.next();
@@ -204,7 +225,6 @@ public class Table {
 				System.out.println("Enter a valid response.");
 				answer = scan.next();
 			}
-
 
 			// Did player double down
 			if (answer.equalsIgnoreCase("No") ||
@@ -215,38 +235,25 @@ public class Table {
 				System.out.println("\nChoose to hit or stand.");
 				String move = scan.next();
 				while (move.equalsIgnoreCase("hit")) {
-					Card c = cardDeck.dealCard();
-					if (c.getCardName().equals("A")) {
-						System.out.println("You got an Ace card. Value = 1 or 11?");
-						int ans = scan.nextInt();
-						while (ans != 1 && ans != 11) {
-							System.out.println("Invalid input. Try again.");
-							ans = scan.nextInt();
-						}
-						if (ans == 1) {
-							c.setCardValue(1);
-						} else if (ans == 11) {
-							break;
-						}
-					}
-					currentPlayer.getHand().addCard(c);
+					currentPlayer.getHand().addCard(cardDeck.dealCard());
+					currentPlayer.aceChanger();
 					currentPlayer.printHand();
-
 					if(currentPlayer.isBusted()) {
 						System.out.println("You've busted."); // if they bust
 						break;
 					}
-
 					System.out.println("Hit or stand?");
 					move = scan.next();
 				}				
 			} else if (answer.equalsIgnoreCase("Yes")) {
 				currentPlayer.doubleDown();
-				currentPlayer.getHand().addCard(cardDeck.dealCard());
+				//Asks player for value of ace card, if ace is dealt
+				Card c = cardDeck.dealCard();
+				checkForAceValue(c);
+				currentPlayer.getHand().addCard(c);
 				currentPlayer.printHand();
 				if(currentPlayer.isBusted()) {
 					System.out.println("You've busted."); // if they bust
-					break;
 				}
 			}
 		}
@@ -264,7 +271,7 @@ public class Table {
 			Player currentPlayer = (Player) playerIterator.next();
 			int playerValue = currentPlayer.getHand().checkHandValue();
 			int dealerValue = dealer.getHand().checkHandValue();
-			if (playerValue <= 21){
+			if (!currentPlayer.isBusted()){
 				if (playerValue > dealerValue || dealerValue > 21) {
 					System.out.println("Congratulations " + currentPlayer.getName()
 					+ "! You have won against the dealer!");
@@ -283,6 +290,8 @@ public class Table {
 				} else {
 					System.out.println("Dealer beats " + currentPlayer.getName() + "!");
 				}
+			} else {
+				
 			}
 		}
 	}
@@ -327,9 +336,9 @@ public class Table {
 		startRound();
 
 		//dealer plays after the iterator has gone through all the players
-		while(!dealer.checkSoftSeventeen() && dealer.getHand().checkHandValue()<17){
-			Card c = cardDeck.dealCard();
-			dealer.getHand().addCard(c);
+		while(dealer.checkSoftSeventeen() || dealer.getHand().checkHandValue()<17){
+			dealer.getHand().addCard(cardDeck.dealCard());
+			dealer.aceChecker();
 		}
 		dealer.printHand();
 		distributeMoney();
