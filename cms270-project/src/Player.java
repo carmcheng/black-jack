@@ -129,22 +129,29 @@ public class Player {
 		if (checkForAce()) {
 			Iterator handIterator = new HandIterator(hand.getCards());
 			Card temp = null;
+			int value = 0;
 			while (handIterator.hasNext()) {
 				Card c = (Card) handIterator.next();
 				if (c.getCardName().equals("A")) {
-					System.out.println("You got an Ace card. Value = 1 or 11?");
+					System.out.println("You got an Ace card. Value = 1 or 11?"
+							+ " Type 0 to leave it unchanged.");
 					int ans = scan.nextInt();
-					while (ans != 1 && ans != 11) {
+					while (ans != 1 && ans != 11 && ans != 0) {
 						System.out.println("Invalid input. Try again.");
 						ans = scan.nextInt();
 					}
+					temp = c;
 					if (ans == 1) {
-						temp = c;
+						value = 1;
 						hand.remove(c);
+					} else if (ans == 11) {
+						value = 11;
+					} else {
+						return;
 					}
 				}
 			}
-			hand.addCard(new Card(1, "A", temp.getCardSuit()));
+			hand.addCard(new Card(value, "A", temp.getCardSuit()));
 			printHand();
 		}
 	}
