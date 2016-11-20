@@ -1,24 +1,40 @@
 import javafx.application.Application;
+import javafx.geometry.Insets;
 import javafx.scene.Scene;
-import javafx.event.ActionEvent;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import javafx.scene.paint.Color;
 
 public class BlackjackGUI extends Application{
-
-	public BlackjackGUI() {
-		// TODO Auto-generated constructor stub
+	public static void main (String [] args) {
+		Application.launch(args);
 	}
-
 	@Override
-	public void start(Stage arg0) throws Exception {
-		// TODO Auto-generated method stub
+	public void start(Stage stage) {
+		stage.setTitle("Blackjack Test");
+		BorderPane bp = new BorderPane();
+		bp.setPadding(new Insets(10, 20, 10, 20));
+		
+		Button btnTop = new Button("Top");
+		bp.setTop(btnTop);
+		
+		Button btnLeft = new Button ("left");
+		bp.setLeft(btnLeft);
+		
+		Button btnCenter = new Button("Center");
+		bp.setCenter(btnCenter);
+		
+		Button btnRight = new Button("Right");
+		bp.setRight(btnRight);
+		
+		Button btnBottom = new Button("Bottom");
+		bp.setBottom(btnBottom);
+		
+		Scene scene = new Scene(bp, 600, 400, Color.GREEN);
+		stage.setScene(scene);
+		stage.show();
+		
 		
 	}
 
