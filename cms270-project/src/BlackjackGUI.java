@@ -16,21 +16,6 @@ public class BlackjackGUI extends Application{
 		BorderPane bp = new BorderPane();
 		bp.setPadding(new Insets(10, 20, 10, 20));
 		
-		Button btnTop = new Button("Top");
-		bp.setTop(btnTop);
-		
-		Button btnLeft = new Button ("left");
-		bp.setLeft(btnLeft);
-		
-		Button btnCenter = new Button("Center");
-		bp.setCenter(btnCenter);
-		
-		Button btnRight = new Button("Right");
-		bp.setRight(btnRight);
-		
-		Button btnBottom = new Button("Bottom");
-		bp.setBottom(btnBottom);
-		
 		Scene scene = new Scene(bp, 600, 400, Color.GREEN);
 		stage.setScene(scene);
 		stage.show();
