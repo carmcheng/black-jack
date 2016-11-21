@@ -4,6 +4,7 @@ import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.scene.paint.Color;
 import java.util.ArrayList;
@@ -20,6 +21,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+
 
 
 public class BlackjackGUI extends Application{
@@ -49,25 +51,18 @@ public class BlackjackGUI extends Application{
 	@Override
 	
 	public void start(Stage stage) {
-
+		stage.setTitle("Blackjack Test");
 		BorderPane bp = new BorderPane();
 		bp.setPadding(new Insets(10, 20, 10, 20));
 		
-		HBox root = new HBox();
-		root.setPadding(new Insets(10, 10, 10, 10));
-		root.setStyle("-fx-background-color: DAE6F3;");
+		//creating vbox for the center, setting background as green 
+		VBox center = new VBox();
+		bp.setCenter(center);
+		center.setStyle("-fx-background-color: GREEN;");
 		
-		bp.setTop(root);
-		rootLabel = new Label("Results of our dialog will go here");
-		rootTF = new TextField();
-		bp.getChildren().addAll(rootLabel, rootTF);
 		Scene scene = new Scene(bp, 600, 400, Color.GREEN);
-		stage.setTitle("Blackjack");
 		stage.setScene(scene);
-
 		stage.show();
-		launchConfirmDialog();
-		
 		
 	}
 
