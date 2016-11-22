@@ -53,16 +53,19 @@ public class BlackjackGUI extends Application{
 	public void start(Stage stage) {
 		stage.setTitle("Blackjack Test");
 		BorderPane bp = new BorderPane();
-		bp.setPadding(new Insets(10, 20, 10, 20));
+		rootLabel = new Label("Results of our dialog will go here");
+		rootTF = new TextField();
+		bp.getChildren().addAll(rootLabel, rootTF);
+	//	bp.setPadding(new Insets(10, 20, 10, 20));
 		
 		//creating vbox for the center, setting background as green 
 		VBox center = new VBox();
+		center.setStyle("-fx-background-color: DARKGREEN;");
 		bp.setCenter(center);
-		center.setStyle("-fx-background-color: GREEN;");
-		
 		Scene scene = new Scene(bp, 600, 400, Color.GREEN);
 		stage.setScene(scene);
 		stage.show();
+		launchConfirmDialog();
 		
 	}
 
