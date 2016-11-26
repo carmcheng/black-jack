@@ -58,19 +58,19 @@ public class BlackjackGUI extends Application{
 		bp.getChildren().addAll(rootLabel, rootTF);
 	//	bp.setPadding(new Insets(10, 20, 10, 20));
 		
-		//creating vbox for the center, setting background as green 
+		//creating vbox for the center, left and right and  setting background as green 
 		VBox center = new VBox();
 		center.setStyle("-fx-background-color: DARKGREEN;");
 		bp.setCenter(center);
 		
 		VBox left = new VBox();
 		left.setStyle("fx-background-color: DARKGREEN;");
-		left.setMaxWidth(200);
+		left.setPrefWidth(200);
 		bp.setLeft(left);
 		
 		VBox right = new VBox();
-		right.setStyle("fx-baxkground-color: DARKGREEN);");
-		right.setMaxWidth(200);
+		right.setStyle("fx-background-color: DARKGREEN;");
+		right.setPrefWidth(200);
 		bp.setRight(right);
 		
 		
