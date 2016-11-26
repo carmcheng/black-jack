@@ -28,6 +28,7 @@ public class BlackjackGUI extends Application{
 	
 	Label rootLabel;
 	TextField rootTF;
+	HBox cards = new HBox(); //***
 	
 	public void launchConfirmDialog() {
 		//confirmation dialog
@@ -61,6 +62,7 @@ public class BlackjackGUI extends Application{
 		//creating vbox for the center, left and right and  setting background as green 
 		VBox center = new VBox();
 		center.setStyle("-fx-background-color: DARKGREEN;");
+		center.getChildren().add(cards);
 		bp.setCenter(center);
 		
 		VBox left = new VBox();
@@ -81,9 +83,13 @@ public class BlackjackGUI extends Application{
 		launchConfirmDialog();
 	}
 	
-	public void displayCurrentPlayer(){
-		launchConfirmDialog();
-		
+	public void displayCurrentPlayer(Player player){
+		int numCards = player.getHand().numOfCards();
+		for(int i = 0; i < numCards; i++){
+			VBox card = new VBox();
+			card.setPrefSize(50, 100);
+			cards.getChildren().add(card);
+		}
 	}
 
 }
