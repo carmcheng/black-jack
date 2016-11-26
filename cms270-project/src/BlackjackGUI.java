@@ -63,15 +63,20 @@ public class BlackjackGUI extends Application{
 		//bp.setCenter(center);
 		//center.setStyle("-fx-background-color: GREEN;");
 		
+		VBox left = new VBox();
+		bp.setLeft(left);
+		left.setStyle("fx-background-color: GREEN;");
+		
 		center.setStyle("-fx-background-color: DARKGREEN;");
 		bp.setCenter(center);
 		Scene scene = new Scene(bp, 600, 400, Color.GREEN);
 		stage.setScene(scene);
-		stage.show();	
+		stage.show();
+		
+		launchConfirmDialog();
 	}
 	
 	public void displayCurrentPlayer(){
-		stage.show();
 		launchConfirmDialog();
 		
 	}
