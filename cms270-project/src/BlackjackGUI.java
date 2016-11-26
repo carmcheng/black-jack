@@ -61,8 +61,8 @@ public class BlackjackGUI extends Application{
 		//creating vbox for the center, setting background as green 
 		VBox center = new VBox();
 <<<<<<< HEAD
-		bp.setCenter(center);
-		center.setStyle("-fx-background-color: GREEN;");
+		//bp.setCenter(center);
+		//center.setStyle("-fx-background-color: GREEN;");
 		
 =======
 		center.setStyle("-fx-background-color: DARKGREEN;");
