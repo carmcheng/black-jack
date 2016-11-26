@@ -60,25 +60,19 @@ public class BlackjackGUI extends Application{
 		
 		//creating vbox for the center, setting background as green 
 		VBox center = new VBox();
-<<<<<<< HEAD
 		//bp.setCenter(center);
 		//center.setStyle("-fx-background-color: GREEN;");
 		
-=======
 		center.setStyle("-fx-background-color: DARKGREEN;");
 		bp.setCenter(center);
->>>>>>> branch 'master' of https://github.com/rollins-cms270/project-team-vegas.git
 		Scene scene = new Scene(bp, 600, 400, Color.GREEN);
 		stage.setScene(scene);
-<<<<<<< HEAD
 		stage.show();	
 	}
 	
 	public void displayCurrentPlayer(){
-=======
 		stage.show();
 		launchConfirmDialog();
->>>>>>> branch 'master' of https://github.com/rollins-cms270/project-team-vegas.git
 		
 	}
 
