@@ -60,16 +60,21 @@ public class BlackjackGUI extends Application{
 		
 		//creating vbox for the center, setting background as green 
 		VBox center = new VBox();
-		//bp.setCenter(center);
-		//center.setStyle("-fx-background-color: GREEN;");
-		
-		VBox left = new VBox();
-		bp.setLeft(left);
-		left.setStyle("fx-background-color: GREEN;");
-		
 		center.setStyle("-fx-background-color: DARKGREEN;");
 		bp.setCenter(center);
-		Scene scene = new Scene(bp, 600, 400, Color.GREEN);
+		
+		VBox left = new VBox();
+		left.setStyle("fx-background-color: DARKGREEN;");
+		left.setMaxWidth(200);
+		bp.setLeft(left);
+		
+		VBox right = new VBox();
+		right.setStyle("fx-baxkground-color: DARKGREEN);");
+		right.setMaxWidth(200);
+		bp.setRight(right);
+		
+		
+		Scene scene = new Scene(bp, 600, 400, Color.DARKGREEN);
 		stage.setScene(scene);
 		stage.show();
 		
