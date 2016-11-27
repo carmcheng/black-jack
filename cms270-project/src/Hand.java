@@ -12,6 +12,7 @@ public class Hand {
 
 	private int totalValue;
 	private int totalNumOfCards;
+	private int totalNumOfAces;
 	private ArrayList<Card> cards;
 	private Scanner scan = new Scanner(System.in);
 	
@@ -21,6 +22,7 @@ public class Hand {
 	public Hand() {
 		totalValue = 0;
 		totalNumOfCards = 0;
+		totalNumOfAces = 0;
 		cards = new ArrayList<Card>(); 
 	}
 	/**
@@ -29,9 +31,19 @@ public class Hand {
 	 * @param c - The card to add to total value and array list.
 	 */
 	public void addCard(Card c) {
+		if (c.getCardName().equals("A")) {
+			totalNumOfAces++;
+		}
 		totalNumOfCards++; 				//increments totalNumOfCards by 1
 		totalValue += c.getCardValue();
 		cards.add(c);
+	}
+	/**
+	 * This method returns the number of Ace cards in the hand.
+	 * @return number of Aces in hand
+	 */
+	public int numOfAces() {
+		return totalNumOfAces;
 	}
 	/**
 	 * This method accesses the current set of cards in the array list.

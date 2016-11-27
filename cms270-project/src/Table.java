@@ -154,8 +154,10 @@ public class Table {
 		playerIterator = new PlayerIterator(players);
 		while(playerIterator.hasNext()) {
 			Player currentPlayer = (Player) playerIterator.next();
-			currentPlayer.getHand().addCard(cardDeck.dealCard());
-			currentPlayer.getHand().addCard(cardDeck.dealCard()); //adds two cards to player's hand on first deal
+			currentPlayer.getHand().addCard(new Card(11, "A", "Test"));
+			currentPlayer.getHand().addCard(new Card(11, "A", "Test"));
+//			currentPlayer.getHand().addCard(cardDeck.dealCard());
+//			currentPlayer.getHand().addCard(cardDeck.dealCard()); //adds two cards to player's hand on first deal
 			if (currentPlayer.getHand().checkBlackjack()) {
 				currentPlayer.printHand();
 				System.out.println(currentPlayer.getName() + " got blackjack!");
@@ -184,12 +186,12 @@ public class Table {
 	
 	/**
 	 * This method checks if a dealt card is an Ace, then asks the
-	 * client if they want its value to be 1 or 11
+	 * client if they want its value to be 1 or 11. ONLY IN DOUBLE DOWN.
 	 * @param c - 
 	 */
 	public void checkForAceValue(Card c) {
 		if (c.getCardName().equals("A")) {
-			System.out.println("You got an Ace card. Value = 1 or 11?");
+			System.out.println("You received an Ace card. Value = 1 or 11?");
 			int ans = scan.nextInt();
 			while (ans != 1 && ans != 11) {
 				System.out.println("Invalid input. Try again.");
@@ -199,6 +201,7 @@ public class Table {
 				c.setCardValue(1);
 		}
 	}
+	
 
 	/**
 	 * This method starts a new round of Blackjack using the player iterator interface.
@@ -215,9 +218,10 @@ public class Table {
 				break;
 			}
 			System.out.println("\nIt's your turn, " + currentPlayer.getName() + ".");
-			currentPlayer.printHand();
 			//Asks player if s/he wants to change ace card value in first hand
+			//Automatically changes ace to 1 if player holds two aces
 			currentPlayer.aceChanger();
+			currentPlayer.printHand();
 			// Double down option
 			System.out.println("Would you like to double down? Yes/No?");
 			String answer = scan.next();

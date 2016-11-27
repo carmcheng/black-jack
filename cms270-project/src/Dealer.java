@@ -102,7 +102,7 @@ public class Dealer {
 	 */
 	public void printHand() {
 		Iterator handIterator = new HandIterator(hand.getCards());
-		System.out.println("Dealer's hand:");
+		System.out.println("\nDealer's hand:");
 		while(handIterator.hasNext()) {
 			Card card = (Card) handIterator.next();
 			System.out.println("\t" + card);
