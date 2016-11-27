@@ -89,6 +89,7 @@ public class Hand {
 	 */
 	public void reset() {
 		totalNumOfCards = 0;
+		totalNumOfAces = 0;
 		totalValue = 0;
 		cards = new ArrayList<Card>();
 	}
