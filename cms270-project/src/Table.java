@@ -154,10 +154,8 @@ public class Table {
 		playerIterator = new PlayerIterator(players);
 		while(playerIterator.hasNext()) {
 			Player currentPlayer = (Player) playerIterator.next();
-			currentPlayer.getHand().addCard(new Card(11, "A", "Test"));
-			currentPlayer.getHand().addCard(new Card(11, "A", "Test"));
-//			currentPlayer.getHand().addCard(cardDeck.dealCard());
-//			currentPlayer.getHand().addCard(cardDeck.dealCard()); //adds two cards to player's hand on first deal
+			currentPlayer.getHand().addCard(cardDeck.dealCard());
+			currentPlayer.getHand().addCard(cardDeck.dealCard()); //adds two cards to player's hand on first deal
 			if (currentPlayer.getHand().checkBlackjack()) {
 				currentPlayer.printHand();
 				System.out.println(currentPlayer.getName() + " got blackjack!");
@@ -234,7 +232,7 @@ public class Table {
 			// Did player double down
 			if (answer.equalsIgnoreCase("No") ||
 					currentPlayer.getMoney() < currentPlayer.getSetBet()) {
-				String s = currentPlayer.getMoney() < currentPlayer.getSetBet() ? 
+				String s = answer.equalsIgnoreCase("Yes") ? 
 						"Not enough money to double down." : "You have chosen NOT to double down.";
 				System.out.println(s);
 				System.out.println("\nChoose to hit or stand.");

@@ -124,16 +124,18 @@ public class Player {
 	
 	/**
 	 * This method checks the player's first hand to see if it
-	 * holds an Ace card. It then asks if the player wants to
-	 * change the value of the Ace card from 11 to 1.
+	 * holds an Ace card, then changes its value based upon the
+	 * nature of the hand.
 	 */
 	public void aceChanger() {
+		// Two aces in hand before move has been made
 		if (hand.numOfCards() == 2 && isBusted()) {
 			handIterator = new HandIterator(hand.getCards());
 			Card c = hand.getCards().get(0);
 			Card newAce = new Card(1, "A", c.getCardSuit());
 			hand.addCard(newAce);
 			hand.remove(c);
+		// Ace in hand and set to 11, and hand has busted
 		} else if (checkForAce() && isBusted() && hand.numOfCards() > 2) {
 			handIterator = new HandIterator(hand.getCards());
 			while (handIterator.hasNext()) {
@@ -144,6 +146,7 @@ public class Player {
 					return;
 				}
 			}
+		// Ace in hand and total hand value is < 21
 		} else if (checkForAce() && !isBusted()) {
 			printHand();
 			if (hand.numOfAces() == 1) {
@@ -167,8 +170,24 @@ public class Player {
 				handIterator = new HandIterator(hand.getCards());
 				System.out.println("You have multiple Ace cards in your hand."
 						+ " Which card do you want to set the value for?"
-						+ " (Select by appropriate card suit.)");
+						+ " (Select by appropriate card suit.) Type exit to"
+						+ " make no changes.");
 				String suit = scan.next();
+				if (suit.equalsIgnoreCase("exit")) {
+					return;
+				}
+				while (handIterator.hasNext()) {
+					Card c = (Card) handIterator.next();
+					if (c.getCardName().equals("A") && 
+							c.getCardSuit().equalsIgnoreCase(suit)) {
+						System.out.println("Do you want to set the value to 1"
+								+ " or 11?");
+						int ans = scan.nextInt();
+						hand.addCard(new Card(ans, "A", c.getCardSuit()));
+						hand.remove(c);
+						return;
+					}
+				}
 			}
 		}
 	}
