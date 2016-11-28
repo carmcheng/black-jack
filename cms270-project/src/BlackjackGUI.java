@@ -55,7 +55,10 @@ public class BlackjackGUI extends Application{
 	public void start(Stage stage) {
 		stage.setTitle("Blackjack Test");
 		BorderPane bp = new BorderPane();
+		Scene scene = new Scene(bp, 600, 400, Color.DARKGREEN);
 		rootLabel = new Label("Results of our dialog will go here");
+		rootLabel.setTextFill(Color.RED);
+		
 		rootTF = new TextField();
 		bp.getChildren().addAll(rootLabel, rootTF);
 	//	bp.setPadding(new Insets(10, 20, 10, 20));
@@ -80,7 +83,11 @@ public class BlackjackGUI extends Application{
 		top.setPrefHeight(30);
 		bp.setTop(top);  
 		
-		Scene scene = new Scene(bp, 600, 400, Color.DARKGREEN);
+		HBox bottom = new HBox();
+		bottom.setPrefHeight(30);
+		bp.setBottom(bottom);
+		
+
 		stage.setScene(scene);
 		stage.show();
 		
