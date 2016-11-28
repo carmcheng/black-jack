@@ -3,7 +3,10 @@ import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.scene.paint.Color;
@@ -61,25 +64,30 @@ public class BlackjackGUI extends Application{
 		bp.getChildren().addAll(rootLabel, rootTF);
 	//	bp.setPadding(new Insets(10, 20, 10, 20));
 		
+		HBox top = new HBox(); 
+		top.setPrefHeight(30);
+		bp.setTop(top);
+		
 		//creating vbox for the center, left and right and  setting background as green 
 		VBox center = new VBox();
-		center.setStyle("-fx-background-color: DARKGREEN;");
+		center.setStyle("fx-background-color: DARKGREEN;");
 		center.getChildren().add(cards);
 		bp.setCenter(center);
 		
 		VBox left = new VBox();
 		left.setStyle("fx-background-color: DARKGREEN;");
+		//left.setBackground(new Background(new BackgroundFill(Color.GREEN, CornerRadii.EMPTY, Insets.EMPTY)));
 		left.setPrefWidth(150);
 		bp.setLeft(left);
 		
 		VBox right = new VBox();
 		right.setStyle("fx-background-color: DARKGREEN;");
 		right.setPrefWidth(150);
-		bp.setRight(right);
+		bp.setRight(right); 
 		
-		HBox top = new HBox(); 
-		top.setPrefHeight(30);
-		bp.setTop(top);  
+		HBox bottom = new HBox();
+		bottom.setPrefHeight(30);
+		
 		
 		Scene scene = new Scene(bp, 600, 400, Color.DARKGREEN);
 		stage.setScene(scene);
