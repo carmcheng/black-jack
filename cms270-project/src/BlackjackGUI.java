@@ -23,7 +23,8 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 
-
+/** This is our gui class
+ */
 public class BlackjackGUI extends Application{
 	
 	Label rootLabel;
