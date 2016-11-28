@@ -67,10 +67,6 @@ public class BlackjackGUI extends Application{
 		bp.getChildren().addAll(rootLabel, rootTF);
 	//	bp.setPadding(new Insets(10, 20, 10, 20));
 		
-		HBox top = new HBox(); 
-		top.setPrefHeight(30);
-		bp.setTop(top);
-		
 		//creating vbox for the center, left and right and  setting background as green 
 		VBox center = new VBox();
 		center.setStyle("fx-background-color: DARKGREEN;");
@@ -88,11 +84,6 @@ public class BlackjackGUI extends Application{
 		right.setPrefWidth(150);
 		bp.setRight(right); 
 		
-<<<<<<< HEAD
-		HBox bottom = new HBox();
-		bottom.setPrefHeight(30);
-		
-=======
 		HBox top = new HBox(); 
 		top.setPrefHeight(30);
 		bp.setTop(top);  
@@ -100,7 +91,7 @@ public class BlackjackGUI extends Application{
 		HBox bottom = new HBox();
 		bottom.setPrefHeight(30);
 		bp.setBottom(bottom);
->>>>>>> refs/remotes/origin/master
+
 		
 
 		stage.setScene(scene);
