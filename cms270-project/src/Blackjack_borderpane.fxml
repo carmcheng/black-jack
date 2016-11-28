@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+ 
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+ 
+<BorderPane fx:controller="BlackjackController" 
+	xmlns:fx="http://javafx.com/fxml/1">
+
+    <top>
+    	<HBox alignment="center" spacing="10">
+    	<Label text="Hello, it's me" alignment="center"/>
+    	</HBox>
+        
+    </top>
+    <left>
+        <Label text="LEFT pane"/>
+    </left>
+    <center>
+        <TextField fx:id="textInput" text="CENTER"/>
+    </center>
+    <right>
+        <Button fx:id="rightButton"  text="RIGHT Button"
+            onAction="#rightClick" />
+    </right>
+    <bottom>
+        <Label fx:id="bottomLabel" text="BOTTOM pane"/>
+    </bottom>
+ 
+</BorderPane>
