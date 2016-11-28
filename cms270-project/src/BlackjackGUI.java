@@ -44,6 +44,7 @@ public class BlackjackGUI extends Application{
 		} else {
 			rootLabel.setText("User DOESN'T want to start the game.");
 		}
+		
 	}
 	
 	public static void main (String [] args) {
