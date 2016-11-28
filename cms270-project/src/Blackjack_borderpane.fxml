@@ -8,9 +8,8 @@
 	xmlns:fx="http://javafx.com/fxml/1">
 
     <top>
-    	<HBox alignment="center" spacing="10">
+    	<HBox alignment="center">
     	<Label fx:id="topLabel" text="TOP pane" />
-    	
     	</HBox>
         
     </top>
@@ -22,14 +21,14 @@
     <right>
     </right>
     <bottom>
-       <HBox alignment="center"/>
-        <TextField fx:id="textInput" text="CENTER"/>
+       <HBox>
+        <TextField fx:id="textInput" text="Enter text here"/>
          <Button fx:id="leftButton"  text="Hit"
             onAction="#hit" />
          <Button fx:id="rightButton" text="Stand"
          	onAction="#stand" />
+         <Label fx:id="bottomLabel" text="Bottom Pane" />
        </HBox>
-       
-    </bottom>
+     </bottom>
  
 </BorderPane>

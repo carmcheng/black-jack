@@ -7,8 +7,9 @@ public class BlackjackController {
 	@FXML private TextField textInput;
 	@FXML private Label bottomLabel;
 	@FXML private Label topLabel;
-	@FXML private Button rightButton;
-	@FXML private Button leftButton;
+	@FXML private Button stand;
+	@FXML private Button hitButton;
+	@FXML private Button standButton;
 
 	@FXML protected void stand(ActionEvent event) { // when player stands 
 		String i = textInput.getText();
