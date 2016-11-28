@@ -9,7 +9,8 @@
 
     <top>
     	<HBox alignment="center" spacing="10">
-    	<Label text="Hello, it's me" alignment="center"/>
+    	<Label fx:id="topLabel" text="TOP pane" />
+    	
     	</HBox>
         
     </top>
@@ -17,14 +18,18 @@
         <Label text="LEFT pane"/>
     </left>
     <center>
-        <TextField fx:id="textInput" text="CENTER"/>
     </center>
     <right>
-        <Button fx:id="rightButton"  text="RIGHT Button"
-            onAction="#rightClick" />
     </right>
     <bottom>
-        <Label fx:id="bottomLabel" text="BOTTOM pane"/>
+       <HBox alignment="center"/>
+        <TextField fx:id="textInput" text="CENTER"/>
+         <Button fx:id="leftButton"  text="Hit"
+            onAction="#hit" />
+         <Button fx:id="rightButton" text="Stand"
+         	onAction="#stand" />
+       </HBox>
+       
     </bottom>
  
 </BorderPane>
