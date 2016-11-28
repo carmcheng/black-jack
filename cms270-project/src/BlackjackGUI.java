@@ -67,14 +67,17 @@ public class BlackjackGUI extends Application{
 		
 		VBox left = new VBox();
 		left.setStyle("fx-background-color: DARKGREEN;");
-		left.setPrefWidth(200);
+		left.setPrefWidth(150);
 		bp.setLeft(left);
 		
 		VBox right = new VBox();
 		right.setStyle("fx-background-color: DARKGREEN;");
-		right.setPrefWidth(200);
+		right.setPrefWidth(150);
 		bp.setRight(right);
 		
+		HBox top = new HBox(); 
+		top.setPrefHeight(30);
+		bp.setTop(top);  
 		
 		Scene scene = new Scene(bp, 600, 400, Color.DARKGREEN);
 		stage.setScene(scene);
