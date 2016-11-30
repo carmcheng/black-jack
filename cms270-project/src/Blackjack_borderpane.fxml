@@ -16,6 +16,7 @@
         <Label text="LEFT pane"/>
     </left>
     <center>
+    
     </center>
     <right>
     	<VBox>
