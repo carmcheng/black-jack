@@ -9,7 +9,7 @@
 
     <top>
     	<HBox>
-    	<Label fx:id="topLabel" text="TOP pane" />
+    		<Label fx:id="topLabel" text="TOP pane" />
     	</HBox>
     </top>
     <left>
@@ -18,7 +18,11 @@
     <center>
     </center>
     <right>
-    	<Label fx:id="rightLabel" text="The Dealer's Side" />
+    	<VBox>
+    		<Label fx:id="rightLabel" text="The Dealer's Side" />
+    		<Label fx:id="dealerHand" />
+    		<Label fx:id="dealerHandValue" />
+    	</VBox>
     </right>
     <bottom>
        <HBox>
