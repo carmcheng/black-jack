@@ -20,6 +20,13 @@ public class BlackjackController {
 		bottomLabel.setText(i);
 
 	} 
+	
+	/*** Methods associated with dealer side ***/
+	@FXML protected void dealerHand(ActionEvent event) {
+		
+	}
+	
+	
 }
 //	public BlackjackController() {
 //		super();
