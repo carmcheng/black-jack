@@ -80,7 +80,6 @@ public class BlackjackLauncher extends Application{
 		alert.setTitle("Error Dialog");
 		alert.setHeaderText(error);
 		alert.setContentText("Please enter a valid value for " + error);
-
 		alert.showAndWait();
 	}
 	

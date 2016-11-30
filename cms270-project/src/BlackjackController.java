@@ -23,6 +23,18 @@ public class BlackjackController extends BorderPane {
 	private Button hit;
 	private Button stand;
 	
+	private Dealer dealer;
+	private static int numPlayers;
+	private ArrayList<Player> players;
+	private Deck cardDeck;
+	private Player player;
+	private Pot pot;
+	private final int MAX_PLAYERS = 6;
+	private static int roundCount;
+	private DecimalFormat money = new DecimalFormat("$0.00");
+	private Scanner scan = new Scanner(System.in);
+	private Iterator playerIterator;
+	
 	public BlackjackController() {
 		super();
 		VBox center = new VBox();
@@ -71,6 +83,7 @@ public class BlackjackController extends BorderPane {
 		
 		if (event.getSource() == hit) { // testing if these two are aliases
 			message.setText("You hit");
+			
 		} 
 		
 		if(event.getSource() == stand) {

@@ -29,11 +29,11 @@ public class BlackjackPlayTable {
 		}
 	}
 	public void hit() {
-	currentPlayer.getHand().addCard(cardDeck.dealCard());
-	currentPlayer.aceChanger();
-	currentPlayer.printHand();
-	if(currentPlayer.isBusted()) {
-		System.out.println("You've busted."); // if they bust
+		currentPlayer.getHand().addCard(cardDeck.dealCard());
+		currentPlayer.aceChanger();
+		currentPlayer.printHand();
+		if(currentPlayer.isBusted()) {
+			System.out.println("You've busted."); // if they bust
 		break;
 	}
 	}
