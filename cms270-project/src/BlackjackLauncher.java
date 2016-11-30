@@ -35,10 +35,10 @@ public class BlackjackLauncher extends Application{
 
 	Label rootLabel;
 	TextField rootTF;
-	private Player player;
-	private ArrayList<Player> players;
-	@FXML private Label playerName;
-	@FXML private Label playerMoney;
+//	private Player player;
+//	private ArrayList<Player> players;
+//	@FXML private Label playerName;
+//	@FXML private Label playerMoney;
 	
 	public void start(Stage stage) {
 		BlackjackController root = new BlackjackController();

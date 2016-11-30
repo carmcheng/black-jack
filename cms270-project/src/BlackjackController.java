@@ -28,9 +28,9 @@ public class BlackjackController extends BorderPane {
 
 	public BlackjackController (){
 
+		/*** Center pane ***/
 		center = new VBox();
 		center.setStyle("-fx-background-color: DARKGREEN;");
-
 		setCenter(center);
 
 		/*** Left pane ***/
@@ -74,6 +74,17 @@ public class BlackjackController extends BorderPane {
 		setBottom(bottom);
 	}
 
+	
+	protected void playerMove(ActionEvent event) {
+		if (event.getSource() == hit) {
+			
+		}
+		
+		if(event.getSource() == stand) {
+			
+		}
+	}
+	
 	public void printPlayerNames() {
 		for(int i = 0; i < players.size(); i++) {
 			message = new Label(players.get(i).getName() + " " + players.get(i).getMoney());
