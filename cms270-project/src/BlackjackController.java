@@ -19,13 +19,7 @@ public class BlackjackController {
 		String i = textInput.getText();
 		bottomLabel.setText(i);
 
-	} 
-	
-	/*** Methods associated with dealer side ***/
-	@FXML protected void dealerHand(ActionEvent event) {
-		
 	}
-	
 	
 }
 //	public BlackjackController() {
