@@ -7,11 +7,9 @@ import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonBar.ButtonData;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-
 import javafx.scene.layout.*;
 import javafx.util.Pair;
 public class BlackjackController extends BorderPane {
@@ -35,6 +33,7 @@ public class BlackjackController extends BorderPane {
 
 		setCenter(center);
 
+		/*** Left pane ***/
 		left = new VBox();
 		//	left.setStyle("-fx-background-color: DARKGREEN;");
 		left.setPrefWidth(150);
@@ -42,17 +41,20 @@ public class BlackjackController extends BorderPane {
 		setLeft(left);
 		left.getChildren().add(leftLabel);
 
+		/*** Right pane ***/
 		right = new VBox();
 		//	right.setStyle("-fx-background-color: DARKGREEN;");
 		right.setPrefWidth(150);
 		setRight(right); 
 
+		/*** Top pane ***/
 		top = new HBox();
 		top.setStyle("-fx-background-color: WHITE;");
 		top.setPrefHeight(20);
 		//top.getChildren().add(message);
 		setTop(top);
 
+		/*** Bottom pane ***/
 		bottom = new HBox();
 		bottom.setStyle("-fx-background-color: WHITE;");
 		bottom.setPrefHeight(20);;
@@ -79,7 +81,6 @@ public class BlackjackController extends BorderPane {
 		}
 	}
 
-
 	public int retrieveNumPlayers() {
 		List<String> choices = new ArrayList<>();
 		choices.add("1");
@@ -103,6 +104,7 @@ public class BlackjackController extends BorderPane {
 			return 1; //default of 1 player
 		}
 	}
+	
 	public void launchErrorDialog(String error) {
 		Alert alert = new Alert(AlertType.ERROR);
 		alert.setTitle("Error Dialog");
