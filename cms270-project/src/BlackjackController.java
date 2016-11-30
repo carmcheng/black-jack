@@ -93,7 +93,5 @@ public class BlackjackController extends BorderPane {
 	
 	Label rootLabel;
 	TextField rootTF;
-	
-	
-	
+
 }
