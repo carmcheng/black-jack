@@ -337,7 +337,7 @@ public class Table {
 		// Starting hands are dealt
 		firstDeal();
 		startRound();
-
+		
 		//dealer plays after the iterator has gone through all the players
 		while(dealer.checkSoftSeventeen() || dealer.getHand().checkHandValue()<17){
 			dealer.getHand().addCard(cardDeck.dealCard());
