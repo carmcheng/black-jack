@@ -33,7 +33,7 @@ public class BlackjackLauncher extends Application{
 	Label rootLabel;
 	TextField rootTF;
 	
-	public void launchConfirmDialog() {
+	protected void launchConfirmDialog() {
 		//confirmation dialog
 		Alert alert = new Alert(AlertType.CONFIRMATION);
 		alert.setTitle("Ready To Play Dialog");
@@ -48,11 +48,8 @@ public class BlackjackLauncher extends Application{
 		} else {
 			rootLabel.setText("User DOESN'T want to start the game.");
 		}
-		
-		
 	}
 	
-
 	public int retrieveNumPlayers() {
 		List<String> choices = new ArrayList<>();
 		choices.add("1");
@@ -108,8 +105,9 @@ public class BlackjackLauncher extends Application{
 		stage.setScene(scene);
 		stage.show();
 		
+		
 		launchConfirmDialog();
-		int numPlayers = retrieveNumPlayers();
+		
 	}
 	
 
