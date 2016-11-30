@@ -199,6 +199,7 @@ public class BlackjackController extends BorderPane {
 //		String i = textInput.getText();
 //		bottomLabel.setText(i);
 //	}
+<<<<<<< HEAD
 //	@FXML protected void stand (ActionEvent event) {
 //		String i = textInput.getText();
 //		bottomLabel.setText(i);
@@ -209,3 +210,11 @@ public class BlackjackController extends BorderPane {
 
 
 
+=======
+//	
+//	protected void displayPlayerInfo(ActionEvent event){
+//		String name = 
+//	
+//
+//
+>>>>>>> branch 'master' of https://github.com/rollins-cms270/project-team-vegas.git
