@@ -1,56 +1,25 @@
 
-import java.text.DecimalFormat;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.Scanner;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.fxml.FXML;
-import javafx.scene.control.*;
-import javafx.scene.control.Alert.AlertType;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
-import javafx.scene.layout.HBox;
+
 
 public class BlackjackController {
-//	private Label message;
-//	private Label prompt;
-//	private TextField input;
-//	private Label result;
-//	private Button hit;
-//	private Button stand;
-//	
-//	private Dealer dealer;
-//	private static int numPlayers;
-//	private ArrayList<Player> players;
-//	private Deck cardDeck;
-//	private Player player;
-//	private Pot pot;
-//	private final int MAX_PLAYERS = 6;
-//	private static int roundCount;
-//	private DecimalFormat money = new DecimalFormat("$0.00");
-//	private Scanner scan = new Scanner(System.in);
-//	private Iterator playerIterator;
 
 	@FXML private TextField textInput;
 	@FXML private Label bottomLabel;
 	@FXML private Button rightButton;
 
 	@FXML protected void hit(ActionEvent event) {
-			String i = textInput.getText();
-			bottomLabel.setText(i);
-		
+		String i = textInput.getText();
+		bottomLabel.setText(i);
+
 	} 
 	@FXML protected void stand(ActionEvent event) {
 		String i = textInput.getText();
 		bottomLabel.setText(i);
-	
-} 
+
+	} 
 }
 //	public BlackjackController() {
 //		super();
