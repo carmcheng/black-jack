@@ -31,14 +31,6 @@ public class BlackjackLauncher extends Application{
 		alert.setHeaderText("Play!");
 		alert.setContentText("Are you ready to start the game?");
 
-		
-		//ERROR CHECK LATER: does not prevent user from playing the game
-		Optional<ButtonType> result = alert.showAndWait();
-		if (result.get() == ButtonType.OK){
-			rootLabel.setText("User is ready to play!");
-		} else {
-			rootLabel.setText("User DOESN'T want to start the game.");
-		}
 	}
 	
 	public int retrieveNumPlayers() {
