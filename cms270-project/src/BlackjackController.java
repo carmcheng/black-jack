@@ -10,12 +10,10 @@ public class BlackjackController  {
 	
 	@FXML protected void hit (ActionEvent event) {
 		String i = textInput.getText();
-
 		bottomLabel.setText(i);
 	}
 	@FXML protected void stand (ActionEvent event) {
 		String i = textInput.getText();
-
 		bottomLabel.setText(i);
 	}
 }
