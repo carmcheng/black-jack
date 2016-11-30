@@ -16,7 +16,9 @@
         <Label text="LEFT pane"/>
     </left>
     <center>
-    
+    	<VBox alignment="top_center">
+    		<Label fx:id="centerLabel" text="Current Player" />
+    	</VBox>
     </center>
     <right>
     	<VBox>
