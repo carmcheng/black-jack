@@ -18,6 +18,7 @@
     <center>
     </center>
     <right>
+    	<Label fx:id="rightLabel" text="The Dealer's Side" />
     </right>
     <bottom>
        <HBox>
