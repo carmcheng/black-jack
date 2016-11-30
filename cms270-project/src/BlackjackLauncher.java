@@ -17,7 +17,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextInputDialog;
 
-/** This is our gui class
+/** This is our gui class.
  */
 public class BlackjackLauncher extends Application{
 	
