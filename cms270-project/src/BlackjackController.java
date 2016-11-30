@@ -38,4 +38,6 @@ public class BlackjackController extends BorderPane {
 		top.getChildren().add(message);
 		setTop(top);
 	}
+	
+
 }
