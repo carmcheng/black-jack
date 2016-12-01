@@ -27,6 +27,7 @@ public class BlackjackController extends BorderPane {
 	private Label rightDealerHandValue;
 	private Label centerLabel;
 	private Label centerPlayerHand;
+	private Label cardLabel;
 	private Text topOutput;
 	private Button start;
 	private Button hit;
@@ -36,16 +37,17 @@ public class BlackjackController extends BorderPane {
 	private VBox right;
 	private HBox top;
 	private HBox bottom;
+	private VBox handVBox;
 
 	public BlackjackController() {
 		
 		/*** Center pane ***/
 		center = new VBox();
 //		center.setStyle("-fx-background-color: DARKGREEN;");
-		centerLabel = new Label("CURRENT PLAYER");
-		centerPlayerHand = new Label("");
+		centerLabel = new Label("PLAYER");
+		handVBox = new VBox();
 		setCenter(center);
-		center.getChildren().add(centerLabel);
+		center.getChildren().addAll(centerLabel, handVBox);
 
 		/*** Left pane ***/
 		left = new VBox();
@@ -59,7 +61,7 @@ public class BlackjackController extends BorderPane {
 		right = new VBox();
 		//	right.setStyle("-fx-background-color: DARKGREEN;");
 		right.setPrefWidth(150);
-		rightLabel = new Label("THE DEALER");
+		rightLabel = new Label("The Dealer");
 		rightDealerHand = new Label("");
 		rightDealerHandValue = new Label("");
 		setRight(right); 
@@ -108,12 +110,11 @@ public class BlackjackController extends BorderPane {
 			text = "Round has started. First hands dealt.";
 			topOutput.setText(text);
 			table.firstDeal();
-			
+			updateView();
 		}
 		if (event.getSource() == hit) {
 			text = "You chose to hit.";
 			topOutput.setText(text);
-			player.getHand().addCard(deck.dealCard());
 			
 			
 		}
@@ -162,6 +163,7 @@ public class BlackjackController extends BorderPane {
 		alert.showAndWait();
 	}
 
+	// Adds players into game
 	public void launchAskPlayerInfo(int numOfPlayers) {
 		table = new Table();
 		players = table.getPlayers();
@@ -207,6 +209,28 @@ public class BlackjackController extends BorderPane {
 			});
 		}
 		table.setCurrentPlayer();
+	}
+	
+	//Update information in window
+	protected void updateView() {
+		updateHandView();
+	}
+	
+	//Update hand cards
+	protected void updateHandView() {
+		handVBox.getChildren().clear();
+		for (Card c : activeHand().getCards()) {
+			Label cardLabel = new Label(c.toString());
+			handVBox.getChildren().add(cardLabel);
+		}
+	}
+	
+	private Player activePlayer() {
+		return table.getCurrentPlayer();
+	}
+	
+	private Hand activeHand() {
+		return activePlayer().getHand();
 	}
 }
 
