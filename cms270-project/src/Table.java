@@ -19,6 +19,7 @@ public class Table {
 	private ArrayList<Player> players;
 	private Deck cardDeck;
 	private Player player;
+	private Player currentP;
 	private Pot pot;
 	private final int MAX_PLAYERS = 6;
 	private static int roundCount;
@@ -37,6 +38,7 @@ public class Table {
 		cardDeck = Deck.getInstance();
 		pot = new Pot();
 		players = new ArrayList<Player>();
+		currentP = null;
 	}
 
 	/**
@@ -74,7 +76,39 @@ public class Table {
 				numPlayers++;
 			}
 	}
-
+	/**
+	 * Returns ArrayList of players at table
+	 * @return players
+	 */
+	public ArrayList<Player> getPlayers() {
+		return players;
+	}
+	
+	public Player getCurrentPlayer() {
+		return this.currentP;
+	}
+	
+	public void setCurrentPlayer() {
+		if (players.size() > 0)
+			currentP = players.get(0);
+		return;
+	}
+	
+	public Player moveToNextPlayer() {
+		int i = players.indexOf(currentP);
+		currentP = players.get(++i);
+		return currentP;
+	}
+	
+	public boolean hasNextPlayer() {
+		int i = players.indexOf(currentP);
+		if (i < players.size() - 1) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
 	/**
 	 * Starts table with certain number of Player objects. Checks to make sure
 	 * the table does not have an invalid amount of players. A player is able to enter
@@ -95,7 +129,6 @@ public class Table {
 			count++;
 		}		
 	}
-
 	/**
 	 * Mechanism that asks players if they want to keep playing, and if they do,
 	 * resets all variables. If player chooses to quit, the player is removed
@@ -151,6 +184,7 @@ public class Table {
 	 * for a dealer
 	 */
 	public void firstDeal() {
+		currentP = players.get(0);
 		playerIterator = new PlayerIterator(players);
 		while(playerIterator.hasNext()) {
 			Player currentPlayer = (Player) playerIterator.next();
@@ -347,6 +381,9 @@ public class Table {
 		distributeMoney();
 		printMoneyLeft();
 		restart();
+	}
+	public int getRoundCount() {
+		return roundCount;
 	}
 	/**
 	 * Main method, where we are able to run our program.

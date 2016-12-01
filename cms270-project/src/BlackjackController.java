@@ -11,27 +11,41 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import javafx.scene.layout.*;
+import javafx.scene.text.Text;
 import javafx.util.Pair;
 public class BlackjackController extends BorderPane {
+	private String text;
+	private Player player;
+	private Deck deck;
+	private Table table;
+	private ArrayList<Player> players;
+	
 	private Label message;
 	private Label leftLabel;
 	private Label rightLabel;
+	private Label rightDealerHand;
+	private Label rightDealerHandValue;
+	private Label centerLabel;
+	private Label centerPlayerHand;
+	private Text topOutput;
+	private Button start;
 	private Button hit;
 	private Button stand;
-	private ArrayList<Player> players;
-	private Player player;
 	private VBox center;
 	private VBox left;
 	private VBox right;
 	private HBox top;
 	private HBox bottom;
 
-	public BlackjackController (){
-
+	public BlackjackController() {
+		
 		/*** Center pane ***/
 		center = new VBox();
-		center.setStyle("-fx-background-color: DARKGREEN;");
+//		center.setStyle("-fx-background-color: DARKGREEN;");
+		centerLabel = new Label("CURRENT PLAYER");
+		centerPlayerHand = new Label("");
 		setCenter(center);
+		center.getChildren().add(centerLabel);
 
 		/*** Left pane ***/
 		left = new VBox();
@@ -45,38 +59,62 @@ public class BlackjackController extends BorderPane {
 		right = new VBox();
 		//	right.setStyle("-fx-background-color: DARKGREEN;");
 		right.setPrefWidth(150);
+		rightLabel = new Label("THE DEALER");
+		rightDealerHand = new Label("");
+		rightDealerHandValue = new Label("");
 		setRight(right); 
+		right.getChildren().addAll(rightLabel, rightDealerHand, rightDealerHandValue);
 
 		/*** Top pane ***/
 		top = new HBox();
 		top.setStyle("-fx-background-color: WHITE;");
 		top.setPrefHeight(20);
-		//top.getChildren().add(message);
+		topOutput = new Text("");
 		setTop(top);
+		top.getChildren().add(topOutput);
 
 		/*** Bottom pane ***/
 		bottom = new HBox();
 		bottom.setStyle("-fx-background-color: WHITE;");
 		bottom.setPrefHeight(20);;
+		start = new Button("START ROUND");
+		start.setOnAction(new EventHandler<ActionEvent> () {
+			@Override public void handle(ActionEvent e) {
+				doPlayerMove(e);
+			}
+		});
 		hit = new Button("HIT");
 		hit.setOnAction(new EventHandler<ActionEvent> () {
 			@Override public void handle(ActionEvent e) {
-				//	        playerMove(e);
+				doPlayerMove(e);
 			}
 		});
 		stand = new Button("STAND");
 		stand.setOnAction(new EventHandler<ActionEvent>() {
 			@Override public void handle(ActionEvent e) {
-				//	        playerMove(e);
+				// doPlayerMove(e);
 			}
 		});
-		bottom.getChildren().addAll(hit, stand);
+		bottom.getChildren().addAll(start, hit, stand);
 		setBottom(bottom);
 	}
 
+	protected void createNewGame(ActionEvent event) {
+		table = new Table();
+	}
 	
-	protected void playerMove(ActionEvent event) {
+	protected void doPlayerMove(ActionEvent event) {
+		if (event.getSource() == start) {
+			text = "Round has started. First hands dealt.";
+			topOutput.setText(text);
+			table.firstDeal();
+			
+		}
 		if (event.getSource() == hit) {
+			text = "You chose to hit.";
+			topOutput.setText(text);
+			player.getHand().addCard(deck.dealCard());
+			
 			
 		}
 		
@@ -125,7 +163,8 @@ public class BlackjackController extends BorderPane {
 	}
 
 	public void launchAskPlayerInfo(int numOfPlayers) {
-		players = new ArrayList<Player>();
+		table = new Table();
+		players = table.getPlayers();
 		for (int i = 0; i < numOfPlayers; i++) {
 			Dialog<Pair<String, String>> dialog = new Dialog<>();
 			dialog.setTitle("Player Information Retrieval");
@@ -166,8 +205,8 @@ public class BlackjackController extends BorderPane {
 				player = new Player(playerInfo.getKey(), Double.parseDouble(playerInfo.getValue()));
 				players.add(player);
 			});
-
 		}
+		table.setCurrentPlayer();
 	}
 }
 
