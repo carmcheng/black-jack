@@ -19,7 +19,11 @@ public class Table {
 	private ArrayList<Player> players;
 	private Deck cardDeck;
 	private Player player;
+<<<<<<< HEAD
 	private Player currentPlayer;
+=======
+	private Player currentP;
+>>>>>>> refs/remotes/origin/master
 	private Pot pot;
 	private final int MAX_PLAYERS = 6;
 	private static int roundCount;
@@ -38,6 +42,7 @@ public class Table {
 		cardDeck = Deck.getInstance();
 		pot = new Pot();
 		players = new ArrayList<Player>();
+		currentP = null;
 	}
 
 	/**
@@ -75,7 +80,47 @@ public class Table {
 				numPlayers++;
 			}
 	}
-
+	/**
+	 * Returns ArrayList of players at table
+	 * @return players
+	 */
+	public ArrayList<Player> getPlayers() {
+		return players;
+	}
+	
+	public Player getCurrentPlayer() {
+		return this.currentP;
+	}
+	
+	public void setCurrentPlayer() {
+		if (players.size() > 0)
+			currentP = players.get(0);
+		return;
+	}
+	
+	public Player moveToNextPlayer() {
+		int i = players.indexOf(currentP);
+		currentP = players.get(++i);
+		return currentP;
+	}
+	
+	public boolean hasNextPlayer() {
+		int i = players.indexOf(currentP);
+		if (i < players.size() - 1) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	public Dealer getDealer() {
+		return dealer;
+	}
+	
+	public Deck getDeck() {
+		return cardDeck;
+	}
+	
 	/**
 	 * Starts table with certain number of Player objects. Checks to make sure
 	 * the table does not have an invalid amount of players. A player is able to enter
@@ -96,7 +141,6 @@ public class Table {
 			count++;
 		}		
 	}
-
 	/**
 	 * Mechanism that asks players if they want to keep playing, and if they do,
 	 * resets all variables. If player chooses to quit, the player is removed
@@ -106,44 +150,45 @@ public class Table {
 		//Clear out dealer's hand and resets deck
 		dealer.getHand().reset();
 		cardDeck = null;
+		cardDeck = Deck.getInstance();
 		pot.emptyPot();
 		
 		//Restart players
-		playerIterator = new PlayerIterator(players);
-		String response;
-		ArrayList<Player> toRemove = new ArrayList<Player>();
-		while(playerIterator.hasNext()) {
-			boolean valid;
-			Player currentPlayer = (Player) playerIterator.next();
-			System.out.println(currentPlayer.getName() + ", would you like to keep playing? Yes/No?");
-			do {
-				valid = true;
-				response = scan.next();
-				if (currentPlayer.getMoney() <= 0 && response.equalsIgnoreCase("yes")) {
-					System.out.println("You have no money, " + currentPlayer.getName() + "!"
-							+ " Security will be escorting you out...");
-					toRemove.add(currentPlayer);
-				} else if(response.equalsIgnoreCase("Yes")) {
-					currentPlayer.getHand().reset();
-				} else if(response.equalsIgnoreCase("No")) {
-					toRemove.add(currentPlayer);
-				} else {
-					System.out.println("Enter a valid response");
-					valid = false;
-				}
-			} while(!valid);
-		}
-		
-		for (Player p : toRemove) {
-			players.remove(p);
-		}
-
-		if (!players.isEmpty()) {
-			playGame();
-		} else {
-			System.out.println("Thanks for playing!");
-			System.exit(0);
-		}
+//		playerIterator = new PlayerIterator(players);
+//		String response;
+//		ArrayList<Player> toRemove = new ArrayList<Player>();
+//		while(playerIterator.hasNext()) {
+//			boolean valid;
+//			Player currentPlayer = (Player) playerIterator.next();
+//			System.out.println(currentPlayer.getName() + ", would you like to keep playing? Yes/No?");
+//			do {
+//				valid = true;
+//				response = scan.next();
+//				if (currentPlayer.getMoney() <= 0 && response.equalsIgnoreCase("yes")) {
+//					System.out.println("You have no money, " + currentPlayer.getName() + "!"
+//							+ " Security will be escorting you out...");
+//					toRemove.add(currentPlayer);
+//				} else if(response.equalsIgnoreCase("Yes")) {
+//					currentPlayer.getHand().reset();
+//				} else if(response.equalsIgnoreCase("No")) {
+//					toRemove.add(currentPlayer);
+//				} else {
+//					System.out.println("Enter a valid response");
+//					valid = false;
+//				}
+//			} while(!valid);
+//		}
+//		
+//		for (Player p : toRemove) {
+//			players.remove(p);
+//		}
+//
+//		if (!players.isEmpty()) {
+//			playGame();
+//		} else {
+//			System.out.println("Thanks for playing!");
+//			System.exit(0);
+//		}
 	}
 
 	/**
@@ -152,24 +197,26 @@ public class Table {
 	 * for a dealer
 	 */
 	public void firstDeal() {
+		currentP = players.get(0);
 		playerIterator = new PlayerIterator(players);
 		while(playerIterator.hasNext()) {
 			Player currentPlayer = (Player) playerIterator.next();
 			currentPlayer.getHand().addCard(cardDeck.dealCard());
 			currentPlayer.getHand().addCard(cardDeck.dealCard()); //adds two cards to player's hand on first deal
-			if (currentPlayer.getHand().checkBlackjack()) {
-				currentPlayer.printHand();
-				System.out.println(currentPlayer.getName() + " got blackjack!");
-			}
+			currentPlayer.aceChanger();
+//			if (currentPlayer.getHand().checkBlackjack()) {
+//				currentPlayer.printHand();
+//				System.out.println(currentPlayer.getName() + " got blackjack!");
+//			}
 		}
 		dealer.getHand().addCard(cardDeck.dealCard());
 		dealer.getHand().addCard(cardDeck.dealCard());
-		if(dealer.getHand().checkBlackjack()) {
-			dealer.printHand();
-			System.out.println("Dealer got blackjack.");
-			return;
-		}
-		dealer.printHiddenHand();
+//		if(dealer.getHand().checkBlackjack()) {
+//			dealer.printHand();
+//			System.out.println("Dealer got blackjack.");
+//			return;
+//		}
+//		dealer.printHiddenHand();
 	}
 	/**
 	 * This method prints the amount of money left the players hold.
@@ -219,7 +266,7 @@ public class Table {
 			System.out.println("\nIt's your turn, " + currentPlayer.getName() + ".");
 			//Asks player if s/he wants to change ace card value in first hand
 			//Automatically changes ace to 1 if player holds two aces
-			currentPlayer.aceChanger();
+//			currentPlayer.aceChanger();
 			currentPlayer.printHand();
 			// Double down option
 			System.out.println("Would you like to double down? Yes/No?");
@@ -348,6 +395,9 @@ public class Table {
 		distributeMoney();
 		printMoneyLeft();
 		restart();
+	}
+	public int getRoundCount() {
+		return roundCount;
 	}
 	/**
 	 * Main method, where we are able to run our program.

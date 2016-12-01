@@ -147,48 +147,48 @@ public class Player {
 				}
 			}
 		// Ace in hand and total hand value is < 21
-		} else if (checkForAce() && !isBusted()) {
-			printHand();
-			if (hand.numOfAces() == 1) {
-				handIterator = new HandIterator(hand.getCards());
-				System.out.println("You have an Ace card in your hand. Do you "
-						+ "want to set the value to 1 or 11?");
-				int ans = scan.nextInt();
-				while (handIterator.hasNext()) {
-					Card c = (Card) handIterator.next();
-					if (c.getCardName().equals("A")) {
-						while (ans != 1 && ans != 11) {
-							System.out.println("Invalid input. Try again.");
-							ans = scan.nextInt();
-						}
-						hand.addCard(new Card(ans, "A", c.getCardSuit()));
-						hand.remove(c);
-						return;
-					}
-				}
-			} else {
-				handIterator = new HandIterator(hand.getCards());
-				System.out.println("You have multiple Ace cards in your hand."
-						+ " Which card do you want to set the value for?"
-						+ " (Select by appropriate card suit.) Type exit to"
-						+ " make no changes.");
-				String suit = scan.next();
-				if (suit.equalsIgnoreCase("exit")) {
-					return;
-				}
-				while (handIterator.hasNext()) {
-					Card c = (Card) handIterator.next();
-					if (c.getCardName().equals("A") && 
-							c.getCardSuit().equalsIgnoreCase(suit)) {
-						System.out.println("Do you want to set the value to 1"
-								+ " or 11?");
-						int ans = scan.nextInt();
-						hand.addCard(new Card(ans, "A", c.getCardSuit()));
-						hand.remove(c);
-						return;
-					}
-				}
-			}
+//		} else if (checkForAce() && !isBusted()) {
+//			printHand();
+//			if (hand.numOfAces() == 1) {
+//				handIterator = new HandIterator(hand.getCards());
+//				System.out.println("You have an Ace card in your hand. Do you "
+//						+ "want to set the value to 1 or 11?");
+//				int ans = scan.nextInt();
+//				while (handIterator.hasNext()) {
+//					Card c = (Card) handIterator.next();
+//					if (c.getCardName().equals("A")) {
+//						while (ans != 1 && ans != 11) {
+//							System.out.println("Invalid input. Try again.");
+//							ans = scan.nextInt();
+//						}
+//						hand.addCard(new Card(ans, "A", c.getCardSuit()));
+//						hand.remove(c);
+//						return;
+//					}
+//				}
+//			} else {
+//				handIterator = new HandIterator(hand.getCards());
+//				System.out.println("You have multiple Ace cards in your hand."
+//						+ " Which card do you want to set the value for?"
+//						+ " (Select by appropriate card suit.) Type exit to"
+//						+ " make no changes.");
+//				String suit = scan.next();
+//				if (suit.equalsIgnoreCase("exit")) {
+//					return;
+//				}
+//				while (handIterator.hasNext()) {
+//					Card c = (Card) handIterator.next();
+//					if (c.getCardName().equals("A") && 
+//							c.getCardSuit().equalsIgnoreCase(suit)) {
+//						System.out.println("Do you want to set the value to 1"
+//								+ " or 11?");
+//						int ans = scan.nextInt();
+//						hand.addCard(new Card(ans, "A", c.getCardSuit()));
+//						hand.remove(c);
+//						return;
+//					}
+//				}
+//			}
 		}
 	}
 

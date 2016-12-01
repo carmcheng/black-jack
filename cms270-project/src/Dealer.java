@@ -78,6 +78,13 @@ public class Dealer {
 			hand.addCard(new Card(1, "A", temp.getCardSuit()));
 		}
 	}
+	
+	public boolean isBusted() {
+		if (hand.checkHandValue() > 21) {
+			return true;
+		}
+		return false;
+	}
 
 	/**
 	 * This method accesses to dealer's hand.
