@@ -16,7 +16,6 @@ import javafx.util.Pair;
 public class BlackjackController extends BorderPane {
 	private String text;
 	private Player player;
-	private Deck deck;
 	private Table table;
 	private ArrayList<Player> players;
 	
@@ -44,7 +43,7 @@ public class BlackjackController extends BorderPane {
 		/*** Center pane ***/
 		center = new VBox();
 //		center.setStyle("-fx-background-color: DARKGREEN;");
-		centerLabel = new Label("PLAYER");
+		centerLabel = new Label("");
 		handVBox = new VBox();
 		playerHandValueLabel = new Label("");
 		setCenter(center);
@@ -80,7 +79,7 @@ public class BlackjackController extends BorderPane {
 		bottom = new HBox();
 		bottom.setStyle("-fx-background-color: WHITE;");
 		bottom.setPrefHeight(20);;
-		start = new Button("START ROUND");
+		start = new Button("START");
 		start.setOnAction(new EventHandler<ActionEvent> () {
 			@Override public void handle(ActionEvent e) {
 				doPlayerMove(e);
@@ -104,23 +103,49 @@ public class BlackjackController extends BorderPane {
 
 	
 	protected void doPlayerMove(ActionEvent event) {
+		// Start the round
 		if (event.getSource() == start) {
 			text = "Round has started. First hands dealt.";
 			topOutput.setText(text);
 			table.firstDeal();
+			start.setVisible(false);		// Hides start button until the round is over
 			updateView();
 		}
 		if (event.getSource() == hit) {
-			text = "You chose to hit.";
+			text = activePlayer().getName() + ", you chose to hit.";
 			topOutput.setText(text);
-			
+			if (activePlayer().isBusted()) {
+				text = "You busted!";
+				topOutput.setText(text);
+				if (table.hasNextPlayer()) {
+					table.moveToNextPlayer();
+				} else {
+					doDealerMove();
+				}
+			}
+			activeHand().addCard(cardDeck().dealCard());
 			updateView();
 		}
 		
 		if(event.getSource() == stand) {
-			
+			if (table.hasNextPlayer()) {
+				table.moveToNextPlayer();
+				text = "You chose to stand.\nIt is now " + activePlayer().getName()
+						+ "'s turn.";
+				topOutput.setText(text);
+			} else {
+				hit.setVisible(false);
+				stand.setVisible(false);
+				doDealerMove();
+			}
 			updateView();
 		}
+	}
+	
+	protected void doDealerMove() {
+		text = "It is the dealer's turn.";
+		topOutput.setText(text);
+		return;
 	}
 	
 	public void printPlayerNames() {
@@ -208,6 +233,7 @@ public class BlackjackController extends BorderPane {
 			});
 		}
 		table.setCurrentPlayer();
+		centerLabel.setText("Current player: " + activePlayer().getName());
 	}
 	
 	//Update information in window
@@ -247,6 +273,10 @@ public class BlackjackController extends BorderPane {
 	
 	private Hand dealerHand() {
 		return table.getDealer().getHand();
+	}
+	
+	private Deck cardDeck() {
+		return table.getDeck();
 	}
 }
 

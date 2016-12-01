@@ -198,19 +198,19 @@ public class Table {
 			Player currentPlayer = (Player) playerIterator.next();
 			currentPlayer.getHand().addCard(cardDeck.dealCard());
 			currentPlayer.getHand().addCard(cardDeck.dealCard()); //adds two cards to player's hand on first deal
-			if (currentPlayer.getHand().checkBlackjack()) {
-				currentPlayer.printHand();
-				System.out.println(currentPlayer.getName() + " got blackjack!");
-			}
+//			if (currentPlayer.getHand().checkBlackjack()) {
+//				currentPlayer.printHand();
+//				System.out.println(currentPlayer.getName() + " got blackjack!");
+//			}
 		}
 		dealer.getHand().addCard(cardDeck.dealCard());
 		dealer.getHand().addCard(cardDeck.dealCard());
-		if(dealer.getHand().checkBlackjack()) {
-			dealer.printHand();
-			System.out.println("Dealer got blackjack.");
-			return;
-		}
-		dealer.printHiddenHand();
+//		if(dealer.getHand().checkBlackjack()) {
+//			dealer.printHand();
+//			System.out.println("Dealer got blackjack.");
+//			return;
+//		}
+//		dealer.printHiddenHand();
 	}
 	/**
 	 * This method prints the amount of money left the players hold.
