@@ -2,7 +2,6 @@
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
@@ -393,50 +392,3 @@ public class BlackjackController extends BorderPane {
 		return table.getDeck();
 	}
 }
-
-//protected void playerMove(ActionEvent event) {
-//
-//if (event.getSource() == hit) { // testing if these two are aliases
-//	message.setText("You hit");
-//	
-//} 
-//
-//if(event.getSource() == stand) {
-//	message.setText("You stand");
-//}
-//}
-
-//public class BlackjackController  {
-//	@FXML private TextField textInput;
-//	@FXML private Label bottomLabel;
-//	@FXML private Button rightButton;
-//	@FXML private Button okButton;
-//	@FXML private Label playerName;
-//	@FXML private Label playerMoney;
-//	private ArrayList<Player> players;
-//	private Player player;
-//	
-//	@FXML protected void getPlayerInfo() {
-//		players = new ArrayList<Player>();
-//		String name = textInput.getText();
-//		playerName.setText(name);
-//		okButton.setOnAction(new EventHandler<ActionEvent> () {
-//			@Override public void handle(ActionEvent e) {
-//				String m = textInput.getText();
-//				double money = Double.parseDouble(m);
-//				playerMoney.setText(m);
-//				player = new Player(name, money);
-//			}
-//		});
-//		players.add(player);
-//	}
-//	
-//	@FXML protected void hit (ActionEvent event) {
-//		String i = textInput.getText();
-//		bottomLabel.setText(i);
-//	}
-//	@FXML protected void stand (ActionEvent event) {
-//		String i = textInput.getText();
-//		bottomLabel.setText(i);
-//	}
-//}
