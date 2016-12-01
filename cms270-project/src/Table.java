@@ -113,6 +113,10 @@ public class Table {
 		return dealer;
 	}
 	
+	public Deck getDeck() {
+		return cardDeck;
+	}
+	
 	/**
 	 * Starts table with certain number of Player objects. Checks to make sure
 	 * the table does not have an invalid amount of players. A player is able to enter
