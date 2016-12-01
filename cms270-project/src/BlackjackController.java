@@ -105,7 +105,7 @@ public class BlackjackController extends BorderPane {
 				 doPlayerMove(e);
 			}
 		});
-		bottom.getChildren().addAll(start, hit, stand);
+		bottom.getChildren().addAll(start, hit, stand, ok);
 		setBottom(bottom);
 	}
 
@@ -121,6 +121,7 @@ public class BlackjackController extends BorderPane {
 			stand.setVisible(true);
 			updateView();
 		}
+		
 		if (event.getSource() == hit) {
 			text = activePlayer().getName() + ", you chose to hit.";
 			topOutput.setText(text);
@@ -129,14 +130,9 @@ public class BlackjackController extends BorderPane {
 			if (activePlayer().isBusted()) {
 				text = "You busted!";
 				topOutput.setText(text);
-				if (table.hasNextPlayer()) {
-					table.moveToNextPlayer();
-					text += "\nIt is now " + activePlayer().getName() + "'s turn.";
-					centerLabel.setText("Current player: " + activePlayer().getName());
-					topOutput.setText(text);
-				} else {
-					doDealerMove();
-				}
+				hit.setVisible(false);
+				stand.setVisible(false);
+				ok.setVisible(true);
 			}
 			updateView();
 		}
@@ -151,16 +147,31 @@ public class BlackjackController extends BorderPane {
 			} else {
 				text = "You chose to stand. It is now the dealer's turn.";
 				topOutput.setText(text);
-				center.setVisible(false);
-				doDealerMove();
+				hit.setVisible(false);
+				stand.setVisible(false);
+				ok.setVisible(true);
 			}
 			updateView();
+		}
+		
+		if(event.getSource() == ok) {
+			if (table.hasNextPlayer()) {
+				table.moveToNextPlayer();
+				text += "\nIt is now " + activePlayer().getName() + "'s turn.";
+				updateView();
+				hit.setVisible(true);
+				stand.setVisible(true);
+				ok.setVisible(false);
+				centerLabel.setText("Current player: " + activePlayer().getName());
+				topOutput.setText(text);
+			} else {
+				doDealerMove();
+			}
 		}
 	}
 	
 	protected void doDealerMove() {
-		hit.setVisible(false);
-		stand.setVisible(false);
+		center.setVisible(false);
 		text = "It is the dealer's turn.";
 		topOutput.setText(text);
 		
@@ -377,6 +388,7 @@ public class BlackjackController extends BorderPane {
 		start.setVisible(true);
 		hit.setVisible(false);
 		stand.setVisible(false);
+		ok.setVisible(false);
 		center.setVisible(true);
 	}
 	
