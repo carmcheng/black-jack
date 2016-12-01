@@ -52,7 +52,6 @@ public class BlackjackLauncher extends Application{
 		//launchConfirmDialog();
 		int numPlayers = root.retrieveNumPlayers();
 		root.launchAskPlayerInfo(numPlayers);
-		root.printPlayerNames();
 		
 	}
 
