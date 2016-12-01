@@ -27,6 +27,7 @@ public class BlackjackController extends BorderPane {
 	private Button start;
 	private Button hit;
 	private Button stand;
+	private Button ok;
 	private VBox center;
 	private VBox playerVBox;
 	private VBox dealerPane;
@@ -93,6 +94,13 @@ public class BlackjackController extends BorderPane {
 		stand = new Button("STAND");
 		stand.setVisible(false);
 		stand.setOnAction(new EventHandler<ActionEvent>() {
+			@Override public void handle(ActionEvent e) {
+				 doPlayerMove(e);
+			}
+		});
+		ok = new Button("OK");
+		ok.setVisible(false);
+		ok.setOnAction(new EventHandler<ActionEvent>() {
 			@Override public void handle(ActionEvent e) {
 				 doPlayerMove(e);
 			}
