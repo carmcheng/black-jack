@@ -146,44 +146,45 @@ public class Table {
 		//Clear out dealer's hand and resets deck
 		dealer.getHand().reset();
 		cardDeck = null;
+		cardDeck = Deck.getInstance();
 		pot.emptyPot();
 		
 		//Restart players
-		playerIterator = new PlayerIterator(players);
-		String response;
-		ArrayList<Player> toRemove = new ArrayList<Player>();
-		while(playerIterator.hasNext()) {
-			boolean valid;
-			Player currentPlayer = (Player) playerIterator.next();
-			System.out.println(currentPlayer.getName() + ", would you like to keep playing? Yes/No?");
-			do {
-				valid = true;
-				response = scan.next();
-				if (currentPlayer.getMoney() <= 0 && response.equalsIgnoreCase("yes")) {
-					System.out.println("You have no money, " + currentPlayer.getName() + "!"
-							+ " Security will be escorting you out...");
-					toRemove.add(currentPlayer);
-				} else if(response.equalsIgnoreCase("Yes")) {
-					currentPlayer.getHand().reset();
-				} else if(response.equalsIgnoreCase("No")) {
-					toRemove.add(currentPlayer);
-				} else {
-					System.out.println("Enter a valid response");
-					valid = false;
-				}
-			} while(!valid);
-		}
-		
-		for (Player p : toRemove) {
-			players.remove(p);
-		}
-
-		if (!players.isEmpty()) {
-			playGame();
-		} else {
-			System.out.println("Thanks for playing!");
-			System.exit(0);
-		}
+//		playerIterator = new PlayerIterator(players);
+//		String response;
+//		ArrayList<Player> toRemove = new ArrayList<Player>();
+//		while(playerIterator.hasNext()) {
+//			boolean valid;
+//			Player currentPlayer = (Player) playerIterator.next();
+//			System.out.println(currentPlayer.getName() + ", would you like to keep playing? Yes/No?");
+//			do {
+//				valid = true;
+//				response = scan.next();
+//				if (currentPlayer.getMoney() <= 0 && response.equalsIgnoreCase("yes")) {
+//					System.out.println("You have no money, " + currentPlayer.getName() + "!"
+//							+ " Security will be escorting you out...");
+//					toRemove.add(currentPlayer);
+//				} else if(response.equalsIgnoreCase("Yes")) {
+//					currentPlayer.getHand().reset();
+//				} else if(response.equalsIgnoreCase("No")) {
+//					toRemove.add(currentPlayer);
+//				} else {
+//					System.out.println("Enter a valid response");
+//					valid = false;
+//				}
+//			} while(!valid);
+//		}
+//		
+//		for (Player p : toRemove) {
+//			players.remove(p);
+//		}
+//
+//		if (!players.isEmpty()) {
+//			playGame();
+//		} else {
+//			System.out.println("Thanks for playing!");
+//			System.exit(0);
+//		}
 	}
 
 	/**

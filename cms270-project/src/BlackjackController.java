@@ -85,12 +85,14 @@ public class BlackjackController extends BorderPane {
 			}
 		});
 		hit = new Button("HIT");
+		hit.setVisible(false);
 		hit.setOnAction(new EventHandler<ActionEvent> () {
 			@Override public void handle(ActionEvent e) {
 				doPlayerMove(e);
 			}
 		});
 		stand = new Button("STAND");
+		stand.setVisible(false);
 		stand.setOnAction(new EventHandler<ActionEvent>() {
 			@Override public void handle(ActionEvent e) {
 				 doPlayerMove(e);
@@ -108,9 +110,14 @@ public class BlackjackController extends BorderPane {
 			topOutput.setText(text);
 			table.firstDeal();
 			start.setVisible(false);		// Hides start button until the round is over
+			hit.setVisible(true);
+			stand.setVisible(true);
 			updateView();
 		}
 		if (event.getSource() == hit) {
+			text = activePlayer().getName() + ", you chose to hit.";
+			topOutput.setText(text);
+			activeHand().addCard(deck().dealCard());
 			if (activePlayer().isBusted()) {
 				text = "You busted!";
 				topOutput.setText(text);
@@ -120,9 +127,6 @@ public class BlackjackController extends BorderPane {
 					doDealerMove();
 				}
 			}
-			text = activePlayer().getName() + ", you chose to hit.";
-			topOutput.setText(text);
-			activeHand().addCard(deck().dealCard());
 			updateView();
 		}
 		
@@ -160,11 +164,80 @@ public class BlackjackController extends BorderPane {
 			topOutput.setText(text);
 		}
 		
+		calculateResults();
+		newRound();
 		updateView();
 	}
 	
 	protected void calculateResults() {
+		Alert results = new Alert(AlertType.INFORMATION);
+		results.setTitle("Results");
+		results.setHeaderText(null);
+		String text = "";
+		for (Player p : table.getPlayers()) {
+			if (dealer().isBusted()) {
+				text = "The dealer busted! ";
+				if (!p.isBusted()) {
+					text += p.getName() + ", you win!";
+				} else {
+					text += p.getName() + ", you busted as well."
+							+ " You do not win or lose money.";
+				}
+			} else if(dealerHand().checkBlackjack()) {
+				text = "Dealer got Blackjack! ";
+				if (!p.getHand().checkBlackjack()) {
+					text += p.getName() + ", you lose!";
+				} else {
+					text += p.getName() + ", you got Blackjack as well!"
+							+ "You do not win or lose money.";
+				}
+			} else {
+				if (p.isBusted()) {
+					text = p.getName() + ", you busted! You lose!";
+				} else if (p.getHand().checkHandValue() == dealerHand().checkHandValue()) {
+					text = p.getName() + ", you have the same hand value"
+							+ " as the dealer. You do not win or lose money.";
+				} else if (p.getHand().checkHandValue() > dealerHand().checkHandValue()) {
+					text = p.getName() + ", you have a larger hand value than"
+							+ " the dealer. You win!";
+				} else {
+					text = p.getName() + ", you have a smaller hand value than"
+							+ " the dealer. You lose!";
+				}
+			}
+		results.setContentText(text);
+		results.showAndWait();
+		}
+		return;
+	}
+	
+	protected void newRound() {
+		ArrayList <Player> toRemove = new ArrayList<Player>();
+		Alert alert = new Alert(AlertType.CONFIRMATION);
+		alert.setTitle("Reset");
 		
+		for (Player p : table.getPlayers()) {
+			alert.setHeaderText(p.getName() + ", would you"
+					+ " like to stay for another round?");
+			alert.setContentText("You currently have $" + p.getMoney()
+					+ " left.");
+			
+			Optional<ButtonType> result = alert.showAndWait();
+			if (result.get() == ButtonType.OK) {
+				p.getHand().reset();
+			} else {
+				toRemove.add(p);
+			}
+		}
+		
+		for (Player p : toRemove) {
+			players.remove(p);
+		}
+		table.restart();
+		reset();
+		fillPlayerVBox();
+		table.setCurrentPlayer();
+		centerLabel.setText("Current player: " + activePlayer().getName());
 	}
 	
 	public void fillPlayerVBox() {
@@ -257,6 +330,11 @@ public class BlackjackController extends BorderPane {
 		centerLabel.setText("Current player: " + activePlayer().getName());
 	}
 	
+	protected void reset() {
+		playerVBox.getChildren().clear();
+		resetView();
+	}
+	
 	//Update information in window
 	protected void updateView() {
 		updateHandView();
@@ -282,6 +360,13 @@ public class BlackjackController extends BorderPane {
 		}
 		dealerHandValueLabel.setText("\n" + 
 				Integer.toString(dealerHand().checkHandValue()));
+	}
+	
+	protected void resetView() {
+		start.setVisible(true);
+		hit.setVisible(false);
+		stand.setVisible(false);
+		center.setVisible(true);
 	}
 	
 	private Player activePlayer() {
