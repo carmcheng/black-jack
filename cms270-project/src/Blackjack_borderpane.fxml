@@ -18,6 +18,9 @@
     <center>
     	<VBox alignment="top_center">
     		<Label fx:id="centerLabel" text="Current Player" />
+    		<HBox alignment="center">
+    			<Label fx:id="playerHand" text="This is your hand" />
+    		</HBox>
     	</VBox>
     </center>
     <right>
