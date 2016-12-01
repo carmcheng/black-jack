@@ -19,6 +19,7 @@ public class Table {
 	private ArrayList<Player> players;
 	private Deck cardDeck;
 	private Player player;
+	private Player currentPlayer;
 	private Player currentP;
 	private Pot pot;
 	private final int MAX_PLAYERS = 6;
