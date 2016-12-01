@@ -109,7 +109,7 @@ public class BlackjackController extends BorderPane {
 			text = "Round has started. First hands dealt.";
 			topOutput.setText(text);
 			table.firstDeal();
-			start.setVisible(false);		// Hides start button until the round is over
+			start.setVisible(false);
 			hit.setVisible(true);
 			stand.setVisible(true);
 			updateView();
@@ -118,11 +118,15 @@ public class BlackjackController extends BorderPane {
 			text = activePlayer().getName() + ", you chose to hit.";
 			topOutput.setText(text);
 			activeHand().addCard(deck().dealCard());
+			activePlayer().aceChanger();
 			if (activePlayer().isBusted()) {
 				text = "You busted!";
 				topOutput.setText(text);
 				if (table.hasNextPlayer()) {
 					table.moveToNextPlayer();
+					text += "\nIt is now " + activePlayer().getName() + "'s turn.";
+					centerLabel.setText("Current player: " + activePlayer().getName());
+					topOutput.setText(text);
 				} else {
 					doDealerMove();
 				}

@@ -199,6 +199,7 @@ public class Table {
 			Player currentPlayer = (Player) playerIterator.next();
 			currentPlayer.getHand().addCard(cardDeck.dealCard());
 			currentPlayer.getHand().addCard(cardDeck.dealCard()); //adds two cards to player's hand on first deal
+			currentPlayer.aceChanger();
 //			if (currentPlayer.getHand().checkBlackjack()) {
 //				currentPlayer.printHand();
 //				System.out.println(currentPlayer.getName() + " got blackjack!");
@@ -261,7 +262,7 @@ public class Table {
 			System.out.println("\nIt's your turn, " + currentPlayer.getName() + ".");
 			//Asks player if s/he wants to change ace card value in first hand
 			//Automatically changes ace to 1 if player holds two aces
-			currentPlayer.aceChanger();
+//			currentPlayer.aceChanger();
 			currentPlayer.printHand();
 			// Double down option
 			System.out.println("Would you like to double down? Yes/No?");
