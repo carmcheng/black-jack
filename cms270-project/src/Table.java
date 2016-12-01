@@ -19,11 +19,8 @@ public class Table {
 	private ArrayList<Player> players;
 	private Deck cardDeck;
 	private Player player;
-<<<<<<< HEAD
 	private Player currentPlayer;
-=======
 	private Player currentP;
->>>>>>> refs/remotes/origin/master
 	private Pot pot;
 	private final int MAX_PLAYERS = 6;
 	private static int roundCount;
