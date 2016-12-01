@@ -294,7 +294,7 @@ public class BlackjackController extends BorderPane {
 		}
 	}
 	
-	public void launchErrorDialog(String error) {
+	protected void launchErrorDialog(String error) {
 		Alert alert = new Alert(AlertType.ERROR);
 		alert.setTitle("Error Dialog");
 		alert.setHeaderText(error);
@@ -352,9 +352,28 @@ public class BlackjackController extends BorderPane {
 		centerLabel.setText("Current player: " + activePlayer().getName());
 	}
 	
+	protected void askForNewPlayers() {
+		Alert alert = new Alert(AlertType.CONFIRMATION);
+		alert.setTitle("New Players?");
+		
+		alert.setHeaderText("If you want to continue, press OK.");
+	
+
+		Optional<ButtonType> result = alert.showAndWait();
+		if (result.get() == ButtonType.OK) {
+			int newPlayers = retrieveNumPlayers();
+			launchAskPlayerInfo(newPlayers);
+		} else {
+			Alert end = new Alert(AlertType.CONFIRMATION);
+			end.setHeaderText("Thank you for playing!");
+		}
+		
+	}
+
 	protected void reset() {
 		playerVBox.getChildren().clear();
 		resetView();
+		askForNewPlayers();
 	}
 	
 	//Update information in window
