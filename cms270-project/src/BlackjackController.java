@@ -166,7 +166,7 @@ public class BlackjackController extends BorderPane {
 			setButtonsVisibility();
 			updateView();
 		}
-		
+
 		if (event.getSource() == doubleDown) {
 			setButtonsVisibility();
 			text = activePlayer().getName() + ", you chose to double down.";
@@ -230,12 +230,12 @@ public class BlackjackController extends BorderPane {
 			text = "The dealer busted!";
 			topOutput.setText(text);
 		}
-		
+
 		updateDealerHandView();
 		calculateResults();
 		newRound();
 	}
-	
+
 	protected Card launchAceCardChooser() {
 		updateView();
 		List<Card> choices = new ArrayList<Card>();
@@ -249,7 +249,7 @@ public class BlackjackController extends BorderPane {
 		dialog.setHeaderText("Pick the Ace card in your hand that you would like "
 				+ "to switch the value of.");
 		dialog.setContentText("Choose the card: ");
-		
+
 		Optional<Card> result = dialog.showAndWait();
 		if (result.isPresent()) {
 			return result.get();
@@ -257,7 +257,7 @@ public class BlackjackController extends BorderPane {
 			return null;
 		}
 	}
-	
+
 	protected void launchAceValueChooser() {
 		Card ace = launchAceCardChooser();
 		if (ace == null) {
@@ -267,7 +267,7 @@ public class BlackjackController extends BorderPane {
 			alert.setTitle("Ace Card Found!");
 			alert.setContentText("Click OK to set card value to 1, "
 					+ "Cancel to set card value to 11.");
-			
+
 			Optional<ButtonType> result = alert.showAndWait();
 			if (result.get() == ButtonType.OK) {
 				activeHand().addCard(new Card(1, "A", ace.getCardSuit()));
@@ -294,7 +294,16 @@ public class BlackjackController extends BorderPane {
 				} else {
 					text += p.getName() + ", you busted as well.";
 				}
-			} else if(dealerHand().checkBlackjack()) {
+			} else if (p.getHand().checkBlackjack()) {
+				text = p.getName() + " , you got Blackjack!";
+				if (dealerHand().checkBlackjack()) {
+					text += "Dealer got Blackjack as well" 
+							+ "You do not win or lose money.";
+					p.takeBetBack();
+				} else {
+					p.collectWinnings();
+				}
+			} else if (dealerHand().checkBlackjack()) {
 				text = "Dealer got Blackjack! ";
 				if (!p.getHand().checkBlackjack()) {
 					text += p.getName() + ", you lose!";
@@ -381,7 +390,7 @@ public class BlackjackController extends BorderPane {
 		alert.setContentText("Security will be escorting you out now...");
 		alert.showAndWait();
 	}
-	
+
 	protected void launchGame() {
 		table = new Table();
 		utils = new Utils();
@@ -467,14 +476,14 @@ public class BlackjackController extends BorderPane {
 			});
 
 			Optional<Pair<String,String>> result = dialog.showAndWait();
-			
+
 			result.ifPresent(playerInfo -> {
 				player = new Player(playerInfo.getKey(), Double.parseDouble(playerInfo.getValue()));
 				players.add(player);
 			});
 		}
 	}
-	
+
 	protected void askPlayerBet() {
 		for (Player p : table.getPlayers()){
 			double bet;
@@ -562,7 +571,7 @@ public class BlackjackController extends BorderPane {
 		playerVBox.getChildren().clear();
 		fillPlayerVBox();
 	}
-	
+
 	protected void updateFinalView() {
 		updateHandView();
 		updateDealerHandView();
@@ -580,7 +589,7 @@ public class BlackjackController extends BorderPane {
 		playerHandValueLabel.setText("\n" + 
 				Integer.toString(activeHand().checkHandValue()));
 	}
-	
+
 	protected void updateDealerHandView() {
 		dealerHandHBox.getChildren().clear();
 		for (Card c : dealerHand().getCards()) {
@@ -590,7 +599,7 @@ public class BlackjackController extends BorderPane {
 		dealerHandValueLabel.setText("\n" + 
 				Integer.toString(dealerHand().checkHandValue()));
 	}
-	
+
 	protected void dealerHiddenHandView() {
 		dealerHandHBox.getChildren().clear();
 		Card c = dealerHand().getCards().get(0);
