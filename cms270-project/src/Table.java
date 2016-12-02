@@ -85,6 +85,9 @@ public class Table {
 	public ArrayList<Player> getPlayers() {
 		return players;
 	}
+	public void setPlayers(ArrayList<Player> p) {
+		players = p;
+	}
 	/**
 	 * This method returns the current player so the GUI is able to
 	 * keep track of who's turn it is.

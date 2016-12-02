@@ -257,17 +257,23 @@ public class BlackjackController extends BorderPane {
 		}
 		table.restart();
 		reset();
-		fillPlayerVBox();
-		table.setCurrentPlayer();
-		centerLabel.setText("Current player: " + activePlayer().getName());
 	}
 	
-	public void fillPlayerVBox() {
+	protected void fillPlayerVBox() {
 		for (Player p : table.getPlayers()) {
 			String info = "\n" + p.getName() + "\n" + p.getMoney();
 			Label playerInfo = new Label(info);
 			playerVBox.getChildren().add(playerInfo);
 		}
+	}
+	
+	protected void launchGame() {
+		table = new Table();
+		int numPlayers = retrieveNumPlayers();
+		launchAskPlayerInfo(numPlayers);
+		fillPlayerVBox();
+		table.setCurrentPlayer();
+		centerLabel.setText("Current player: " + activePlayer().getName());
 	}
 
 	public int retrieveNumPlayers() {
@@ -304,7 +310,6 @@ public class BlackjackController extends BorderPane {
 
 	// Adds players into game
 	public void launchAskPlayerInfo(int numOfPlayers) {
-		table = new Table();
 		players = table.getPlayers();
 		for (int i = 0; i < numOfPlayers; i++) {
 			Dialog<Pair<String, String>> dialog = new Dialog<>();
@@ -347,9 +352,6 @@ public class BlackjackController extends BorderPane {
 				players.add(player);
 			});
 		}
-		fillPlayerVBox();
-		table.setCurrentPlayer();
-		centerLabel.setText("Current player: " + activePlayer().getName());
 	}
 	
 	protected void askForNewPlayers() {
@@ -362,6 +364,9 @@ public class BlackjackController extends BorderPane {
 		if (result.get() == ButtonType.OK) {
 			int newPlayers = retrieveNumPlayers();
 			launchAskPlayerInfo(newPlayers);
+			fillPlayerVBox();
+			table.setCurrentPlayer();
+			centerLabel.setText("Current player: " + activePlayer().getName());
 		}
 		
 	}
@@ -405,6 +410,7 @@ public class BlackjackController extends BorderPane {
 		stand.setVisible(false);
 		ok.setVisible(false);
 		center.setVisible(true);
+		playerVBox.getChildren().clear();
 	}
 	
 	private Player activePlayer() {
