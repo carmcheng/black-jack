@@ -3,6 +3,7 @@ import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonBar.ButtonData;
@@ -49,6 +50,7 @@ public class BlackjackController extends BorderPane {
 		centerLabel.setStyle("-fx-text-fill: WHITE");
 		handVBox = new VBox();
 		handVBox.setStyle("-fx-text-fill: WHITE");
+		//handVBox.setAlignment(Pos.BOTTOM_LEFT);
 		playerHandValueLabel = new Label("");
 		playerHandValueLabel.setStyle("-fx-text-fill: WHITE");
 		setCenter(center);
@@ -133,6 +135,18 @@ public class BlackjackController extends BorderPane {
 			text = "Round has started. First hands dealt.";
 			topOutput.setText(text);
 			table.firstDeal();
+//			Iterator cardIterator=table.getCurrentPlayer().getHand().createIterator();
+//			while(cardIterator.hasNext()){
+//				Card currentCard=(Card) cardIterator.next();
+//				cardLabel=new Label(currentCard.getCardSuit()+currentCard.getCardValue());
+//				card=new VBox(5);
+//				card.getChildren().add(cardLabel);
+//				cardLabel.setAlignment(Pos.TOP_LEFT);
+//				card.setPrefSize(10,30);
+//				card.setStyle("-fx-background-color: WHITE;");
+//				center.getChildren().add(card);
+//				card.setAlignment(Pos.BOTTOM_CENTER);
+//			}
 			start.setVisible(false);
 			hit.setVisible(true);
 			stand.setVisible(true);
@@ -157,17 +171,9 @@ public class BlackjackController extends BorderPane {
 		}
 
 		if(event.getSource() == stand) {
-			if (table.hasNextPlayer()) {
-				table.moveToNextPlayer();
-				centerLabel.setText("Current player: " + activePlayer().getName());
-				text = "You chose to stand.\nIt is now " + activePlayer().getName()
-						+ "'s turn.";
-				topOutput.setText(text);
-			} else {
-				text = "You chose to stand. It is now the dealer's turn.";
-				topOutput.setText(text);
-				setButtonsVisibility();    // hides stand, hit, and double, shows OK
-			}
+			text = activePlayer().getName() + ", you chose to stand.";
+			topOutput.setText(text);
+			setButtonsVisibility();
 			updateView();
 		}
 		if (event.getSource() == doubleDown) {
@@ -195,6 +201,8 @@ public class BlackjackController extends BorderPane {
 				centerLabel.setText("Current player: " + activePlayer().getName());
 				topOutput.setText(text);
 			} else {
+				text = "It is now the dealer's turn.";
+				topOutput.setText(text);
 				doDealerMove();
 			}
 		}
