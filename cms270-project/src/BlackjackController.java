@@ -356,16 +356,12 @@ public class BlackjackController extends BorderPane {
 		Alert alert = new Alert(AlertType.CONFIRMATION);
 		alert.setTitle("New Players?");
 		
-		alert.setHeaderText("If you want to continue, press OK.");
-	
-
+		alert.setHeaderText("Are there any new players? If yes, press OK");
+		
 		Optional<ButtonType> result = alert.showAndWait();
 		if (result.get() == ButtonType.OK) {
 			int newPlayers = retrieveNumPlayers();
 			launchAskPlayerInfo(newPlayers);
-		} else {
-			Alert end = new Alert(AlertType.CONFIRMATION);
-			end.setHeaderText("Thank you for playing!");
 		}
 		
 	}
