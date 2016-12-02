@@ -178,7 +178,6 @@ public class BlackjackController extends BorderPane {
 		while(dealer().checkSoftSeventeen() || dealerHand().checkHandValue()<17){
 			dealerHand().addCard(deck().dealCard());
 			dealer().aceChecker();
-			updateDealerHandView();
 		}
 		
 		if (dealer().isBusted()) {
@@ -186,9 +185,9 @@ public class BlackjackController extends BorderPane {
 			topOutput.setText(text);
 		}
 		
+		updateDealerHandView();
 		calculateResults();
 		newRound();
-		updateView();
 	}
 	
 	protected void calculateResults() {
@@ -362,6 +361,7 @@ public class BlackjackController extends BorderPane {
 		
 		Optional<ButtonType> result = alert.showAndWait();
 		if (result.get() == ButtonType.OK) {
+			playerVBox.getChildren().clear();
 			int newPlayers = retrieveNumPlayers();
 			if (newPlayers + table.getPlayers().size() > 6) {
 				launchTooManyPlayersError();
@@ -371,6 +371,8 @@ public class BlackjackController extends BorderPane {
 			fillPlayerVBox();
 			table.setCurrentPlayer();
 			centerLabel.setText("Current player: " + activePlayer().getName());
+		} else {
+			return;
 		}
 		
 	}
@@ -384,7 +386,6 @@ public class BlackjackController extends BorderPane {
 	}
 
 	protected void reset() {
-		playerVBox.getChildren().clear();
 		resetView();
 		askForNewPlayers();
 	}
@@ -422,7 +423,12 @@ public class BlackjackController extends BorderPane {
 		stand.setVisible(false);
 		ok.setVisible(false);
 		center.setVisible(true);
-		playerVBox.getChildren().clear();
+		handVBox.getChildren().clear();
+		dealerHandVBox.getChildren().clear();
+		topOutput.setText("");
+		playerHandValueLabel.setText("");
+		dealerHandValueLabel.setText("");
+		
 	}
 	
 	private Player activePlayer() {
