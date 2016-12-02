@@ -363,12 +363,24 @@ public class BlackjackController extends BorderPane {
 		Optional<ButtonType> result = alert.showAndWait();
 		if (result.get() == ButtonType.OK) {
 			int newPlayers = retrieveNumPlayers();
+			if (newPlayers + table.getPlayers().size() > 6) {
+				launchTooManyPlayersError();
+				newPlayers = retrieveNumPlayers();
+			}
 			launchAskPlayerInfo(newPlayers);
 			fillPlayerVBox();
 			table.setCurrentPlayer();
 			centerLabel.setText("Current player: " + activePlayer().getName());
 		}
 		
+	}
+	
+	protected void launchTooManyPlayersError() {
+		Alert alert = new Alert(AlertType.ERROR);
+		alert.setTitle("Too Many Players");
+		alert.setHeaderText("The table cannot exceed 6 players.");
+		alert.setContentText("Please try again.");
+		alert.showAndWait();
 	}
 
 	protected void reset() {
