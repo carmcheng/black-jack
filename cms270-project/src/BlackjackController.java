@@ -19,7 +19,6 @@ public class BlackjackController extends BorderPane {
 	private Table table;
 	private ArrayList<Player> players;
 
-	private Label leftLabel;
 	private Label rightLabel;
 	private Label centerLabel;
 	private Label playerHandValueLabel;
@@ -58,10 +57,7 @@ public class BlackjackController extends BorderPane {
 		playerVBox = new VBox();
 		playerVBox.setStyle("-fx-background-color: DARKGREEN;");
 		playerVBox.setPrefWidth(150);
-		leftLabel = new Label("Player Information:");
-		leftLabel.setStyle("-fx-text-fill: WHITE");
 		setLeft(playerVBox);
-		playerVBox.getChildren().add(leftLabel);
 
 		/*** Right pane ***/
 		dealerPane = new VBox();
@@ -256,7 +252,7 @@ public class BlackjackController extends BorderPane {
 		}
 		ChoiceDialog<Card> dialog = new ChoiceDialog<Card>(null, choices);
 		dialog.setTitle("Ace Card Chooser");
-		dialog.setHeaderText("Pick the Ace card in your hand that you would like ."
+		dialog.setHeaderText("Pick the Ace card in your hand that you would like "
 				+ "to switch the value of.");
 		dialog.setContentText("Choose the card: ");
 		
@@ -396,6 +392,10 @@ public class BlackjackController extends BorderPane {
 		table = new Table();
 		int numPlayers = retrieveNumPlayers();
 		launchAskPlayerInfo(numPlayers);
+		if (table.getPlayers().size() == 0) {
+			launchThanksForPlaying();
+			System.exit(0);
+		}
 		askPlayerBet();
 		fillPlayerVBox();
 		table.setCurrentPlayer();
@@ -421,8 +421,7 @@ public class BlackjackController extends BorderPane {
 		if (result.isPresent()){
 			return Integer.parseInt(result.get());
 		} else {
-			launchErrorDialog("number of players");
-			return 1; //default of 1 player
+			return 1;		//default player
 		}
 	}
 
@@ -443,7 +442,7 @@ public class BlackjackController extends BorderPane {
 			dialog.setHeaderText("Enter your name and amount of money you have.");
 
 			ButtonType okButtonType = new ButtonType("OK", ButtonData.OK_DONE);
-			dialog.getDialogPane().getButtonTypes().addAll(okButtonType, ButtonType.CANCEL);
+			dialog.getDialogPane().getButtonTypes().addAll(okButtonType);
 
 			GridPane grid = new GridPane();
 			grid.setHgap(10);
@@ -472,7 +471,7 @@ public class BlackjackController extends BorderPane {
 			});
 
 			Optional<Pair<String,String>> result = dialog.showAndWait();
-
+			
 			result.ifPresent(playerInfo -> {
 				player = new Player(playerInfo.getKey(), Double.parseDouble(playerInfo.getValue()));
 				players.add(player);
@@ -482,28 +481,27 @@ public class BlackjackController extends BorderPane {
 	
 	protected void askPlayerBet() {
 		for (Player p : table.getPlayers()){
-			double bet = eachBet();
+			double bet = eachBet(p);
 			if(p.getMoney() < bet) {
 				Alert error = new Alert(AlertType.ERROR, "You do not have enough money");
 				error.showAndWait();
-				eachBet();
+				eachBet(p);
 			} else {
 				p.setBet(bet);
 			}
 		}
 	}
 
-	protected double eachBet() {
+	protected double eachBet(Player p) {
 		TextInputDialog dialog = new TextInputDialog();
 		dialog.setTitle("Set your bet");
-		dialog.setHeaderText("Enter bet amount.");
+		dialog.setHeaderText("Enter bet amount, " + p.getName() + ".");
 
 		Optional<String> result = dialog.showAndWait();
 		double bet = Double.parseDouble(result.get());
 		if(result.isPresent()){
 			return bet;
-		}
-		else {
+		} else {
 			launchErrorDialog("Default Bet");
 			return 1.00; //default of 1 player
 		}
