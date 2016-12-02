@@ -44,7 +44,7 @@ public class BlackjackController extends BorderPane {
 	public BlackjackController() {
 
 		/*** Center pane ***/
-		center = new VBox();
+		center = new VBox(5);
 		center.setStyle("-fx-background-color: DARKGREEN;");
 		centerLabel = new Label("");
 		handVBox = new VBox();
@@ -135,7 +135,7 @@ public class BlackjackController extends BorderPane {
 			while(cardIterator.hasNext()){
 				Card currentCard=(Card) cardIterator.next();
 				cardLabel=new Label(currentCard.getCardSuit()+currentCard.getCardValue());
-				card=new VBox(5);
+				card=new VBox();
 				card.getChildren().add(cardLabel);
 				cardLabel.setAlignment(Pos.TOP_LEFT);
 				card.setPrefSize(10,30);
