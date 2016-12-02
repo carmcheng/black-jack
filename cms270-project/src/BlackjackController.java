@@ -20,6 +20,7 @@ public class BlackjackController extends BorderPane {
 	private String text;
 	private Player player;
 	private Table table;
+	private int numPlayers;
 	private ArrayList<Player> players;
 	private Utils utils;
 
@@ -38,9 +39,9 @@ public class BlackjackController extends BorderPane {
 	private VBox dealerPane;
 	private HBox top;
 	private HBox bottom;
-	private DecimalFormat currency = new DecimalFormat("$0.00");
 	private HBox handHBox;
 	private HBox dealerHandHBox;
+	private DecimalFormat currency = new DecimalFormat("$0.00");
 
 	public BlackjackController() {
 
@@ -294,15 +295,6 @@ public class BlackjackController extends BorderPane {
 				} else {
 					text += p.getName() + ", you busted as well.";
 				}
-			} else if (p.getHand().checkBlackjack()) {
-				text = p.getName() + " , you got Blackjack!";
-				if (dealerHand().checkBlackjack()) {
-					text += "Dealer got Blackjack as well" 
-							+ "You do not win or lose money.";
-					p.takeBetBack();
-				} else {
-					p.collectWinnings();
-				}
 			} else if (dealerHand().checkBlackjack()) {
 				text = "Dealer got Blackjack! ";
 				if (!p.getHand().checkBlackjack()) {
@@ -394,7 +386,7 @@ public class BlackjackController extends BorderPane {
 	protected void launchGame() {
 		table = new Table();
 		utils = new Utils();
-		int numPlayers = retrieveNumPlayers();
+		numPlayers = retrieveNumPlayers();
 		launchAskPlayerInfo(numPlayers);
 		if (table.getPlayers().size() == 0) {
 			launchThanksForPlaying();
@@ -557,7 +549,9 @@ public class BlackjackController extends BorderPane {
 
 	protected void reset() {
 		resetView();
-		askForNewPlayers();
+		if(numPlayers < 6) {
+			askForNewPlayers();
+		}
 		for (Player p : table.getPlayers()) {
 			p.setBet(0);
 		}
