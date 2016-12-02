@@ -11,7 +11,7 @@ public class Deck {
 	private ArrayList<Card> deck;
 	private static Deck cardDeck;
 
-	private String cardSuits[] = {"Spade", "Clover", "Heart", "Diamond"};
+	private String cardSuits[] = {"Spade", "Club", "Heart", "Diamond"};
 	private String cardNames[] = {"2", "3", "4", "5", "6", "7",
 								  "8", "9", "10", "J", "Q", "K", "A"};		  
 
