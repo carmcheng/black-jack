@@ -16,4 +16,11 @@ public class Utils {
 		iv.setFitHeight(150);
 		return iv;
 	}	
+	
+	public ImageView getHiddenCardImageView() {
+		ImageView iv = new ImageView(getImage("flipped.png"));
+		iv.setPreserveRatio(true);
+		iv.setFitHeight(150);
+		return iv;
+	}
 }

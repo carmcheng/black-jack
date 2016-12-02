@@ -218,6 +218,7 @@ public class BlackjackController extends BorderPane {
 	protected void doDealerMove() {
 		text = "It is the dealer's turn.";
 		topOutput.setText(text);
+		updateDealerHandView();
 
 		while(dealer().checkSoftSeventeen() || dealerHand().checkHandValue()<17){
 			dealerHand().addCard(deck().dealCard());
@@ -228,8 +229,8 @@ public class BlackjackController extends BorderPane {
 			text = "The dealer busted!";
 			topOutput.setText(text);
 		}
-
-		updateHandView();
+		
+		updateDealerHandView();
 		calculateResults();
 		newRound();
 	}
@@ -278,7 +279,7 @@ public class BlackjackController extends BorderPane {
 	}
 
 	protected void calculateResults() {
-		updateView();
+		updateFinalView();
 		Alert results = new Alert(AlertType.INFORMATION);
 		results.setTitle("Results");
 		results.setHeaderText(null);
@@ -547,12 +548,20 @@ public class BlackjackController extends BorderPane {
 		for (Player p : table.getPlayers()) {
 			p.setBet(0);
 		}
-		updateView();
+		updateFinalView();
 	}
 
 	//Update information in window
 	protected void updateView() {
 		updateHandView();
+		dealerHiddenHandView();
+		playerVBox.getChildren().clear();
+		fillPlayerVBox();
+	}
+	
+	protected void updateFinalView() {
+		updateHandView();
+		updateDealerHandView();
 		playerVBox.getChildren().clear();
 		fillPlayerVBox();
 	}
@@ -566,7 +575,9 @@ public class BlackjackController extends BorderPane {
 		}
 		playerHandValueLabel.setText("\n" + 
 				Integer.toString(activeHand().checkHandValue()));
-
+	}
+	
+	protected void updateDealerHandView() {
 		dealerHandHBox.getChildren().clear();
 		for (Card c : dealerHand().getCards()) {
 			ImageView cardView = utils.getCardImageView(c.getCardName() + c.getCardSuit());
@@ -574,6 +585,14 @@ public class BlackjackController extends BorderPane {
 		}
 		dealerHandValueLabel.setText("\n" + 
 				Integer.toString(dealerHand().checkHandValue()));
+	}
+	
+	protected void dealerHiddenHandView() {
+		dealerHandHBox.getChildren().clear();
+		Card c = dealerHand().getCards().get(0);
+		ImageView hiddenCard = utils.getHiddenCardImageView();
+		ImageView cardView = utils.getCardImageView(c.getCardName() + c.getCardSuit());
+		dealerHandHBox.getChildren().addAll(cardView, hiddenCard);
 	}
 
 	protected void resetView() {
