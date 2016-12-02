@@ -22,6 +22,7 @@ public class BlackjackController extends BorderPane {
 	private Label rightLabel;
 	private Label centerLabel;
 	private Label playerHandValueLabel;
+	private Label cardLabel;
 	private Label dealerHandValueLabel;
 	private Text topOutput;
 	private Button start;
@@ -34,6 +35,7 @@ public class BlackjackController extends BorderPane {
 	private HBox top;
 	private HBox bottom;
 	
+	private VBox card;
 	private VBox handVBox;
 	private VBox dealerHandVBox;
 
@@ -41,7 +43,7 @@ public class BlackjackController extends BorderPane {
 		
 		/*** Center pane ***/
 		center = new VBox();
-//		center.setStyle("-fx-background-color: DARKGREEN;");
+		center.setStyle("-fx-background-color: DARKGREEN;");
 		centerLabel = new Label("");
 		handVBox = new VBox();
 		playerHandValueLabel = new Label("");
@@ -50,7 +52,7 @@ public class BlackjackController extends BorderPane {
 
 		/*** Left pane ***/
 		playerVBox = new VBox();
-		//	left.setStyle("-fx-background-color: DARKGREEN;");
+		playerVBox.setStyle("-fx-background-color: DARKGREEN;");
 		playerVBox.setPrefWidth(150);
 		leftLabel = new Label("Player Information:");
 		setLeft(playerVBox);
@@ -58,7 +60,7 @@ public class BlackjackController extends BorderPane {
 
 		/*** Right pane ***/
 		dealerPane = new VBox();
-		//	right.setStyle("-fx-background-color: DARKGREEN;");
+		dealerPane.setStyle("-fx-background-color: DARKGREEN;");
 		dealerPane.setPrefWidth(150);
 		rightLabel = new Label("The Dealer");
 		dealerHandVBox = new VBox();
@@ -116,6 +118,11 @@ public class BlackjackController extends BorderPane {
 			text = "Round has started. First hands dealt.";
 			topOutput.setText(text);
 			table.firstDeal();
+			for(int i=0; i<table.getCurrentPlayer().getHand().numOfCards();i++){
+				cardLabel=new Label();
+				card=new VBox();
+				handVBox.getChildren().add(card);
+			}
 			start.setVisible(false);
 			hit.setVisible(true);
 			stand.setVisible(true);
