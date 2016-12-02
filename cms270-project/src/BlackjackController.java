@@ -7,6 +7,8 @@ import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonBar.ButtonData;
+import javafx.scene.image.ImageView;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -18,6 +20,7 @@ public class BlackjackController extends BorderPane {
 	private Player player;
 	private Table table;
 	private ArrayList<Player> players;
+	private Utils utils;
 
 	private Label rightLabel;
 	private Label centerLabel;
@@ -390,6 +393,7 @@ public class BlackjackController extends BorderPane {
 	
 	protected void launchGame() {
 		table = new Table();
+		utils = new Utils();
 		int numPlayers = retrieveNumPlayers();
 		launchAskPlayerInfo(numPlayers);
 		if (table.getPlayers().size() == 0) {
@@ -568,11 +572,19 @@ public class BlackjackController extends BorderPane {
 	protected void updateHandView() {
 		handVBox.getChildren().clear();
 		for (Card c : activeHand().getCards()) {
-			Label cardLabel = new Label(c.toString());
-			handVBox.getChildren().add(cardLabel);
+			ImageView cardView = utils.getCardImageView(c.getCardName() + c.getCardSuit());
+			handVBox.getChildren().add(cardView);
 		}
 		playerHandValueLabel.setText("\n" + 
 				Integer.toString(activeHand().checkHandValue()));
+//		
+//		handVBox.getChildren().clear();
+//		for (Card c : activeHand().getCards()) {
+//			Label cardLabel = new Label(c.toString());
+//			handVBox.getChildren().add(cardLabel);
+//		}
+//		playerHandValueLabel.setText("\n" + 
+//				Integer.toString(activeHand().checkHandValue()));
 	}
 
 	protected void updateDealerHandView() {
