@@ -19,7 +19,6 @@ public class Table {
 	private ArrayList<Player> players;
 	private Deck cardDeck;
 	private Player player;
-	private Player currentPlayer;
 	private Player currentP;
 	private Pot pot;
 	private final int MAX_PLAYERS = 6;
@@ -78,29 +77,51 @@ public class Table {
 			}
 	}
 	/**
-	 * Returns ArrayList of players at table
-	 * @return players
+	 * This method returns the ArrayList of Player objects in the Table 
+	 * object created.
+	 * 
+	 * @return An ArrayList of Player objects
 	 */
 	public ArrayList<Player> getPlayers() {
 		return players;
 	}
-	
+	/**
+	 * This method returns the current player so the GUI is able to
+	 * keep track of who's turn it is.
+	 * 
+	 * @return a Player object
+	 */
 	public Player getCurrentPlayer() {
 		return this.currentP;
 	}
-	
+	/**
+	 * This method sets the current player to the first Player object
+	 * in the ArrayList.
+	 */
 	public void setCurrentPlayer() {
 		if (players.size() > 0)
 			currentP = players.get(0);
 		return;
 	}
-	
+	/**
+	 * This method acts like an Iterator and sets the current player
+	 * to the next Player object in the ArrayList. It then returns the
+	 * Player object.
+	 * 
+	 * @return a Player object
+	 */
 	public Player moveToNextPlayer() {
 		int i = players.indexOf(currentP);
 		currentP = players.get(++i);
 		return currentP;
 	}
-	
+	/**
+	 * This method returns true if there is another Player that succeeds
+	 * the current Player in the ArrayList. If the current Player is
+	 * the only object or is at the last of the ArrayList, it returns false.
+	 * 
+	 * @return a boolean value
+	 */
 	public boolean hasNextPlayer() {
 		int i = players.indexOf(currentP);
 		if (i < players.size() - 1) {
