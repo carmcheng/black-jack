@@ -45,7 +45,7 @@ public class BlackjackController extends BorderPane {
 	public BlackjackController() {
 
 		/*** Center pane ***/
-		center = new VBox();
+		center = new VBox(5);
 		center.setStyle("-fx-background-color: DARKGREEN;");
 		center.setPrefWidth(400);
 		centerLabel = new Label("");
