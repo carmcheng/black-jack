@@ -17,7 +17,7 @@ public class BlackjackController extends BorderPane {
 	private Player player;
 	private Table table;
 	private ArrayList<Player> players;
-	
+
 	private Label leftLabel;
 	private Label rightLabel;
 	private Label centerLabel;
@@ -29,18 +29,19 @@ public class BlackjackController extends BorderPane {
 	private Button hit;
 	private Button stand;
 	private Button ok;
+	private Button doubleDown;
 	private VBox center;
 	private VBox playerVBox;
 	private VBox dealerPane;
 	private HBox top;
 	private HBox bottom;
-	
+
 	private VBox card;
 	private VBox handVBox;
 	private VBox dealerHandVBox;
 
 	public BlackjackController() {
-		
+
 		/*** Center pane ***/
 		center = new VBox();
 		center.setStyle("-fx-background-color: DARKGREEN;");
@@ -55,6 +56,7 @@ public class BlackjackController extends BorderPane {
 		playerVBox.setStyle("-fx-background-color: DARKGREEN;");
 		playerVBox.setPrefWidth(150);
 		leftLabel = new Label("Player Information:");
+		leftLabel.setStyle("-fx-text-fill: WHITE");
 		setLeft(playerVBox);
 		playerVBox.getChildren().add(leftLabel);
 
@@ -63,6 +65,7 @@ public class BlackjackController extends BorderPane {
 		dealerPane.setStyle("-fx-background-color: DARKGREEN;");
 		dealerPane.setPrefWidth(150);
 		rightLabel = new Label("The Dealer");
+		rightLabel.setStyle("-fx-text-fill: WHITE");
 		dealerHandVBox = new VBox();
 		dealerHandValueLabel = new Label("");
 		setRight(dealerPane); 
@@ -73,6 +76,7 @@ public class BlackjackController extends BorderPane {
 		top.setStyle("-fx-background-color: WHITE;");
 		top.setPrefHeight(20);
 		topOutput = new Text("");
+
 		setTop(top);
 		top.getChildren().add(topOutput);
 
@@ -97,27 +101,35 @@ public class BlackjackController extends BorderPane {
 		stand.setVisible(false);
 		stand.setOnAction(new EventHandler<ActionEvent>() {
 			@Override public void handle(ActionEvent e) {
-				 doPlayerMove(e);
+				doPlayerMove(e);
+			}
+		});
+		doubleDown = new Button("DOUBLE");
+		doubleDown.setVisible(false);
+		doubleDown.setOnAction(new EventHandler<ActionEvent>() {
+			@Override public void handle(ActionEvent e) {
+				doPlayerMove(e);
 			}
 		});
 		ok = new Button("OK");
 		ok.setVisible(false);
 		ok.setOnAction(new EventHandler<ActionEvent>() {
 			@Override public void handle(ActionEvent e) {
-				 doPlayerMove(e);
+				doPlayerMove(e);
 			}
 		});
-		bottom.getChildren().addAll(start, hit, stand, ok);
+		bottom.getChildren().addAll(start, hit, stand, doubleDown, ok);
 		setBottom(bottom);
 	}
 
-	
+
 	protected void doPlayerMove(ActionEvent event) {
 		// Start the round
 		if (event.getSource() == start) {
 			text = "Round has started. First hands dealt.";
 			topOutput.setText(text);
 			table.firstDeal();
+<<<<<<< HEAD
 			for(int i=0; i<table.getCurrentPlayer().getHand().numOfCards();i++){
 				cardLabel=new Label();
 				card=new VBox();
@@ -125,27 +137,34 @@ public class BlackjackController extends BorderPane {
 				card.setStyle("-fx-background-color: WHITE;");
 				handVBox.getChildren().add(card);
 			}
+=======
+			//			for(int i=0; i<table.getCurrentPlayer().getHand().numOfCards();i++){
+			//				cardLabel=new Label();
+			//				card=new VBox();
+			//				handVBox.getChildren().add(card);
+			//			}
+>>>>>>> branch 'master' of https://github.com/rollins-cms270/project-team-vegas.git
 			start.setVisible(false);
 			hit.setVisible(true);
 			stand.setVisible(true);
+			doubleDown.setVisible(true);
 			updateView();
 		}
-		
+
 		if (event.getSource() == hit) {
 			text = activePlayer().getName() + ", you chose to hit.";
 			topOutput.setText(text);
+			doubleDown.setVisible(false);
 			activeHand().addCard(deck().dealCard());
 			activePlayer().aceChanger();
 			if (activePlayer().isBusted()) {
 				text = "You busted!";
 				topOutput.setText(text);
-				hit.setVisible(false);
-				stand.setVisible(false);
-				ok.setVisible(true);
+				setButtonsVisibility();
 			}
 			updateView();
 		}
-		
+
 		if(event.getSource() == stand) {
 			if (table.hasNextPlayer()) {
 				table.moveToNextPlayer();
@@ -156,13 +175,29 @@ public class BlackjackController extends BorderPane {
 			} else {
 				text = "You chose to stand. It is now the dealer's turn.";
 				topOutput.setText(text);
-				hit.setVisible(false);
-				stand.setVisible(false);
-				ok.setVisible(true);
+				setButtonsVisibility();    // hides stand and hit, shows OK
 			}
 			updateView();
 		}
-		
+		if (event.getSource() == doubleDown) {
+			text = activePlayer().getName() + ", you chose to double down.";
+			topOutput.setText(text);
+			Card c = deck().dealCard();
+			activePlayer().doubleDown();       // BET DECREASES BECAUSE OF DOUBLE DOWN
+			checkForAceCard(c);
+			activeHand().addCard(c);
+			updateView();
+			setButtonsVisibility();
+			doubleDown.setVisible(false);
+			if (table.hasNextPlayer()) {
+				table.moveToNextPlayer();
+				centerLabel.setText("Current player: " + activePlayer().getName());
+				text = "You chose to stand.\nIt is now " + activePlayer().getName()
+						+ "'s turn.";
+				topOutput.setText(text);
+			}
+		}
+
 		if(event.getSource() == ok) {
 			if (table.hasNextPlayer()) {
 				table.moveToNextPlayer();
@@ -171,6 +206,7 @@ public class BlackjackController extends BorderPane {
 				hit.setVisible(true);
 				stand.setVisible(true);
 				ok.setVisible(false);
+				doubleDown.setVisible(true);
 				centerLabel.setText("Current player: " + activePlayer().getName());
 				topOutput.setText(text);
 			} else {
@@ -178,27 +214,44 @@ public class BlackjackController extends BorderPane {
 			}
 		}
 	}
-	
+
+	private void checkForAceCard(Card c) {
+		if (c.getCardName().equals("A")) {
+			Alert alert = new Alert(AlertType.CONFIRMATION);
+			alert.setTitle("Ace Card Found!");
+			alert.setHeaderText("You received an Ace card.");
+			alert.setContentText("Would you like to change its value "
+					+ "from 11 to 1? Click OK to confirm, cancel to leave "
+					+ "card value unchanged.");
+
+			Optional<ButtonType> result = alert.showAndWait();
+			if (result.get() == ButtonType.OK) {
+				c.setCardValue(1);
+			} else {
+				return;
+			}
+		}
+	}
+
 	protected void doDealerMove() {
-		center.setVisible(false);
 		text = "It is the dealer's turn.";
 		topOutput.setText(text);
-		
+
 		while(dealer().checkSoftSeventeen() || dealerHand().checkHandValue()<17){
 			dealerHand().addCard(deck().dealCard());
 			dealer().aceChecker();
 		}
-		
+
 		if (dealer().isBusted()) {
 			text = "The dealer busted!";
 			topOutput.setText(text);
 		}
-		
+
 		updateDealerHandView();
 		calculateResults();
 		newRound();
 	}
-	
+
 	protected void calculateResults() {
 		Alert results = new Alert(AlertType.INFORMATION);
 		results.setTitle("Results");
@@ -235,23 +288,23 @@ public class BlackjackController extends BorderPane {
 							+ " the dealer. You lose!";
 				}
 			}
-		results.setContentText(text);
-		results.showAndWait();
+			results.setContentText(text);
+			results.showAndWait();
 		}
 		return;
 	}
-	
+
 	protected void newRound() {
 		ArrayList <Player> toRemove = new ArrayList<Player>();
 		Alert alert = new Alert(AlertType.CONFIRMATION);
 		alert.setTitle("Reset");
-		
+
 		for (Player p : table.getPlayers()) {
 			alert.setHeaderText(p.getName() + ", would you"
 					+ " like to stay for another round?");
 			alert.setContentText("You currently have $" + p.getMoney()
-					+ " left.");
-			
+			+ " left.");
+
 			Optional<ButtonType> result = alert.showAndWait();
 			if (result.get() == ButtonType.OK) {
 				p.getHand().reset();
@@ -259,14 +312,18 @@ public class BlackjackController extends BorderPane {
 				toRemove.add(p);
 			}
 		}
-		
+
 		for (Player p : toRemove) {
 			players.remove(p);
 		}
 		table.restart();
 		reset();
+		if (table.getPlayers().size() == 0) {
+			launchThanksForPlaying();
+			System.exit(0);
+		}
 	}
-	
+
 	protected void fillPlayerVBox() {
 		for (Player p : table.getPlayers()) {
 			String info = "\n" + p.getName() + "\n" + p.getMoney();
@@ -274,11 +331,12 @@ public class BlackjackController extends BorderPane {
 			playerVBox.getChildren().add(playerInfo);
 		}
 	}
-	
+
 	protected void launchGame() {
 		table = new Table();
 		int numPlayers = retrieveNumPlayers();
 		launchAskPlayerInfo(numPlayers);
+		askPlayerBet();
 		fillPlayerVBox();
 		table.setCurrentPlayer();
 		centerLabel.setText("Current player: " + activePlayer().getName());
@@ -307,7 +365,7 @@ public class BlackjackController extends BorderPane {
 			return 1; //default of 1 player
 		}
 	}
-	
+
 	protected void launchErrorDialog(String error) {
 		Alert alert = new Alert(AlertType.ERROR);
 		alert.setTitle("Error Dialog");
@@ -362,12 +420,40 @@ public class BlackjackController extends BorderPane {
 		}
 	}
 	
+	protected void askPlayerBet() {
+		for (Player p : table.getPlayers()){
+			if(p.getMoney() < eachBet()) {
+				Alert error = new Alert(AlertType.ERROR, "You do not have enough money");
+				error.showAndWait();
+				eachBet();
+			} else {
+				p.setBet(eachBet());
+			}
+		}
+	}
+
+	protected double eachBet() {
+		TextInputDialog dialog = new TextInputDialog();
+		dialog.setTitle("Set your bet now");
+		dialog.setHeaderText("Enter bet amount.");
+
+		Optional<String> result = dialog.showAndWait();
+		double bet = Double.parseDouble(result.get());
+		if(result.isPresent()){
+			return bet;
+		}
+		else {
+			launchErrorDialog("Default Bet");
+			return 1.00; //default of 1 player
+		}
+	}
+
 	protected void askForNewPlayers() {
 		Alert alert = new Alert(AlertType.CONFIRMATION);
 		alert.setTitle("New Players?");
-		
+
 		alert.setHeaderText("Are there any new players? If yes, press OK");
-		
+
 		Optional<ButtonType> result = alert.showAndWait();
 		if (result.get() == ButtonType.OK) {
 			playerVBox.getChildren().clear();
@@ -383,9 +469,17 @@ public class BlackjackController extends BorderPane {
 		} else {
 			return;
 		}
-		
+
 	}
-	
+
+	protected void launchThanksForPlaying() {
+		Alert alert = new Alert(AlertType.INFORMATION);
+		alert.setTitle("Quitting...");
+		alert.setHeaderText(null);
+		alert.setContentText("Thanks for playing!");
+		alert.showAndWait();
+	}
+
 	protected void launchTooManyPlayersError() {
 		Alert alert = new Alert(AlertType.ERROR);
 		alert.setTitle("Too Many Players");
@@ -398,13 +492,13 @@ public class BlackjackController extends BorderPane {
 		resetView();
 		askForNewPlayers();
 	}
-	
+
 	//Update information in window
 	protected void updateView() {
 		updateHandView();
 		updateDealerHandView();
 	}
-	
+
 	//Update hand cards
 	protected void updateHandView() {
 		handVBox.getChildren().clear();
@@ -415,7 +509,7 @@ public class BlackjackController extends BorderPane {
 		playerHandValueLabel.setText("\n" + 
 				Integer.toString(activeHand().checkHandValue()));
 	}
-	
+
 	protected void updateDealerHandView() {
 		dealerHandVBox.getChildren().clear();
 		for (Card c : dealerHand().getCards()) {
@@ -425,38 +519,43 @@ public class BlackjackController extends BorderPane {
 		dealerHandValueLabel.setText("\n" + 
 				Integer.toString(dealerHand().checkHandValue()));
 	}
-	
+
 	protected void resetView() {
 		start.setVisible(true);
 		hit.setVisible(false);
 		stand.setVisible(false);
 		ok.setVisible(false);
-		center.setVisible(true);
 		handVBox.getChildren().clear();
 		dealerHandVBox.getChildren().clear();
 		topOutput.setText("");
 		playerHandValueLabel.setText("");
 		dealerHandValueLabel.setText("");
-		
+
 	}
-	
+
 	private Player activePlayer() {
 		return table.getCurrentPlayer();
 	}
-	
+
 	private Hand activeHand() {
 		return activePlayer().getHand();
 	}
-	
+
 	private Dealer dealer() {
 		return table.getDealer();
 	}
-	
+
 	private Hand dealerHand() {
 		return table.getDealer().getHand();
 	}
-	
+
 	private Deck deck() {
 		return table.getDeck();
+	}
+
+	private void setButtonsVisibility() {
+		hit.setVisible(false);
+		stand.setVisible(false);
+		ok.setVisible(true);
 	}
 }
