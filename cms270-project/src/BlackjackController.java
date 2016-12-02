@@ -134,27 +134,7 @@ public class BlackjackController extends BorderPane {
 			text = "Round has started. First hands dealt.";
 			topOutput.setText(text);
 			table.firstDeal();
-<<<<<<< HEAD
-			Iterator cardIterator=table.getCurrentPlayer().getHand().createIterator();
-			while(cardIterator.hasNext()){
-				Card currentCard=(Card) cardIterator.next();
-				cardLabel=new Label(currentCard.getCardSuit()+currentCard.getCardValue());
-				card=new VBox();
-				card.getChildren().add(cardLabel);
-				cardLabel.setAlignment(Pos.TOP_LEFT);
-				card.setPrefSize(10,30);
-				card.setStyle("-fx-background-color: WHITE;");
-				center.getChildren().add(card);
-				card.setAlignment(Pos.BOTTOM_CENTER);
-			}
-			//			for(int i=0; i<table.getCurrentPlayer().getHand().numOfCards();i++){
-			//				cardLabel=new Label();
-			//				card=new VBox();
-			//				handVBox.getChildren().add(card);
-			//			}
-=======
 			activePlayer().aceChanger();
->>>>>>> refs/remotes/origin/master
 			start.setVisible(false);
 			hit.setVisible(true);
 			stand.setVisible(true);
