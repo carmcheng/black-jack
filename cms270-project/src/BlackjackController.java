@@ -23,7 +23,6 @@ public class BlackjackController extends BorderPane {
 	private Label rightLabel;
 	private Label centerLabel;
 	private Label playerHandValueLabel;
-	private Label cardLabel;
 	private Label dealerHandValueLabel;
 	private Text topOutput;
 	private Button start;
@@ -37,7 +36,6 @@ public class BlackjackController extends BorderPane {
 	private HBox top;
 	private HBox bottom;
 
-	private VBox card;
 	private VBox handVBox;
 	private VBox dealerHandVBox;
 
@@ -147,6 +145,7 @@ public class BlackjackController extends BorderPane {
 //				center.getChildren().add(card);
 //				card.setAlignment(Pos.BOTTOM_CENTER);
 //			}
+			activePlayer().aceChanger();
 			start.setVisible(false);
 			hit.setVisible(true);
 			stand.setVisible(true);
@@ -161,7 +160,9 @@ public class BlackjackController extends BorderPane {
 			topOutput.setText(text);
 			doubleDown.setVisible(false);
 			activeHand().addCard(deck().dealCard());
-			activePlayer().aceChanger();
+			if (activePlayer().checkForAce()) {
+				launchAceValueChooser();
+			}
 			if (activePlayer().isBusted()) {
 				text = "You busted!";
 				topOutput.setText(text);
@@ -176,6 +177,7 @@ public class BlackjackController extends BorderPane {
 			setButtonsVisibility();
 			updateView();
 		}
+		
 		if (event.getSource() == doubleDown) {
 			setButtonsVisibility();
 			text = activePlayer().getName() + ", you chose to double down.";
@@ -212,7 +214,6 @@ public class BlackjackController extends BorderPane {
 		if (c.getCardName().equals("A")) {
 			Alert alert = new Alert(AlertType.CONFIRMATION);
 			alert.setTitle("Ace Card Found!");
-			alert.setHeaderText("You received an Ace card.");
 			alert.setContentText("Would you like to change its value "
 					+ "from 11 to 1? Click OK to confirm, cancel to leave "
 					+ "card value unchanged.");
@@ -243,6 +244,49 @@ public class BlackjackController extends BorderPane {
 		updateDealerHandView();
 		calculateResults();
 		newRound();
+	}
+	
+	protected Card launchAceCardChooser() {
+		updateView();
+		List<Card> choices = new ArrayList<Card>();
+		for (Card c : activeHand().getCards()) {
+			if (c.getCardName().equals("A")) {
+				choices.add(c);
+			}
+		}
+		ChoiceDialog<Card> dialog = new ChoiceDialog<Card>(null, choices);
+		dialog.setTitle("Ace Card Chooser");
+		dialog.setHeaderText("Pick the Ace card in your hand that you would like ."
+				+ "to switch the value of.");
+		dialog.setContentText("Choose the card: ");
+		
+		Optional<Card> result = dialog.showAndWait();
+		if (result.isPresent()) {
+			return result.get();
+		} else {
+			return null;
+		}
+	}
+	
+	protected void launchAceValueChooser() {
+		Card ace = launchAceCardChooser();
+		if (ace == null) {
+			return;
+		} else {
+			Alert alert = new Alert(AlertType.CONFIRMATION);
+			alert.setTitle("Ace Card Found!");
+			alert.setContentText("Click OK to set card value to 1, "
+					+ "Cancel to set card value to 11.");
+			
+			Optional<ButtonType> result = alert.showAndWait();
+			if (result.get() == ButtonType.OK) {
+				activeHand().addCard(new Card(1, "A", ace.getCardSuit()));
+				activeHand().remove(ace);
+			} else {
+				activeHand().addCard(new Card(11, "A", ace.getCardSuit()));
+				activeHand().remove(ace);
+			}
+		}
 	}
 
 	protected void calculateResults() {
@@ -508,6 +552,10 @@ public class BlackjackController extends BorderPane {
 	protected void reset() {
 		resetView();
 		askForNewPlayers();
+		for (Player p : table.getPlayers()) {
+			p.setBet(0);
+		}
+		updateView();
 	}
 
 	//Update information in window
@@ -549,7 +597,6 @@ public class BlackjackController extends BorderPane {
 		topOutput.setText("");
 		playerHandValueLabel.setText("");
 		dealerHandValueLabel.setText("");
-
 	}
 
 	private Player activePlayer() {
