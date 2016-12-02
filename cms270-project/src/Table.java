@@ -133,11 +133,19 @@ public class Table {
 			return false;
 		}
 	}
-	
+	/**
+	 * This method returns the Dealer in the Table.
+	 * 
+	 * @return a Dealer object
+	 */
 	public Dealer getDealer() {
 		return dealer;
 	}
-	
+	/**
+	 * This method returns the Deck in the Table.
+	 * 
+	 * @return a Deck object
+	 */
 	public Deck getDeck() {
 		return cardDeck;
 	}
