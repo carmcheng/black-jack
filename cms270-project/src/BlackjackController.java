@@ -62,7 +62,7 @@ public class BlackjackController extends BorderPane {
 		/*** Left pane ***/
 		playerVBox = new VBox();
 		playerVBox.setStyle("-fx-font-size: 14; -fx-background-color: #055A5B;");
-		playerVBox.setPrefWidth(150);
+		playerVBox.setPrefWidth(200);
 		setLeft(playerVBox);
 
 		/*** Right pane ***/
