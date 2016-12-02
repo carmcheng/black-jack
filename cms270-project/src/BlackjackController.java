@@ -3,18 +3,20 @@ import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.image.ImageView;
-
+import javafx.scene.layout.*;
+import javafx.scene.text.Text;
+import javafx.scene.text.Font;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import javafx.scene.layout.*;
-import javafx.scene.text.Text;
 import javafx.util.Pair;
+
 public class BlackjackController extends BorderPane {
 	private String text;
 	private Player player;
@@ -46,71 +48,75 @@ public class BlackjackController extends BorderPane {
 
 		/*** Center pane ***/
 		center = new VBox(5);
-		center.setStyle("-fx-background-color: DARKGREEN;");
-		center.setPrefWidth(400);
+		center.setStyle("-fx-background-color: #023030;");
+		center.setPrefWidth(350);
 		centerLabel = new Label("");
-		centerLabel.setStyle("-fx-text-fill: WHITE");
+		centerLabel.setStyle("-fx-text-fill: #E6E6E6; -fx-padding: 8px; -fx-font-size: 12pt;");
 		handHBox = new HBox();
-		handHBox.setStyle("-fx-text-fill: WHITE");
-		//handVBox.setAlignment(Pos.BOTTOM_LEFT);
+		handHBox.setStyle("-fx-padding: 8px;");
 		playerHandValueLabel = new Label("");
-		playerHandValueLabel.setStyle("-fx-text-fill: WHITE");
-		setCenter(center);
+		playerHandValueLabel.setStyle("-fx-text-fill: #E6E6E6; -fx-padding: 8px;");
 		center.getChildren().addAll(centerLabel, handHBox, playerHandValueLabel);
+		setCenter(center);
 
 		/*** Left pane ***/
 		playerVBox = new VBox();
-		playerVBox.setStyle("-fx-background-color: DARKGREEN;");
+		playerVBox.setStyle("-fx-font-size: 14; -fx-background-color: #055A5B;");
 		playerVBox.setPrefWidth(150);
 		setLeft(playerVBox);
 
 		/*** Right pane ***/
 		dealerPane = new VBox();
-		dealerPane.setStyle("-fx-background-color: DARKGREEN;");
+		dealerPane.setStyle("-fx-background-color: #055A5B;");
 		dealerPane.setPrefWidth(400);
 		rightLabel = new Label("");
-		rightLabel.setStyle("-fx-text-fill: WHITE");
+		rightLabel.setStyle("-fx-text-fill: #E6E6E6; -fx-padding: 8px; -fx-font-size: 12pt;");
 		dealerHandHBox = new HBox();
-		dealerHandHBox.setStyle("-fx-text-fill: WHITE");
+		dealerHandHBox.setStyle("-fx-text-fill: #E6E6E6; -fx-padding: 8px;");
 		dealerHandValueLabel = new Label("");
-		dealerHandValueLabel.setStyle("-fx-text-fill: WHITE");
+		dealerHandValueLabel.setStyle("-fx-text-fill: #E6E6E6; -fx-padding: 8px;");
 		setRight(dealerPane); 
 		dealerPane.getChildren().addAll(rightLabel, dealerHandHBox, dealerHandValueLabel);
 
 		/*** Top pane ***/
 		top = new HBox();
-		top.setStyle("-fx-background-color: WHITE;");
-		top.setPrefHeight(20);
+		top.setStyle("-fx-background-color: #E6E6E6; -fx-padding: 5px;"
+				+ "-fx-font-family:Gafata; -fx-font-size: 20;");
+		top.getStylesheets().add("https://fonts.googleapis.com/css?family=Gafata");
+		top.setPrefHeight(40);
+		top.setAlignment(Pos.CENTER);
 		topOutput = new Text("");
-
-		setTop(top);
 		top.getChildren().add(topOutput);
+		setTop(top);
 
 		/*** Bottom pane ***/
 		bottom = new HBox();
-		bottom.setStyle("-fx-background-color: WHITE;");
-		bottom.setPrefHeight(20);;
-		start = new Button("START");
+		bottom.setStyle("-fx-background-color: #E6E6E6; -fx-text-fill: #055A5B; -fx-padding: 8px;");
+		bottom.setPrefHeight(30);
+		bottom.setSpacing(10);
+		bottom.setAlignment(Pos.CENTER);
+		start = new Button("Start");
+		start.setStyle("-fx-padding: 8px;");
 		start.setOnAction(new EventHandler<ActionEvent> () {
 			@Override public void handle(ActionEvent e) {
 				doPlayerMove(e);
 			}
 		});
-		hit = new Button("HIT");
+		hit = new Button("Hit");
 		hit.setVisible(false);
 		hit.setOnAction(new EventHandler<ActionEvent> () {
 			@Override public void handle(ActionEvent e) {
 				doPlayerMove(e);
 			}
 		});
-		stand = new Button("STAND");
+		stand = new Button("Stand");
 		stand.setVisible(false);
 		stand.setOnAction(new EventHandler<ActionEvent>() {
 			@Override public void handle(ActionEvent e) {
 				doPlayerMove(e);
 			}
 		});
-		doubleDown = new Button("DOUBLE");
+		doubleDown = new Button("Double");
 		doubleDown.setVisible(false);
 		doubleDown.setOnAction(new EventHandler<ActionEvent>() {
 			@Override public void handle(ActionEvent e) {
@@ -366,11 +372,18 @@ public class BlackjackController extends BorderPane {
 
 	protected void fillPlayerVBox() {
 		for (Player p : table.getPlayers()) {
-			String info = "\n Player: " + p.getName() + "\n Wallet: " + currency.format(p.getMoney())
-			+ "\n Bet: " + currency.format(p.getSetBet()) + "\n Hand: " + p.getHand().checkHandValue();
+			String info = "\nPlayer: " + p.getName() + "\nWallet: " + currency.format(p.getMoney())
+				+ "\nBet: " + currency.format(p.getSetBet());
+			String hand = "Hand: [";
+			for (Card c : p.getHand().getCards()) {
+				hand += " " + c.getCardName() + " ";
+			}
+			hand += "]\nHand Value: " + p.getHand().checkHandValue();
 			Label playerInfo = new Label(info);
-			playerInfo.setStyle("-fx-text-fill: WHITE");
-			playerVBox.getChildren().add(playerInfo);
+			Label playerHandInfo = new Label(hand);
+			playerInfo.setStyle("-fx-text-fill: #E6E6E6");
+			playerHandInfo.setStyle("-fx-text-fill: #E6E6E6");
+			playerVBox.getChildren().addAll(playerInfo, playerHandInfo);
 		}
 	}
 
@@ -417,7 +430,7 @@ public class BlackjackController extends BorderPane {
 		if (result.isPresent()){
 			return Integer.parseInt(result.get());
 		} else {
-			return 1;		//default player
+			return 0;		//default player
 		}
 	}
 
@@ -433,46 +446,68 @@ public class BlackjackController extends BorderPane {
 	public void launchAskPlayerInfo(int numOfPlayers) {
 		players = table.getPlayers();
 		for (int i = 0; i < numOfPlayers; i++) {
-			Dialog<Pair<String, String>> dialog = new Dialog<>();
-			dialog.setTitle("Player Information Retrieval");
-			dialog.setHeaderText("Enter your name and amount of money you have.");
+			try {
+				Dialog<Pair<String, String>> dialog = new Dialog<>();
+				dialog.setTitle("Player Information Retrieval");
+				dialog.setHeaderText("Enter your name and amount of money you have.");
 
-			ButtonType okButtonType = new ButtonType("OK", ButtonData.OK_DONE);
-			dialog.getDialogPane().getButtonTypes().addAll(okButtonType);
+				ButtonType okButtonType = new ButtonType("OK", ButtonData.OK_DONE);
+				dialog.getDialogPane().getButtonTypes().add(okButtonType);
 
-			GridPane grid = new GridPane();
-			grid.setHgap(10);
-			grid.setVgap(10);
-			grid.setPadding(new Insets(20, 150, 10, 10));
+				GridPane grid = new GridPane();
+				grid.setHgap(10);
+				grid.setVgap(10);
+				grid.setPadding(new Insets(20, 150, 10, 10));
 
-			TextField name = new TextField();
-			name.setPromptText("Name");
-			TextField money = new TextField();
-			money.setPromptText("Money");
+				TextField name = new TextField();
+				name.setPromptText("Name");
+				TextField money = new TextField();
+				money.setPromptText("Money");
 
-			grid.add(new Label("Name:"), 0, 0);
-			grid.add(name, 1, 0);
-			grid.add(new Label("Money:"), 0, 1);
-			grid.add(money, 1, 1);
+				grid.add(new Label("Name:"), 0, 0);
+				grid.add(name, 1, 0);
+				grid.add(new Label("Money:"), 0, 1);
+				grid.add(money, 1, 1);
 
-			dialog.getDialogPane().setContent(grid);
+				dialog.getDialogPane().setContent(grid);
 
-			Platform.runLater(() -> name.requestFocus());
+				Platform.runLater(() -> name.requestFocus());
+				
+				Button okButton = (Button) dialog.getDialogPane().lookupButton(okButtonType);
+				okButton.addEventFilter(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
+					public void handle(ActionEvent e) {
+						if (!validateInput(money) || !validateInput(name)) {
+							launchErrorDialog("Name/Money");
+							e.consume();
+						}
+					}
+				});
 
-			dialog.setResultConverter(dialogButton -> {
-				if (dialogButton == okButtonType) {
-					return new Pair<>(name.getText(), money.getText());
-				}
-				return null;
+				dialog.setResultConverter(dialogButton -> {
+					if (dialogButton == okButtonType) {
+						return new Pair<>(name.getText(), money.getText());
+					}
+					return null;
+				});
+
+				Optional<Pair<String,String>> result = dialog.showAndWait();
+
+				result.ifPresent(playerInfo -> {
+					player = new Player(playerInfo.getKey(), Double.parseDouble(playerInfo.getValue()));
 			});
-
-			Optional<Pair<String,String>> result = dialog.showAndWait();
-
-			result.ifPresent(playerInfo -> {
-				player = new Player(playerInfo.getKey(), Double.parseDouble(playerInfo.getValue()));
-				players.add(player);
-			});
+			players.add(player);
+			} catch (Exception e) {
+				launchPlayerInfoError();
+			}
 		}
+	}
+	
+	protected void launchPlayerInfoError() {
+		Alert alert = new Alert(AlertType.ERROR);
+		alert.setTitle("Player Info Error");
+		alert.setHeaderText("Invalid inputs");
+		alert.setContentText("You will not get to play.");
+		alert.showAndWait();
 	}
 
 	protected void askPlayerBet() {
@@ -491,19 +526,38 @@ public class BlackjackController extends BorderPane {
 
 	protected double eachBet(Player p) {
 		TextInputDialog dialog = new TextInputDialog();
+		dialog.getDialogPane().getButtonTypes().remove(ButtonType.CANCEL);
 		dialog.setTitle("Set your bet");
 		dialog.setHeaderText("Enter bet amount, " + p.getName() + ".");
 
+		Button okButton = (Button) dialog.getDialogPane().lookupButton(ButtonType.OK);
+		okButton.addEventFilter(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
+			public void handle(ActionEvent e) {
+				if (!validateInput(dialog.getEditor())) {
+					launchErrorDialog("Bet");
+					e.consume();
+				}
+			}
+		});
+		
 		Optional<String> result = dialog.showAndWait();
 		double bet = Double.parseDouble(result.get());
-		if(result.isPresent()){
+		if(result.isPresent()) {
 			return bet;
 		} else {
-			launchErrorDialog("Default Bet");
-			return 1.00; //default of 1 player
+			return 0.1;
 		}
 	}
 
+	private boolean validateInput(TextField tf) {
+		String n = tf.getText();
+		if(n == null || n.equals("")) {
+			return false;
+		} else {
+			return true;
+		}
+	}
+	
 	protected void askForNewPlayers() {
 		Alert alert = new Alert(AlertType.CONFIRMATION);
 		alert.setTitle("New Players?");
@@ -560,7 +614,12 @@ public class BlackjackController extends BorderPane {
 	//Update information in window
 	protected void updateView() {
 		updateHandView();
-		dealerHiddenHandView();
+		if (dealerHand().checkBlackjack()) {
+			updateDealerHandView();
+			calculateResults();
+		} else {
+			dealerHiddenHandView();
+		}
 		playerVBox.getChildren().clear();
 		fillPlayerVBox();
 	}
@@ -568,7 +627,7 @@ public class BlackjackController extends BorderPane {
 	protected void updateFinalView() {
 		updateDealerHandView();
 		handHBox.getChildren().clear();
-		playerHandValueLabel.setText("Current Player:");
+		playerHandValueLabel.setText("Hand Value: ");
 		playerVBox.getChildren().clear();
 		fillPlayerVBox();
 	}
