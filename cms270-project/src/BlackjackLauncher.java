@@ -20,8 +20,7 @@ public class BlackjackLauncher extends Application{
 		stage.setTitle("Let's Play Blackjack!");
 		stage.show();
 		
-		int numPlayers = root.retrieveNumPlayers();
-		root.launchAskPlayerInfo(numPlayers);
+		root.launchGame();
 		
 	}
 

@@ -13,7 +13,11 @@
     	</HBox>
     </top>
     <left>
-        <Label text="LEFT pane"/>
+    	<VBox>
+   			<Label fx:id="leftLabel" text="Player's Information" />
+       		<Label fx:id="playerName" />
+    		<Label fx:id="playerMoney" />
+    	</VBox>
     </left>
     <center>
     	<VBox alignment="top_center">
@@ -33,6 +37,8 @@
     <bottom>
        <HBox>
         <TextField fx:id="textInput" text="Enter text here"/>
+        <Button fx:id = "okButton" text= "OK"
+        	onAction="#getPlayerInfo" />
          <Button fx:id="leftButton"  text="Hit"
             onAction="#hit" />
          <Button fx:id="rightButton" text="Stand"
