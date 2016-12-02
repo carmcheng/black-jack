@@ -121,6 +121,8 @@ public class BlackjackController extends BorderPane {
 			for(int i=0; i<table.getCurrentPlayer().getHand().numOfCards();i++){
 				cardLabel=new Label();
 				card=new VBox();
+				card.setPrefSize(20,50);
+				card.setStyle("-fx-background-color: WHITE;");
 				handVBox.getChildren().add(card);
 			}
 			start.setVisible(false);
