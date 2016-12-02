@@ -3,6 +3,7 @@ import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonBar.ButtonData;
@@ -47,6 +48,7 @@ public class BlackjackController extends BorderPane {
 		center.setStyle("-fx-background-color: DARKGREEN;");
 		centerLabel = new Label("");
 		handVBox = new VBox();
+		//handVBox.setAlignment(Pos.BOTTOM_LEFT);
 		playerHandValueLabel = new Label("");
 		setCenter(center);
 		center.getChildren().addAll(centerLabel, handVBox, playerHandValueLabel);
@@ -129,21 +131,23 @@ public class BlackjackController extends BorderPane {
 			text = "Round has started. First hands dealt.";
 			topOutput.setText(text);
 			table.firstDeal();
-<<<<<<< HEAD
-			for(int i=0; i<table.getCurrentPlayer().getHand().numOfCards();i++){
-				cardLabel=new Label();
-				card=new VBox();
-				card.setPrefSize(20,50);
+			Iterator cardIterator=table.getCurrentPlayer().getHand().createIterator();
+			while(cardIterator.hasNext()){
+				Card currentCard=(Card) cardIterator.next();
+				cardLabel=new Label(currentCard.getCardSuit()+currentCard.getCardValue());
+				card=new VBox(5);
+				card.getChildren().add(cardLabel);
+				cardLabel.setAlignment(Pos.TOP_LEFT);
+				card.setPrefSize(10,30);
 				card.setStyle("-fx-background-color: WHITE;");
-				handVBox.getChildren().add(card);
+				center.getChildren().add(card);
+				card.setAlignment(Pos.BOTTOM_CENTER);
 			}
-=======
 			//			for(int i=0; i<table.getCurrentPlayer().getHand().numOfCards();i++){
 			//				cardLabel=new Label();
 			//				card=new VBox();
 			//				handVBox.getChildren().add(card);
 			//			}
->>>>>>> branch 'master' of https://github.com/rollins-cms270/project-team-vegas.git
 			start.setVisible(false);
 			hit.setVisible(true);
 			stand.setVisible(true);
