@@ -38,23 +38,24 @@ public class BlackjackController extends BorderPane {
 	private HBox top;
 	private HBox bottom;
 
-	private VBox handVBox;
-	private VBox dealerHandVBox;
+	private HBox handHBox;
+	private HBox dealerHandHBox;
 
 	public BlackjackController() {
 
 		/*** Center pane ***/
 		center = new VBox();
 		center.setStyle("-fx-background-color: DARKGREEN;");
+		center.setPrefWidth(400);
 		centerLabel = new Label("");
 		centerLabel.setStyle("-fx-text-fill: WHITE");
-		handVBox = new VBox();
-		handVBox.setStyle("-fx-text-fill: WHITE");
+		handHBox = new HBox();
+		handHBox.setStyle("-fx-text-fill: WHITE");
 		//handVBox.setAlignment(Pos.BOTTOM_LEFT);
 		playerHandValueLabel = new Label("");
 		playerHandValueLabel.setStyle("-fx-text-fill: WHITE");
 		setCenter(center);
-		center.getChildren().addAll(centerLabel, handVBox, playerHandValueLabel);
+		center.getChildren().addAll(centerLabel, handHBox, playerHandValueLabel);
 
 		/*** Left pane ***/
 		playerVBox = new VBox();
@@ -65,15 +66,15 @@ public class BlackjackController extends BorderPane {
 		/*** Right pane ***/
 		dealerPane = new VBox();
 		dealerPane.setStyle("-fx-background-color: DARKGREEN;");
-		dealerPane.setPrefWidth(150);
-		rightLabel = new Label("The Dealer");
+		dealerPane.setPrefWidth(400);
+		rightLabel = new Label("");
 		rightLabel.setStyle("-fx-text-fill: WHITE");
-		dealerHandVBox = new VBox();
-		dealerHandVBox.setStyle("-fx-text-fill: WHITE");
+		dealerHandHBox = new HBox();
+		dealerHandHBox.setStyle("-fx-text-fill: WHITE");
 		dealerHandValueLabel = new Label("");
 		dealerHandValueLabel.setStyle("-fx-text-fill: WHITE");
 		setRight(dealerPane); 
-		dealerPane.getChildren().addAll(rightLabel, dealerHandVBox, dealerHandValueLabel);
+		dealerPane.getChildren().addAll(rightLabel, dealerHandHBox, dealerHandValueLabel);
 
 		/*** Top pane ***/
 		top = new HBox();
@@ -132,18 +133,6 @@ public class BlackjackController extends BorderPane {
 			text = "Round has started. First hands dealt.";
 			topOutput.setText(text);
 			table.firstDeal();
-//			Iterator cardIterator=table.getCurrentPlayer().getHand().createIterator();
-//			while(cardIterator.hasNext()){
-//				Card currentCard=(Card) cardIterator.next();
-//				cardLabel=new Label(currentCard.getCardSuit()+currentCard.getCardValue());
-//				card=new VBox(5);
-//				card.getChildren().add(cardLabel);
-//				cardLabel.setAlignment(Pos.TOP_LEFT);
-//				card.setPrefSize(10,30);
-//				card.setStyle("-fx-background-color: WHITE;");
-//				center.getChildren().add(card);
-//				card.setAlignment(Pos.BOTTOM_CENTER);
-//			}
 			activePlayer().aceChanger();
 			start.setVisible(false);
 			hit.setVisible(true);
@@ -240,7 +229,7 @@ public class BlackjackController extends BorderPane {
 			topOutput.setText(text);
 		}
 
-		updateDealerHandView();
+		updateHandView();
 		calculateResults();
 		newRound();
 	}
@@ -404,6 +393,7 @@ public class BlackjackController extends BorderPane {
 		fillPlayerVBox();
 		table.setCurrentPlayer();
 		centerLabel.setText("Current player: " + activePlayer().getName());
+		rightLabel.setText("The Dealer");
 	}
 
 	public int retrieveNumPlayers() {
@@ -563,35 +553,24 @@ public class BlackjackController extends BorderPane {
 	//Update information in window
 	protected void updateView() {
 		updateHandView();
-		updateDealerHandView();
 		playerVBox.getChildren().clear();
 		fillPlayerVBox();
 	}
 
 	//Update hand cards
 	protected void updateHandView() {
-		handVBox.getChildren().clear();
+		handHBox.getChildren().clear();
 		for (Card c : activeHand().getCards()) {
 			ImageView cardView = utils.getCardImageView(c.getCardName() + c.getCardSuit());
-			handVBox.getChildren().add(cardView);
+			handHBox.getChildren().add(cardView);
 		}
 		playerHandValueLabel.setText("\n" + 
 				Integer.toString(activeHand().checkHandValue()));
-//		
-//		handVBox.getChildren().clear();
-//		for (Card c : activeHand().getCards()) {
-//			Label cardLabel = new Label(c.toString());
-//			handVBox.getChildren().add(cardLabel);
-//		}
-//		playerHandValueLabel.setText("\n" + 
-//				Integer.toString(activeHand().checkHandValue()));
-	}
 
-	protected void updateDealerHandView() {
-		dealerHandVBox.getChildren().clear();
+		dealerHandHBox.getChildren().clear();
 		for (Card c : dealerHand().getCards()) {
-			Label cardLabel = new Label(c.toString());
-			dealerHandVBox.getChildren().add(cardLabel);
+			ImageView cardView = utils.getCardImageView(c.getCardName() + c.getCardSuit());
+			dealerHandHBox.getChildren().add(cardView);
 		}
 		dealerHandValueLabel.setText("\n" + 
 				Integer.toString(dealerHand().checkHandValue()));
@@ -602,8 +581,8 @@ public class BlackjackController extends BorderPane {
 		hit.setVisible(false);
 		stand.setVisible(false);
 		ok.setVisible(false);
-		handVBox.getChildren().clear();
-		dealerHandVBox.getChildren().clear();
+		handHBox.getChildren().clear();
+		dealerHandHBox.getChildren().clear();
 		topOutput.setText("");
 		playerHandValueLabel.setText("");
 		dealerHandValueLabel.setText("");

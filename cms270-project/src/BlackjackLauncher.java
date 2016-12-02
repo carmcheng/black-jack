@@ -14,7 +14,7 @@ public class BlackjackLauncher extends Application{
 	public void start(Stage stage) {
 		BlackjackController root = new BlackjackController();
 
-		Scene scene = new Scene(root, 600, 400);
+		Scene scene = new Scene(root, 1024, 500);
 
 		stage.setScene(scene);
 		stage.setTitle("Let's Play Blackjack!");
