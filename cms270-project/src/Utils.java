@@ -13,14 +13,14 @@ public class Utils {
 	public ImageView getCardImageView(String imageName) {
 		ImageView iv = new ImageView(getImage(imageName + ".png"));
 		iv.setPreserveRatio(true);
-		iv.setFitHeight(150);
+		iv.setFitHeight(120);
 		return iv;
 	}	
 	
 	public ImageView getHiddenCardImageView() {
 		ImageView iv = new ImageView(getImage("flipped.png"));
 		iv.setPreserveRatio(true);
-		iv.setFitHeight(150);
+		iv.setFitHeight(120);
 		return iv;
 	}
 }

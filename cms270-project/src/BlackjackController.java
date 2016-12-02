@@ -523,6 +523,8 @@ public class BlackjackController extends BorderPane {
 			table.setCurrentPlayer();
 			centerLabel.setText("Current player: " + activePlayer().getName());
 		} else {
+			table.setCurrentPlayer();
+			centerLabel.setText("Current player: " + activePlayer().getName());
 			return;
 		}
 
@@ -607,6 +609,7 @@ public class BlackjackController extends BorderPane {
 		topOutput.setText("");
 		playerHandValueLabel.setText("");
 		dealerHandValueLabel.setText("");
+		centerLabel.setText("");
 	}
 
 	private Player activePlayer() {
