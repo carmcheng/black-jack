@@ -566,8 +566,9 @@ public class BlackjackController extends BorderPane {
 	}
 
 	protected void updateFinalView() {
-		updateHandView();
 		updateDealerHandView();
+		handHBox.getChildren().clear();
+		playerHandValueLabel.setText("Current Player:");
 		playerVBox.getChildren().clear();
 		fillPlayerVBox();
 	}
@@ -579,7 +580,7 @@ public class BlackjackController extends BorderPane {
 			ImageView cardView = utils.getCardImageView(c.getCardName() + c.getCardSuit());
 			handHBox.getChildren().add(cardView);
 		}
-		playerHandValueLabel.setText("\n" + 
+		playerHandValueLabel.setText("\nHand Value: " + 
 				Integer.toString(activeHand().checkHandValue()));
 	}
 
@@ -589,7 +590,7 @@ public class BlackjackController extends BorderPane {
 			ImageView cardView = utils.getCardImageView(c.getCardName() + c.getCardSuit());
 			dealerHandHBox.getChildren().add(cardView);
 		}
-		dealerHandValueLabel.setText("\n" + 
+		dealerHandValueLabel.setText("\nDealer's Hand Value: " + 
 				Integer.toString(dealerHand().checkHandValue()));
 	}
 
