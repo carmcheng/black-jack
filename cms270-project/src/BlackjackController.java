@@ -55,6 +55,7 @@ public class BlackjackController extends BorderPane {
 		playerVBox.setStyle("-fx-background-color: DARKGREEN;");
 		playerVBox.setPrefWidth(150);
 		leftLabel = new Label("Player Information:");
+		leftLabel.setStyle("-fx-text-fill: WHITE");
 		setLeft(playerVBox);
 		playerVBox.getChildren().add(leftLabel);
 
@@ -63,6 +64,7 @@ public class BlackjackController extends BorderPane {
 		dealerPane.setStyle("-fx-background-color: DARKGREEN;");
 		dealerPane.setPrefWidth(150);
 		rightLabel = new Label("The Dealer");
+		rightLabel.setStyle("-fx-text-fill: WHITE");
 		dealerHandVBox = new VBox();
 		dealerHandValueLabel = new Label("");
 		setRight(dealerPane); 
@@ -73,6 +75,7 @@ public class BlackjackController extends BorderPane {
 		top.setStyle("-fx-background-color: WHITE;");
 		top.setPrefHeight(20);
 		topOutput = new Text("");
+		
 		setTop(top);
 		top.getChildren().add(topOutput);
 
