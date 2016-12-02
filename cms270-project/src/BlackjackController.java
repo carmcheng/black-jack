@@ -9,6 +9,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.image.ImageView;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -37,7 +38,7 @@ public class BlackjackController extends BorderPane {
 	private VBox dealerPane;
 	private HBox top;
 	private HBox bottom;
-
+	private DecimalFormat currency = new DecimalFormat("$0.00");
 	private HBox handHBox;
 	private HBox dealerHandHBox;
 
@@ -335,7 +336,7 @@ public class BlackjackController extends BorderPane {
 		for (Player p : table.getPlayers()) {
 			alert.setHeaderText(p.getName() + ", would you"
 					+ " like to stay for another round?");
-			alert.setContentText("You currently have $" + p.getMoney()
+			alert.setContentText("You currently have " + currency.format(p.getMoney())
 			+ " left.");
 
 			Optional<ButtonType> result = alert.showAndWait();
@@ -365,8 +366,8 @@ public class BlackjackController extends BorderPane {
 
 	protected void fillPlayerVBox() {
 		for (Player p : table.getPlayers()) {
-			String info = "\n" + p.getName() + "\n" + p.getMoney() 
-			+ "\n" + p.getSetBet() + "\n" + p.getHand().checkHandValue();
+			String info = "\n Player: " + p.getName() + "\n Wallet: " + currency.format(p.getMoney())
+			+ "\n Bet: " + currency.format(p.getSetBet()) + "\n Hand: " + p.getHand().checkHandValue();
 			Label playerInfo = new Label(info);
 			playerInfo.setStyle("-fx-text-fill: WHITE");
 			playerVBox.getChildren().add(playerInfo);
@@ -476,14 +477,15 @@ public class BlackjackController extends BorderPane {
 	
 	protected void askPlayerBet() {
 		for (Player p : table.getPlayers()){
-			double bet = eachBet(p);
-			if(p.getMoney() < bet) {
-				Alert error = new Alert(AlertType.ERROR, "You do not have enough money");
-				error.showAndWait();
-				eachBet(p);
-			} else {
-				p.setBet(bet);
-			}
+			double bet;
+			do {
+				bet = eachBet(p);
+				if(p.getMoney() < bet) {
+					Alert error = new Alert(AlertType.ERROR, p.getName() + ", you do not have enough money");
+					error.showAndWait();
+				} 
+			} while (bet > p.getMoney());
+			p.setBet(bet);
 		}
 	}
 
