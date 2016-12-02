@@ -79,6 +79,12 @@ public class Dealer {
 		}
 	}
 	
+	/**
+	 * This method returns true if the dealer's hand value exceeds
+	 * 21, and false if it is less than or equal to 21.
+	 * 
+	 * @return a boolean value
+	 */
 	public boolean isBusted() {
 		if (hand.checkHandValue() > 21) {
 			return true;
