@@ -140,11 +140,11 @@ public class BlackjackController extends BorderPane {
 		bottom.getChildren().addAll(start, hit, stand, doubleDown, ok);
 		setBottom(bottom);
 	}
-/**
- * This method registers what move the play wants to make next and handles the
- * appropriate output by checking for certain events/ buttons pressed by players
- * @param event
- */
+	/**
+	 * This method registers what move the play wants to make next and handles the
+	 * appropriate output by checking for certain events/ buttons pressed by players
+	 * @param event
+	 */
 	protected void doPlayerMove(ActionEvent event) {
 		// Start the round
 		if (event.getSource() == start) {
@@ -215,11 +215,11 @@ public class BlackjackController extends BorderPane {
 			}
 		}
 	}
-/**
- * This method checks if a dealt card is an ace. If so, the player can choose
- * the valuse of the card (either 1 or 11)
- * @param c
- */
+	/**
+	 * This method checks if a dealt card is an ace. If so, the player can choose
+	 * the valuse of the card (either 1 or 11)
+	 * @param c
+	 */
 	private void checkForAceCard(Card c) {
 		if (c.getCardName().equals("A")) {
 			Alert alert = new Alert(AlertType.CONFIRMATION);
@@ -236,11 +236,11 @@ public class BlackjackController extends BorderPane {
 			}
 		}
 	}
-/**
- * This method is called after all players have played and it is the dealer's
- * turn. While the dealer has a hand with a value under 17, a card is dealt. 
- * The results are then calculated, followed by a new round being started
- */
+	/**
+	 * This method is called after all players have played and it is the dealer's
+	 * turn. While the dealer has a hand with a value under 17, a card is dealt. 
+	 * The results are then calculated, followed by a new round being started
+	 */
 	protected void doDealerMove() {
 		text = "It is the dealer's turn.";
 		topOutput.setText(text);
@@ -260,11 +260,11 @@ public class BlackjackController extends BorderPane {
 		calculateResults();
 		newRound();
 	}
-/**
- * This method allows the player to pick an ace card present in their hand that they
- * want to change the value of, and returns the chosen card
- * @return Card
- */
+	/**
+	 * This method allows the player to pick an ace card present in their hand that they
+	 * want to change the value of, and returns the chosen card
+	 * @return Card
+	 */
 	protected Card launchAceCardChooser() {
 		updateView();
 		List<Card> choices = new ArrayList<Card>();
@@ -286,10 +286,10 @@ public class BlackjackController extends BorderPane {
 			return null;
 		}
 	}
-/**
- * This method allows the player to choose whether an ace card dealt to
- * them should have the value 1 or 11
- */
+	/**
+	 * This method allows the player to choose whether an ace card dealt to
+	 * them should have the value 1 or 11
+	 */
 	protected void launchAceValueChooser() {
 		Card ace = launchAceCardChooser();
 		if (ace == null) {
@@ -310,12 +310,12 @@ public class BlackjackController extends BorderPane {
 			}
 		}
 	}
-/**
- * This method calculates the final results of the game after all the players
- * and the dealer have played. It checks if any of the players or the dealer
- * has blackjack or has busted. It also notifies each player regarding whether
- * they have won or lost against the dealer. 
- */
+	/**
+	 * This method calculates the final results of the game after all the players
+	 * and the dealer have played. It checks if any of the players or the dealer
+	 * has blackjack or has busted. It also notifies each player regarding whether
+	 * they have won or lost against the dealer. 
+	 */
 	protected void calculateResults() {
 		updateFinalView();
 		Alert results = new Alert(AlertType.INFORMATION);
@@ -364,11 +364,11 @@ public class BlackjackController extends BorderPane {
 		}
 		return;
 	}
-/**
- * This method asks the players whether they would like to play another round.
- * It notifies each player of how much money they have left after the previous
- * round. If a player does not wish to play another round, they are removed
- */
+	/**
+	 * This method asks the players whether they would like to play another round.
+	 * It notifies each player of how much money they have left after the previous
+	 * round. If a player does not wish to play another round, they are removed
+	 */
 	protected void newRound() {
 		ArrayList <Player> toRemove = new ArrayList<Player>();
 		Alert alert = new Alert(AlertType.CONFIRMATION);
@@ -404,14 +404,14 @@ public class BlackjackController extends BorderPane {
 		}
 		askPlayerBet();
 	}
-/**
- * This method updates the displayed information for each player. It checks
- * for each player's name, amount of money and hand
- */
+	/**
+	 * This method updates the displayed information for each player. It checks
+	 * for each player's name, amount of money and hand
+	 */
 	protected void fillPlayerVBox() {
 		for (Player p : table.getPlayers()) {
 			String info = "\nPlayer: " + p.getName() + "\nWallet: " + currency.format(p.getMoney())
-				+ "\nBet: " + currency.format(p.getSetBet());
+			+ "\nBet: " + currency.format(p.getSetBet());
 			String hand = "Hand: [";
 			for (Card c : p.getHand().getCards()) {
 				hand += " " + c.getCardName() + " ";
@@ -424,10 +424,10 @@ public class BlackjackController extends BorderPane {
 			playerVBox.getChildren().addAll(playerInfo, playerHandInfo);
 		}
 	}
-/**
- * This method alerts the player if they do not have any money left. In this 
- * case, they can no longer play the game
- */
+	/**
+	 * This method alerts the player if they do not have any money left. In this 
+	 * case, they can no longer play the game
+	 */
 	protected void launchNoMoney() {
 		Alert alert = new Alert(AlertType.ERROR);
 		alert.setTitle("Error");
@@ -435,10 +435,10 @@ public class BlackjackController extends BorderPane {
 		alert.setContentText("Security will be escorting you out now...");
 		alert.showAndWait();
 	}
-/**
- * This method starts a game by initializing a new table, asking for each 
- * player's bet and displaying the current player and dealer's hands
- */
+	/**
+	 * This method starts a game by initializing a new table, asking for each 
+	 * player's bet and displaying the current player and dealer's hands
+	 */
 	protected void launchGame() {
 		table = new Table();
 		utils = new Utils();
@@ -454,11 +454,11 @@ public class BlackjackController extends BorderPane {
 		centerLabel.setText("Current player: " + activePlayer().getName());
 		rightLabel.setText("The Dealer");
 	}
-/**
- * This method asks how many players will be playing the game, giving 
- * an input choice of 1-6
- * @return number of players given the chosen input
- */
+	/**
+	 * This method asks how many players will be playing the game, giving 
+	 * an input choice of 1-6
+	 * @return number of players given the chosen input
+	 */
 	public int retrieveNumPlayers() {
 		List<String> choices = new ArrayList<>();
 		choices.add("1");
@@ -481,10 +481,10 @@ public class BlackjackController extends BorderPane {
 			return 0;		//default player
 		}
 	}
-/**
- * This method launches an error alert if a player enters an invalid value.
- * @param error
- */
+	/**
+	 * This method launches an error alert if a player enters an invalid value.
+	 * @param error
+	 */
 	protected void launchErrorDialog(String error) {
 		Alert alert = new Alert(AlertType.ERROR);
 		alert.setTitle("Error Dialog");
@@ -529,7 +529,7 @@ public class BlackjackController extends BorderPane {
 				dialog.getDialogPane().setContent(grid);
 
 				Platform.runLater(() -> name.requestFocus());
-				
+
 				Button okButton = (Button) dialog.getDialogPane().lookupButton(okButtonType);
 				okButton.addEventFilter(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
 					public void handle(ActionEvent e) {
@@ -551,17 +551,17 @@ public class BlackjackController extends BorderPane {
 
 				result.ifPresent(playerInfo -> {
 					player = new Player(playerInfo.getKey(), Double.parseDouble(playerInfo.getValue()));
-			});
-			players.add(player);
+				});
+				players.add(player);
 			} catch (Exception e) {
 				launchPlayerInfoError();
 			}
 		}
 	}
-/**
- * This method launched an error alert if a player enter an invalid value
- * when entering their information. 
- */
+	/**
+	 * This method launches an error alert if a player enter an invalid value
+	 * when entering their information. 
+	 */
 	protected void launchPlayerInfoError() {
 		Alert alert = new Alert(AlertType.ERROR);
 		alert.setTitle("Player Info Error");
@@ -569,10 +569,10 @@ public class BlackjackController extends BorderPane {
 		alert.setContentText("You will not get to play.");
 		alert.showAndWait();
 	}
-/**
- * This method asks each player for their bet. If they ask to bet a larger 
- * amount of money than what they have, an error alert is launched. 
- */
+	/**
+	 * This method asks each player for their bet. If they ask to bet a larger 
+	 * amount of money than what they have, an error alert is launched. 
+	 */
 	protected void askPlayerBet() {
 		for (Player p : table.getPlayers()){
 			double bet;
@@ -586,37 +586,54 @@ public class BlackjackController extends BorderPane {
 			p.setBet(bet);
 		}
 	}
-	
+
 	/**
 	 * This method prompts the player to set a bet amount for the round.
 	 * @param p - The player to set a bet for.
 	 * @return - double representation of bet amount. 
 	 */
 	protected double eachBet(Player p) {
-		TextInputDialog dialog = new TextInputDialog();
-		dialog.getDialogPane().getButtonTypes().remove(ButtonType.CANCEL);
-		dialog.setTitle("Set your bet");
-		dialog.setHeaderText("Enter bet amount, " + p.getName() + ".");
+		try {
+			TextInputDialog dialog = new TextInputDialog();
+			dialog.getDialogPane().getButtonTypes().remove(ButtonType.CANCEL);
+			dialog.setTitle("Set your bet");
+			dialog.setHeaderText("Enter bet amount, " + p.getName() + ".");
 
-		Button okButton = (Button) dialog.getDialogPane().lookupButton(ButtonType.OK);
-		okButton.addEventFilter(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
-			public void handle(ActionEvent e) {
-				if (!validateInput(dialog.getEditor())) {
-					launchErrorDialog("Bet");
-					e.consume();
+			Button okButton = (Button) dialog.getDialogPane().lookupButton(ButtonType.OK);
+			okButton.addEventFilter(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
+				public void handle(ActionEvent e) {
+					if (!validateInput(dialog.getEditor())) {
+						launchErrorDialog("Bet");
+						e.consume();
+					}
 				}
+			});
+
+			Optional<String> result = dialog.showAndWait();
+			double bet = Double.parseDouble(result.get());
+			if(result.isPresent()) {
+				return bet;
+			} else {
+				return 0.1;
 			}
-		});
-		
-		Optional<String> result = dialog.showAndWait();
-		double bet = Double.parseDouble(result.get());
-		if(result.isPresent()) {
-			return bet;
-		} else {
-			return 0.1;
+		} catch (Exception e) {
+			launchEachBetError();
+			return 0.01;
 		}
 	}
 	
+	/**
+	 * This method launches an error alert if a player enter an invalid value
+	 * when entering a bet.
+	 */
+	protected void launchEachBetError() {
+		Alert alert = new Alert(AlertType.ERROR);
+		alert.setTitle("Set Bet Error");
+		alert.setHeaderText("Invalid Input");
+		alert.setContentText("Your bet has been set to $0.01");
+		alert.showAndWait();
+	}
+
 	/**
 	 * This method ensures that the player entered a valid input 
 	 * when prompted to type in information.
@@ -631,7 +648,7 @@ public class BlackjackController extends BorderPane {
 			return true;
 		}
 	}
-	
+
 	/** 
 	 * This method prompts the user to check for new players at
 	 * the start of a new round. If so, new players are asked to input
@@ -662,7 +679,7 @@ public class BlackjackController extends BorderPane {
 		}
 
 	}
-	
+
 	/**
 	 * This method confirms to the user that they are quitting a game
 	 * of Blackjack.
@@ -674,7 +691,7 @@ public class BlackjackController extends BorderPane {
 		alert.setContentText("Thanks for playing!");
 		alert.showAndWait();
 	}
-	
+
 	/**
 	 * This method indicates an error when there are more than
 	 * six players at the table. The user is asked to try again.
@@ -686,7 +703,7 @@ public class BlackjackController extends BorderPane {
 		alert.setContentText("Please try again.");
 		alert.showAndWait();
 	}
-	
+
 	/**
 	 * This method resets the game for a new round of Blackjack.
 	 */
@@ -716,7 +733,7 @@ public class BlackjackController extends BorderPane {
 		playerVBox.getChildren().clear();
 		fillPlayerVBox();
 	}
-	
+
 	/**
 	 * This method updates the final view of both player's and dealer's hand value.
 	 */
@@ -741,7 +758,7 @@ public class BlackjackController extends BorderPane {
 		playerHandValueLabel.setText("\nHand Value: " + 
 				Integer.toString(activeHand().checkHandValue()));
 	}
-	
+
 	/**
 	 * This method updates the view(image) of the each card in the dealer's hand
 	 * while playing a round of Blackjack.
@@ -755,7 +772,7 @@ public class BlackjackController extends BorderPane {
 		dealerHandValueLabel.setText("\nDealer's Hand Value: " + 
 				Integer.toString(dealerHand().checkHandValue()));
 	}
-	
+
 	/**
 	 * This method displays the dealer's hidden card when it's their
 	 * turn to play and updates all the cards in their hand.
@@ -767,7 +784,7 @@ public class BlackjackController extends BorderPane {
 		ImageView cardView = utils.getCardImageView(c.getCardName() + c.getCardSuit());
 		dealerHandHBox.getChildren().addAll(cardView, hiddenCard);
 	}
-	
+
 	/**
 	 * This method resets the view of the game when a 
 	 * new round of Blackjack begins.
@@ -784,7 +801,7 @@ public class BlackjackController extends BorderPane {
 		dealerHandValueLabel.setText("");
 		centerLabel.setText("");
 	}
-	
+
 	/**
 	 * This method is used to get the current player playing Blackjack.
 	 * @return - the current player
@@ -792,7 +809,7 @@ public class BlackjackController extends BorderPane {
 	private Player activePlayer() {
 		return table.getCurrentPlayer();
 	}
-	
+
 	/**
 	 * This method is used to get the current player's hand playing Blackjack.
 	 * @return - current player's hand/value
@@ -800,7 +817,7 @@ public class BlackjackController extends BorderPane {
 	private Hand activeHand() {
 		return activePlayer().getHand();
 	}
-	
+
 	/**
 	 * This method is used to get the dealer object.
 	 * @return - the dealer info
@@ -808,7 +825,7 @@ public class BlackjackController extends BorderPane {
 	private Dealer dealer() {
 		return table.getDealer();
 	}
-	
+
 	/**
 	 * This method is used to get the dealer's hand.
 	 * @return - dealer's hand/value
@@ -816,7 +833,7 @@ public class BlackjackController extends BorderPane {
 	private Hand dealerHand() {
 		return table.getDealer().getHand();
 	}
-	
+
 	/**
 	 * This method is used to get the current deck at the table.
 	 * @return - the card deck 
@@ -824,7 +841,7 @@ public class BlackjackController extends BorderPane {
 	private Deck deck() {
 		return table.getDeck();
 	}
-	
+
 	/**
 	 * This method is used to display appropriate buttons when necessary.
 	 */
