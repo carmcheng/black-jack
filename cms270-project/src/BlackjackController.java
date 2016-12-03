@@ -140,7 +140,11 @@ public class BlackjackController extends BorderPane {
 		bottom.getChildren().addAll(start, hit, stand, doubleDown, ok);
 		setBottom(bottom);
 	}
-
+/**
+ * This method registers what move the play wants to make next and handles the
+ * appropriate output by checking for certain events/ buttons pressed by players
+ * @param event
+ */
 	protected void doPlayerMove(ActionEvent event) {
 		// Start the round
 		if (event.getSource() == start) {
@@ -211,7 +215,11 @@ public class BlackjackController extends BorderPane {
 			}
 		}
 	}
-
+/**
+ * This method checks if a dealt card is an ace. If so, the player can choose
+ * the valuse of the card (either 1 or 11)
+ * @param c
+ */
 	private void checkForAceCard(Card c) {
 		if (c.getCardName().equals("A")) {
 			Alert alert = new Alert(AlertType.CONFIRMATION);
@@ -228,7 +236,11 @@ public class BlackjackController extends BorderPane {
 			}
 		}
 	}
-
+/**
+ * This method is called after all players have played and it is the dealer's
+ * turn. While the dealer has a hand with a value under 17, a card is dealt. 
+ * The results are then calculated, followed by a new round being started
+ */
 	protected void doDealerMove() {
 		text = "It is the dealer's turn.";
 		topOutput.setText(text);
@@ -248,7 +260,11 @@ public class BlackjackController extends BorderPane {
 		calculateResults();
 		newRound();
 	}
-
+/**
+ * This method allows the player to pick an ace card present in their hand that they
+ * want to change the value of, and returns the chosen card
+ * @return Card
+ */
 	protected Card launchAceCardChooser() {
 		updateView();
 		List<Card> choices = new ArrayList<Card>();
@@ -270,7 +286,10 @@ public class BlackjackController extends BorderPane {
 			return null;
 		}
 	}
-
+/**
+ * This method allows the player to choose whether an ace card dealt to
+ * them should have the value 1 or 11
+ */
 	protected void launchAceValueChooser() {
 		Card ace = launchAceCardChooser();
 		if (ace == null) {
@@ -291,7 +310,12 @@ public class BlackjackController extends BorderPane {
 			}
 		}
 	}
-
+/**
+ * This method calculates the final results of the game after all the players
+ * and the dealer have played. It checks if any of the players or the dealer
+ * has blackjack or has busted. It also notifies each player regarding whether
+ * they have won or lost against the dealer. 
+ */
 	protected void calculateResults() {
 		updateFinalView();
 		Alert results = new Alert(AlertType.INFORMATION);
@@ -340,7 +364,11 @@ public class BlackjackController extends BorderPane {
 		}
 		return;
 	}
-
+/**
+ * This method asks the players whether they would like to play another round.
+ * It notifies each player of how much money they have left after the previous
+ * round. If a player does not wish to play another round, they are removed
+ */
 	protected void newRound() {
 		ArrayList <Player> toRemove = new ArrayList<Player>();
 		Alert alert = new Alert(AlertType.CONFIRMATION);
@@ -376,7 +404,10 @@ public class BlackjackController extends BorderPane {
 		}
 		askPlayerBet();
 	}
-
+/**
+ * This method updates the displayed information for each player. It checks
+ * for each player's name, amount of money and hand
+ */
 	protected void fillPlayerVBox() {
 		for (Player p : table.getPlayers()) {
 			String info = "\nPlayer: " + p.getName() + "\nWallet: " + currency.format(p.getMoney())
@@ -393,7 +424,10 @@ public class BlackjackController extends BorderPane {
 			playerVBox.getChildren().addAll(playerInfo, playerHandInfo);
 		}
 	}
-
+/**
+ * This method alerts the player if they do not have any money left. In this 
+ * case, they can no longer play the game
+ */
 	protected void launchNoMoney() {
 		Alert alert = new Alert(AlertType.ERROR);
 		alert.setTitle("Error");
@@ -401,7 +435,10 @@ public class BlackjackController extends BorderPane {
 		alert.setContentText("Security will be escorting you out now...");
 		alert.showAndWait();
 	}
-
+/**
+ * This method starts a game by initializing a new table, asking for each 
+ * player's bet and displaying the current player and dealer's hands
+ */
 	protected void launchGame() {
 		table = new Table();
 		utils = new Utils();
@@ -417,7 +454,11 @@ public class BlackjackController extends BorderPane {
 		centerLabel.setText("Current player: " + activePlayer().getName());
 		rightLabel.setText("The Dealer");
 	}
-
+/**
+ * This method asks how many players will be playing the game, giving 
+ * an input choice of 1-6
+ * @return number of players given the chosen input
+ */
 	public int retrieveNumPlayers() {
 		List<String> choices = new ArrayList<>();
 		choices.add("1");
@@ -440,7 +481,10 @@ public class BlackjackController extends BorderPane {
 			return 0;		//default player
 		}
 	}
-
+/**
+ * This method launches an error alert if a player enters an invalid value.
+ * @param error
+ */
 	protected void launchErrorDialog(String error) {
 		Alert alert = new Alert(AlertType.ERROR);
 		alert.setTitle("Error Dialog");
@@ -450,6 +494,12 @@ public class BlackjackController extends BorderPane {
 	}
 
 	// Adds players into game
+	/**
+	 * This method retrieves the name and amount of money that each player has by
+	 * running through the total number of players. If a player enters an invalid value,
+	 * an error is launched. 
+	 * @param numOfPlayers
+	 */
 	public void launchAskPlayerInfo(int numOfPlayers) {
 		players = table.getPlayers();
 		for (int i = 0; i < numOfPlayers; i++) {
@@ -508,7 +558,10 @@ public class BlackjackController extends BorderPane {
 			}
 		}
 	}
-	
+/**
+ * This method launched an error alert if a player enter an invalid value
+ * when entering their information. 
+ */
 	protected void launchPlayerInfoError() {
 		Alert alert = new Alert(AlertType.ERROR);
 		alert.setTitle("Player Info Error");
@@ -516,7 +569,10 @@ public class BlackjackController extends BorderPane {
 		alert.setContentText("You will not get to play.");
 		alert.showAndWait();
 	}
-
+/**
+ * This method asks each player for their bet. If they ask to bet a larger 
+ * amount of money than what they have, an error alert is launched. 
+ */
 	protected void askPlayerBet() {
 		for (Player p : table.getPlayers()){
 			double bet;
