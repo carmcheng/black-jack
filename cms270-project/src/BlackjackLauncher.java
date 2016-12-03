@@ -4,7 +4,9 @@ import javafx.stage.Stage;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
-/** This is our gui class.
+/** This class launches the GUI's for our BlackJack game,
+ *
+ *@author Zoe, Carmen, Ebba, Aruna
  */
 public class BlackjackLauncher extends Application{
 

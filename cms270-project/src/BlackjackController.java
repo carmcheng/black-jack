@@ -17,6 +17,13 @@ import java.util.List;
 import java.util.Optional;
 import javafx.util.Pair;
 
+/**
+ * This class implements the GUI's for our game which contains
+ * methods to play a game of Blackjack along with dialog box implementations
+ * to enhance interaction with one or more players.
+ * @author Zoe, Carmen, Ebba, Aruna
+ *
+ */
 public class BlackjackController extends BorderPane {
 	private String text;
 	private Player player;
@@ -523,7 +530,12 @@ public class BlackjackController extends BorderPane {
 			p.setBet(bet);
 		}
 	}
-
+	
+	/**
+	 * This method prompts the player to set a bet amount for the round.
+	 * @param p - The player to set a bet for.
+	 * @return - double representation of bet amount. 
+	 */
 	protected double eachBet(Player p) {
 		TextInputDialog dialog = new TextInputDialog();
 		dialog.getDialogPane().getButtonTypes().remove(ButtonType.CANCEL);
@@ -548,7 +560,13 @@ public class BlackjackController extends BorderPane {
 			return 0.1;
 		}
 	}
-
+	
+	/**
+	 * This method ensures that the player entered a valid input 
+	 * when prompted to type in information.
+	 * @param tf - The text field to check for valid input
+	 * @return - boolean representation if input was valid
+	 */
 	private boolean validateInput(TextField tf) {
 		String n = tf.getText();
 		if(n == null || n.equals("")) {
@@ -558,6 +576,11 @@ public class BlackjackController extends BorderPane {
 		}
 	}
 	
+	/** 
+	 * This method prompts the user to check for new players at
+	 * the start of a new round. If so, new players are asked to input
+	 * their information in order to play. 
+	 */
 	protected void askForNewPlayers() {
 		Alert alert = new Alert(AlertType.CONFIRMATION);
 		alert.setTitle("New Players?");
@@ -583,7 +606,11 @@ public class BlackjackController extends BorderPane {
 		}
 
 	}
-
+	
+	/**
+	 * This method confirms to the user that they are quitting a game
+	 * of Blackjack.
+	 */
 	protected void launchThanksForPlaying() {
 		Alert alert = new Alert(AlertType.INFORMATION);
 		alert.setTitle("Quitting...");
@@ -591,7 +618,11 @@ public class BlackjackController extends BorderPane {
 		alert.setContentText("Thanks for playing!");
 		alert.showAndWait();
 	}
-
+	
+	/**
+	 * This method indicates an error when there are more than
+	 * six players at the table. The user is asked to try again.
+	 */
 	protected void launchTooManyPlayersError() {
 		Alert alert = new Alert(AlertType.ERROR);
 		alert.setTitle("Too Many Players");
@@ -599,7 +630,10 @@ public class BlackjackController extends BorderPane {
 		alert.setContentText("Please try again.");
 		alert.showAndWait();
 	}
-
+	
+	/**
+	 * This method resets the game for a new round of Blackjack.
+	 */
 	protected void reset() {
 		resetView();
 		if(numPlayers < 6) {
@@ -611,7 +645,10 @@ public class BlackjackController extends BorderPane {
 		updateFinalView();
 	}
 
-	//Update information in window
+	/**
+	 * This method updates the information when the 
+	 * dealer's complete hand is shown.
+	 */
 	protected void updateView() {
 		updateHandView();
 		if (dealerHand().checkBlackjack()) {
@@ -623,7 +660,10 @@ public class BlackjackController extends BorderPane {
 		playerVBox.getChildren().clear();
 		fillPlayerVBox();
 	}
-
+	
+	/**
+	 * This method updates the final view of both player's and dealer's hand value.
+	 */
 	protected void updateFinalView() {
 		updateDealerHandView();
 		handHBox.getChildren().clear();
@@ -632,7 +672,10 @@ public class BlackjackController extends BorderPane {
 		fillPlayerVBox();
 	}
 
-	//Update hand cards
+	/**
+	 * This method updates the view(image) of the each card in the player's hand
+	 * while playing a round of Blackjack.
+	 */
 	protected void updateHandView() {
 		handHBox.getChildren().clear();
 		for (Card c : activeHand().getCards()) {
@@ -642,7 +685,11 @@ public class BlackjackController extends BorderPane {
 		playerHandValueLabel.setText("\nHand Value: " + 
 				Integer.toString(activeHand().checkHandValue()));
 	}
-
+	
+	/**
+	 * This method updates the view(image) of the each card in the dealer's hand
+	 * while playing a round of Blackjack.
+	 */
 	protected void updateDealerHandView() {
 		dealerHandHBox.getChildren().clear();
 		for (Card c : dealerHand().getCards()) {
@@ -652,7 +699,11 @@ public class BlackjackController extends BorderPane {
 		dealerHandValueLabel.setText("\nDealer's Hand Value: " + 
 				Integer.toString(dealerHand().checkHandValue()));
 	}
-
+	
+	/**
+	 * This method displays the dealer's hidden card when it's their
+	 * turn to play and updates all the cards in their hand.
+	 */
 	protected void dealerHiddenHandView() {
 		dealerHandHBox.getChildren().clear();
 		Card c = dealerHand().getCards().get(0);
@@ -660,7 +711,11 @@ public class BlackjackController extends BorderPane {
 		ImageView cardView = utils.getCardImageView(c.getCardName() + c.getCardSuit());
 		dealerHandHBox.getChildren().addAll(cardView, hiddenCard);
 	}
-
+	
+	/**
+	 * This method resets the view of the game when a 
+	 * new round of Blackjack begins.
+	 */
 	protected void resetView() {
 		start.setVisible(true);
 		hit.setVisible(false);
@@ -673,27 +728,50 @@ public class BlackjackController extends BorderPane {
 		dealerHandValueLabel.setText("");
 		centerLabel.setText("");
 	}
-
+	
+	/**
+	 * This method is used to get the current player playing Blackjack.
+	 * @return - the current player
+	 */
 	private Player activePlayer() {
 		return table.getCurrentPlayer();
 	}
-
+	
+	/**
+	 * This method is used to get the current player's hand playing Blackjack.
+	 * @return - current player's hand/value
+	 */
 	private Hand activeHand() {
 		return activePlayer().getHand();
 	}
-
+	
+	/**
+	 * This method is used to get the dealer object.
+	 * @return - the dealer info
+	 */
 	private Dealer dealer() {
 		return table.getDealer();
 	}
-
+	
+	/**
+	 * This method is used to get the dealer's hand.
+	 * @return - dealer's hand/value
+	 */
 	private Hand dealerHand() {
 		return table.getDealer().getHand();
 	}
-
+	
+	/**
+	 * This method is used to get the current deck at the table.
+	 * @return - the card deck 
+	 */
 	private Deck deck() {
 		return table.getDeck();
 	}
-
+	
+	/**
+	 * This method is used to display appropriate buttons when necessary.
+	 */
 	private void setButtonsVisibility() {
 		hit.setVisible(false);
 		stand.setVisible(false);
